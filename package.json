@@ -6,13 +6,16 @@
   "license": "ISC",
   "packageManager": "pnpm@10.18.0",
   "scripts": {
+    "build": "run-s main-build admin-build",
     "main": "pnpm --prefix projects/main dev",
     "main-build": "pnpm --prefix projects/main build",
     "admin": "pnpm --prefix projects/admin dev",
     "admin-build": "pnpm --prefix projects/admin build"
   },
   "dependencies": {
+    "@originjs/vite-plugin-federation": "^1.4.1",
     "@tailwindcss/vite": "^4.1.14",
+    "axios": "^1.12.2",
     "pinia": "^3.0.3",
     "tailwindcss": "^4.1.14",
     "vue": "^3.5.22",

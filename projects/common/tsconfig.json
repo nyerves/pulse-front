@@ -1,0 +1,17 @@
+{
+  "include": ["../../env.d.ts", "./**/*.ts", "./**/*.vue", "./modules.d.ts"],
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["node"],
+    "strict": true,
+    "composite": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "verbatimModuleSyntax": false,
+    "paths": {
+      "@common/*": ["./*"]
+    }
+  }
+}
