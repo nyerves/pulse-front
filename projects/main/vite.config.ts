@@ -13,17 +13,15 @@ import federation from '@originjs/vite-plugin-federation'
 export default defineConfig(({ mode, command }) => {
   let base = ''
   const local = 'http://127.0.0.1:5500/_web/project'
-  let pathToAdmin = local + '/admin/assets/admin.js'
+  let pathToAdmin = local + '/admin/admin.js'
 
   // To production
   if (command === 'build') {
     const env = loadEnv(mode, path.resolve(__dirname, '../..'))
 
     base = env?.VITE_PREFIX || '/'
-    pathToAdmin = '../build/admin/assets/admin.js'
+    pathToAdmin = '../build/admin/admin.js'
   }
-
-  console.log(pathToAdmin)
 
   return {
     base,

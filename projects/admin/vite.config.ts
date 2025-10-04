@@ -34,7 +34,7 @@ export default defineConfig({
     modulePreload: false,
     target: ['esnext'],
     minify: false,
-    assetsDir: 'assets',
+    assetsDir: '',
     cssCodeSplit: false,
     outDir: '../../_web/project/admin',
   },
