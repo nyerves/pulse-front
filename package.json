@@ -1,14 +1,16 @@
 {
   "name": "pulse-front-app",
   "version": "1.0.0",
-  "scripts": {
-    "main": "pnpm --prefix projects/main dev",
-    "admin": "pnpm --prefix projects/admin dev"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.18.0",
+  "scripts": {
+    "main": "pnpm --prefix projects/main dev",
+    "main-build": "pnpm --prefix projects/main build",
+    "admin": "pnpm --prefix projects/admin dev",
+    "admin-build": "pnpm --prefix projects/admin build"
+  },
   "dependencies": {
     "pinia": "^3.0.3",
     "vue": "^3.5.22",
