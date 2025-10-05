@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { useLayout } from "@common/composables";
 import { $t, updatePreset, updateSurfacePalette } from "@primeuix/themes";
 import Aura from "@primeuix/themes/aura";
 import Lara from "@primeuix/themes/lara";
 import Nora from "@primeuix/themes/nora";
-import { ref } from "vue";
 
 const { layoutConfig, isDarkTheme } = useLayout();
 
@@ -514,7 +514,7 @@ function getPresetExt() {
   }
 }
 
-function updateColors(type, color) {
+function updateColors(type: string, color: (typeof primaryColors.value)[0]) {
   if (type === "primary") {
     layoutConfig.primary = color.name;
   } else if (type === "surface") {
@@ -524,7 +524,7 @@ function updateColors(type, color) {
   applyTheme(type, color);
 }
 
-function applyTheme(type, color) {
+function applyTheme(type: string, color: (typeof primaryColors.value)[0]) {
   if (type === "primary") {
     updatePreset(getPresetExt());
   } else if (type === "surface") {

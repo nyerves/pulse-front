@@ -3,7 +3,7 @@ import { computed, reactive } from "vue";
 const layoutConfig = reactive({
   preset: "Aura",
   primary: "emerald",
-  surface: null,
+  surface: null as string | null,
   darkTheme: false,
   menuMode: "static",
 });
@@ -19,7 +19,7 @@ const layoutState = reactive({
 });
 
 export function useLayout() {
-  const setActiveMenuItem = (item) => {
+  const setActiveMenuItem = (item: any) => {
     layoutState.activeMenuItem = item.value || item;
   };
 
@@ -30,7 +30,7 @@ export function useLayout() {
       return;
     }
 
-    document.startViewTransition(() => executeDarkModeToggle(event));
+    document.startViewTransition(() => executeDarkModeToggle());
   };
 
   const executeDarkModeToggle = () => {

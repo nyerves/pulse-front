@@ -1,20 +1,12 @@
 <script setup lang="ts">
-import { useLayout } from "@common/composables";
 import { computed, ref, watch } from "vue";
+import { useLayout } from "@common/composables";
 import AppSidebar from "./AppSidebar.vue";
 import AppTopbar from "./AppTopbar.vue";
 
 const { layoutConfig, layoutState, isSidebarActive } = useLayout();
 
 const outsideClickListener = ref(null);
-
-watch(isSidebarActive, (newVal) => {
-  if (newVal) {
-    bindOutsideClickListener();
-  } else {
-    unbindOutsideClickListener();
-  }
-});
 
 const containerClass = computed(() => {
   return {
@@ -40,32 +32,40 @@ function bindOutsideClickListener() {
     document.addEventListener("click", outsideClickListener.value);
   }
 }
-
 function unbindOutsideClickListener() {
   if (outsideClickListener.value) {
     document.removeEventListener("click", outsideClickListener);
     outsideClickListener.value = null;
   }
 }
-
 function isOutsideClicked(event) {
   const sidebarEl = document.querySelector(".layout-sidebar");
-  const topbarEl = document.querySelector(".layout-menu-button");
+  const topBarEl = document.querySelector(".layout-menu-button");
 
   return !(
-    sidebarEl.isSameNode(event.target) ||
-    sidebarEl.contains(event.target) ||
-    topbarEl.isSameNode(event.target) ||
-    topbarEl.contains(event.target)
+    sidebarEl?.isSameNode(event.target) ||
+    sidebarEl?.contains(event.target) ||
+    topBarEl?.isSameNode(event.target) ||
+    topBarEl?.contains(event.target)
   );
 }
+
+watch(isSidebarActive, (newVal) => {
+  if (newVal) {
+    bindOutsideClickListener();
+  } else {
+    unbindOutsideClickListener();
+  }
+});
 </script>
 
 <template>
-  <div class="layout-wrapper" :class="containerClass">
-    <app-topbar></app-topbar>
+  <Toast />
 
-    <app-sidebar></app-sidebar>
+  <div class="layout-wrapper" :class="containerClass">
+    <AppTopbar />
+
+    <AppSidebar />
 
     <div class="layout-main-container">
       <div class="layout-main">
@@ -75,5 +75,4 @@ function isOutsideClicked(event) {
 
     <div class="layout-mask animate-fadein"></div>
   </div>
-  <Toast />
 </template>

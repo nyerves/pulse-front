@@ -29,19 +29,6 @@ const props = defineProps({
 const isActiveMenu = ref(false);
 const itemKey = ref(null);
 
-onBeforeMount(() => {
-  itemKey.value = props.parentItemKey
-    ? props.parentItemKey + "-" + props.index
-    : String(props.index);
-
-  const activeItem = layoutState.activeMenuItem;
-
-  isActiveMenu.value =
-    activeItem === itemKey.value || activeItem
-      ? activeItem.startsWith(itemKey.value + "-")
-      : false;
-});
-
 watch(
   () => layoutState.activeMenuItem,
   (newVal) => {
@@ -75,10 +62,22 @@ function itemClick(event, item) {
 
   setActiveMenuItem(foundItemKey);
 }
-
-function checkActiveRoute(item) {
-  return route.path === item.to;
+function checkActiveRoute(_path: string) {
+  return route.path === _path;
 }
+
+onBeforeMount(() => {
+  itemKey.value = props.parentItemKey
+    ? props.parentItemKey + "-" + props.index
+    : String(props.index);
+
+  const activeItem = layoutState.activeMenuItem;
+
+  isActiveMenu.value =
+    activeItem === itemKey.value || activeItem
+      ? activeItem?.startsWith(itemKey.value + "-")
+      : false;
+});
 </script>
 
 <template>
@@ -95,7 +94,7 @@ function checkActiveRoute(item) {
     <a
       v-if="(!item.to || item.items) && item.visible !== false"
       :href="item.url"
-      @click="itemClick($event, item, index)"
+      @click="itemClick($event, item)"
       :class="item.class"
       :target="item.target"
       tabindex="0"
@@ -108,20 +107,22 @@ function checkActiveRoute(item) {
       ></i>
     </a>
 
-    <router-link
+    <RouterLink
       v-if="item.to && !item.items && item.visible !== false"
-      @click="itemClick($event, item, index)"
-      :class="[item.class, { 'active-route': checkActiveRoute(item) }]"
       tabindex="0"
       :to="item.to"
+      :class="[item.class, { 'active-route': checkActiveRoute(item.to) }]"
+      @click="itemClick($event, item)"
     >
       <i :class="item.icon" class="layout-menuitem-icon"></i>
+
       <span class="layout-menuitem-text">{{ item.label }}</span>
+
       <i
         class="pi pi-fw pi-angle-down layout-submenu-toggler"
         v-if="item.items"
-      ></i>
-    </router-link>
+      />
+    </RouterLink>
 
     <Transition
       v-if="item.items && item.visible !== false"
