@@ -1,13 +1,16 @@
-import './assets/main.css'
-import 'primeicons/primeicons.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import PrimeVue from 'primevue/config'
-import Aura from '@primeuix/themes/aura'
 
 import App from './App.vue'
 import router from './router'
+
+import PrimeVue from 'primevue/config'
+import Aura from '@primeuix/themes/aura'
+import ToastService from 'primevue/toastservice'
+
+import './assets/main.css'
+import 'primeicons/primeicons.css'
+import '@common/assets/base.scss'
 
 const app = createApp(App)
 
@@ -18,9 +21,10 @@ app.use(PrimeVue, {
     name: 'aura',
     preset: Aura,
     options: {
-      darkModeSelector: false || 'none',
+      darkModeSelector: '.app-dark',
     },
   },
 })
+app.use(ToastService)
 
 app.mount('#app')

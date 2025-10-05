@@ -7,6 +7,11 @@ const routes: RouteRecordRaw[] = [
     name: 'login',
     component: Pages.LoginPage,
   },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: Pages.DashboardPage,
+  },
 ]
 
 export default routes
