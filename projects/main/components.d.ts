@@ -12,11 +12,7 @@ declare module 'vue' {
     Menu: typeof import('primevue/menu')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SelectButton: typeof import('primevue/selectbutton')['default']
     TestComponent: typeof import('./src/components/TestComponent/TestComponent.vue')['default']
     Toast: typeof import('primevue/toast')['default']
-  }
-  export interface GlobalDirectives {
-    StyleClass: typeof import('primevue/styleclass')['default']
   }
 }

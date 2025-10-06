@@ -2,14 +2,14 @@
 import { onBeforeMount, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useLayout } from "@common/composables";
+import type { AppMenuItem } from "@common/models";
 
 const route = useRoute();
-
 const { layoutState, setActiveMenuItem, toggleMenu } = useLayout();
 
 const props = defineProps({
   item: {
-    type: Object,
+    type: Object as () => AppMenuItem,
     default: () => ({}),
   },
   index: {
@@ -21,23 +21,23 @@ const props = defineProps({
     default: true,
   },
   parentItemKey: {
-    type: String,
+    type: String as () => string | null,
     default: null,
   },
 });
 
 const isActiveMenu = ref(false);
-const itemKey = ref(null);
+const itemKey = ref<string | null>(null);
 
 watch(
   () => layoutState.activeMenuItem,
   (newVal) => {
-    isActiveMenu.value =
-      newVal === itemKey.value || newVal.startsWith(itemKey.value + "-");
+    const key = itemKey.value;
+    isActiveMenu.value = Boolean(newVal === key || newVal?.startsWith(key + "-"));
   }
 );
 
-function itemClick(event, item) {
+function itemClick(event: MouseEvent, item: AppMenuItem) {
   if (item.disabled) {
     event.preventDefault();
     return;
@@ -81,13 +81,8 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <li
-    :class="{ 'layout-root-menuitem': root, 'active-menuitem': isActiveMenu }"
-  >
-    <div
-      v-if="root && item.visible !== false"
-      class="layout-menuitem-root-text"
-    >
+  <li :class="{ 'layout-root-menuitem': root, 'active-menuitem': isActiveMenu }">
+    <div v-if="root && item.visible !== false" class="layout-menuitem-root-text">
       {{ item.label }}
     </div>
 
@@ -101,10 +96,7 @@ onBeforeMount(() => {
     >
       <i :class="item.icon" class="layout-menuitem-icon"></i>
       <span class="layout-menuitem-text">{{ item.label }}</span>
-      <i
-        class="pi pi-fw pi-angle-down layout-submenu-toggler"
-        v-if="item.items"
-      ></i>
+      <i class="pi pi-fw pi-angle-down layout-submenu-toggler" v-if="item.items"></i>
     </a>
 
     <RouterLink
@@ -118,25 +110,19 @@ onBeforeMount(() => {
 
       <span class="layout-menuitem-text">{{ item.label }}</span>
 
-      <i
-        class="pi pi-fw pi-angle-down layout-submenu-toggler"
-        v-if="item.items"
-      />
+      <i class="pi pi-fw pi-angle-down layout-submenu-toggler" v-if="item.items" />
     </RouterLink>
 
-    <Transition
-      v-if="item.items && item.visible !== false"
-      name="layout-submenu"
-    >
+    <Transition v-if="item.items && item.visible !== false" name="layout-submenu">
       <ul v-show="root ? true : isActiveMenu" class="layout-submenu">
-        <app-menu-item
+        <AppMenuItem
           v-for="(child, i) in item.items"
-          :key="child"
+          :key="i"
           :index="i"
           :item="child"
           :parentItemKey="itemKey"
           :root="false"
-        ></app-menu-item>
+        />
       </ul>
     </Transition>
   </li>

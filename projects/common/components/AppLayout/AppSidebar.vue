@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { AppMenuList } from "@common/models";
 import AppMenuItem from "./AppMenuItem.vue";
 
-const model = ref([
+const appMenuList = ref<AppMenuList[]>([
   {
     label: "Home",
     items: [{ label: "Dashboard", icon: "pi pi-fw pi-home", to: "/dashboard" }],
@@ -42,8 +43,6 @@ const model = ref([
   },
   {
     label: "Pages",
-    icon: "pi pi-fw pi-briefcase",
-    to: "/pages",
     items: [
       {
         label: "Landing",
@@ -154,7 +153,7 @@ const model = ref([
 <template>
   <div class="layout-sidebar">
     <ul class="layout-menu">
-      <template v-for="(item, i) in model" :key="item">
+      <template v-for="(item, i) in appMenuList" :key="item">
         <AppMenuItem :item="item" :index="i" />
       </template>
     </ul>

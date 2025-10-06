@@ -15,12 +15,12 @@ const layoutState = reactive({
   configSidebarVisible: false,
   staticMenuMobileActive: false,
   menuHoverActive: false,
-  activeMenuItem: null,
+  activeMenuItem: null as string | null,
 });
 
 export function useLayout() {
   const setActiveMenuItem = (item: any) => {
-    layoutState.activeMenuItem = item.value || item;
+    layoutState.activeMenuItem = item?.value || item;
   };
 
   const toggleDarkMode = () => {
@@ -44,8 +44,7 @@ export function useLayout() {
     }
 
     if (window.innerWidth > 991) {
-      layoutState.staticMenuDesktopInactive =
-        !layoutState.staticMenuDesktopInactive;
+      layoutState.staticMenuDesktopInactive = !layoutState.staticMenuDesktopInactive;
     } else {
       layoutState.staticMenuMobileActive = !layoutState.staticMenuMobileActive;
     }

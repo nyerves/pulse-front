@@ -6,15 +6,14 @@ import AppTopbar from "./AppTopbar.vue";
 
 const { layoutConfig, layoutState, isSidebarActive } = useLayout();
 
-const outsideClickListener = ref(null);
+const outsideClickListener = ref<((event: MouseEvent) => void) | null>(null);
 
 const containerClass = computed(() => {
   return {
     "layout-overlay": layoutConfig.menuMode === "overlay",
     "layout-static": layoutConfig.menuMode === "static",
     "layout-static-inactive":
-      layoutState.staticMenuDesktopInactive &&
-      layoutConfig.menuMode === "static",
+      layoutState.staticMenuDesktopInactive && layoutConfig.menuMode === "static",
     "layout-overlay-active": layoutState.overlayMenuActive,
     "layout-mobile-active": layoutState.staticMenuMobileActive,
   };
@@ -34,19 +33,21 @@ function bindOutsideClickListener() {
 }
 function unbindOutsideClickListener() {
   if (outsideClickListener.value) {
-    document.removeEventListener("click", outsideClickListener);
+    document.removeEventListener("click", outsideClickListener.value);
     outsideClickListener.value = null;
   }
 }
-function isOutsideClicked(event) {
+function isOutsideClicked(event: MouseEvent) {
   const sidebarEl = document.querySelector(".layout-sidebar");
   const topBarEl = document.querySelector(".layout-menu-button");
 
+  const target = event.target as Node;
+
   return !(
-    sidebarEl?.isSameNode(event.target) ||
-    sidebarEl?.contains(event.target) ||
-    topBarEl?.isSameNode(event.target) ||
-    topBarEl?.contains(event.target)
+    sidebarEl?.isSameNode(target) ||
+    sidebarEl?.contains(target) ||
+    topBarEl?.isSameNode(target) ||
+    topBarEl?.contains(target)
   );
 }
 
