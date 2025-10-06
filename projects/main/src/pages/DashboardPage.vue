@@ -1,10 +1,23 @@
 <script setup lang="ts">
+import { useToast } from 'primevue'
 import { AppLayout } from '@common/components'
+
+const toast = useToast()
+
+function showSuccess() {
+  toast.add({
+    summary: 'Success Message',
+    detail: 'Message Detail',
+    life: 3000,
+  })
+}
 </script>
 
 <template>
   <AppLayout>
     <p>Component</p>
+
+    <Button @click="showSuccess()" label="Success" severity="success" />
 
     <h6>
       adsadasdas das Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae voluptatem

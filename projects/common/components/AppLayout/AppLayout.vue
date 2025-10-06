@@ -63,9 +63,9 @@ watch(isSidebarActive, (newVal) => {
   <Toast />
 
   <div class="layout-wrapper" :class="containerClass">
-    <AppTopbar />
+    <AppTopbar></AppTopbar>
 
-    <AppSidebar />
+    <AppSidebar></AppSidebar>
 
     <div class="layout-main-container">
       <div class="layout-main">

@@ -1,8 +1,35 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { useLayout } from "@common/composables";
 // import AppConfigurator from "./AppConfigurator.vue";
 
 const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
+
+const menu = ref();
+const items = ref([
+  {
+    label: "Options",
+    items: [
+      {
+        label: "Refresh",
+        icon: "pi pi-refresh",
+      },
+      {
+        label: "Export",
+        icon: "pi pi-upload",
+      },
+      {
+        label: "Logout",
+        color: "red",
+        icon: "pi pi-sign-out",
+      },
+    ],
+  },
+]);
+
+const toggle = (event) => {
+  menu.value.toggle(event);
+};
 </script>
 
 <template>
@@ -14,6 +41,7 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
       >
         <i class="pi pi-bars"></i>
       </button>
+
       <div class="layout-topbar-logo">
         <svg viewBox="0 0 54 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -59,53 +87,17 @@ const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
             :class="['pi', { 'pi-moon': isDarkTheme, 'pi-sun': !isDarkTheme }]"
           ></i>
         </button>
-        <div class="relative">
-          <button
-            v-styleclass="{
-              selector: '@next',
-              enterFromClass: 'hidden',
-              enterActiveClass: 'animate-scalein',
-              leaveToClass: 'hidden',
-              leaveActiveClass: 'animate-fadeout',
-              hideOnOutsideClick: true,
-            }"
-            type="button"
-            class="layout-topbar-action layout-topbar-action-highlight"
-          >
-            <i class="pi pi-palette"></i>
-          </button>
-          <!-- <AppConfigurator /> -->
-        </div>
-      </div>
 
-      <button
-        class="layout-topbar-menu-button layout-topbar-action"
-        v-styleclass="{
-          selector: '@next',
-          enterFromClass: 'hidden',
-          enterActiveClass: 'animate-scalein',
-          leaveToClass: 'hidden',
-          leaveActiveClass: 'animate-fadeout',
-          hideOnOutsideClick: true,
-        }"
-      >
-        <i class="pi pi-ellipsis-v"></i>
-      </button>
+        <div>
+          <Button
+            rounded
+            type="text"
+            icon="pi pi-user"
+            aria-controls="overlay_menu"
+            @click="toggle"
+          />
 
-      <div class="layout-topbar-menu hidden lg:block">
-        <div class="layout-topbar-menu-content">
-          <button type="button" class="layout-topbar-action">
-            <i class="pi pi-calendar"></i>
-            <span>Calendar</span>
-          </button>
-          <button type="button" class="layout-topbar-action">
-            <i class="pi pi-inbox"></i>
-            <span>Messages</span>
-          </button>
-          <button type="button" class="layout-topbar-action">
-            <i class="pi pi-user"></i>
-            <span>Profile</span>
-          </button>
+          <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
         </div>
       </div>
     </div>
