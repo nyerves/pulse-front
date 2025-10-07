@@ -10,6 +10,7 @@ import ToastService from "primevue/toastservice";
 
 import "primeicons/primeicons.css";
 import "@common/assets/base.scss";
+import "@common/assets/tailwind.css";
 
 interface VueApp {
   htmlId: string;
