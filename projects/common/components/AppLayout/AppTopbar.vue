@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useLayout } from "@common/composables";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
 
 const menu = ref();
@@ -20,6 +22,9 @@ const items = ref([
       {
         label: "Logout",
         icon: "pi pi-sign-out",
+        command: () => {
+          router.push("/login");
+        },
       },
     ],
   },
@@ -31,7 +36,10 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
 <template>
   <div class="layout-topbar">
     <div class="layout-topbar-logo-container">
-      <button class="layout-menu-button layout-topbar-action" @click="toggleMenu">
+      <button
+        class="layout-menu-button layout-topbar-action"
+        @click="toggleMenu"
+      >
         <i class="pi pi-bars"></i>
       </button>
 
@@ -42,12 +50,23 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
 
     <div class="layout-topbar-actions">
       <div class="layout-config-menu">
-        <button type="button" class="layout-topbar-action" @click="toggleDarkMode">
-          <i :class="['pi', { 'pi-moon': isDarkTheme, 'pi-sun': !isDarkTheme }]"></i>
+        <button
+          type="button"
+          class="layout-topbar-action"
+          @click="toggleDarkMode"
+        >
+          <i
+            :class="['pi', { 'pi-moon': isDarkTheme, 'pi-sun': !isDarkTheme }]"
+          />
         </button>
 
         <div>
-          <Button rounded icon="pi pi-user" aria-controls="overlay_menu" @click="toggle" />
+          <Button
+            rounded
+            icon="pi pi-user"
+            aria-controls="overlay_menu"
+            @click="toggle"
+          />
 
           <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
         </div>
