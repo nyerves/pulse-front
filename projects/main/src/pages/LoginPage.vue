@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useToast } from 'primevue'
 import { useRouter } from 'vue-router'
+import { AuthService } from '@common/services'
 import LogoSvg from '@/assets/svg/pulse-logo.svg'
 
 const router = useRouter()
@@ -47,8 +48,7 @@ const handleLogin = async () => {
   isLoading.value = true
 
   try {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await AuthService.Login(email.value, password.value)
 
     toast.add({
       severity: 'success',
@@ -60,6 +60,7 @@ const handleLogin = async () => {
     router.push('/dashboard')
   } catch (error) {
     console.error('Login error:', error)
+
     toast.add({
       severity: 'error',
       summary: 'Error',
