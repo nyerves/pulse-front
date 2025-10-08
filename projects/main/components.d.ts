@@ -10,6 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('primevue/button')['default']
     LoginFormCard: typeof import('./src/components/Login/LoginFormCard.vue')['default']
+    LogoAnimated: typeof import('./src/components/Login/LogoAnimated.vue')['default']
     Menu: typeof import('primevue/menu')['default']
     RegisterFormCard: typeof import('./src/components/Login/RegisterFormCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

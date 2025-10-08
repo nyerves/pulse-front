@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import LogoSvg from '@/assets/svg/pulse-logo.svg'
 
 const showRegister = ref(false)
 </script>
@@ -54,12 +53,8 @@ const showRegister = ref(false)
       <RegisterFormCard v-else @showLogin="showRegister = false" />
 
       <!-- Branding Section -->
-      <div class="text-white flex flex-col justify-center items-center gap-4">
-        <div class="flex justify-center">
-          <div class="relative">
-            <img :src="LogoSvg" alt="Logo Pulse" class="w-48 h-48 md:w-56 md:h-56" />
-          </div>
-        </div>
+      <div class="text-white flex flex-col justify-center items-center gap-5">
+        <LogoAnimated />
 
         <span class="text-4xl md:text-5xl font-bold">¿ERES PULSE?</span>
 
