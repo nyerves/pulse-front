@@ -21,4 +21,21 @@ export const AuthService = {
     const user = localStorage.getItem(StorageKeys.USER_AUTH);
     return user ? (JSON.parse(user) as AuthResponse) : null;
   },
+  async Logout() {
+    localStorage.removeItem(StorageKeys.USER_AUTH);
+  },
+  async Register({ name = "", username = "", email = "", password = "" }) {
+    try {
+      const res = await axios.post<AuthResponse>(path + "/Auth/register", {
+        name,
+        username,
+        email,
+        password,
+      });
+
+      localStorage.setItem(StorageKeys.USER_AUTH, JSON.stringify(res.data));
+    } catch (error) {
+      throw error;
+    }
+  },
 };

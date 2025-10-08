@@ -9,10 +9,11 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('primevue/button')['default']
+    LoginFormCard: typeof import('./src/components/Login/LoginFormCard.vue')['default']
     Menu: typeof import('primevue/menu')['default']
+    RegisterFormCard: typeof import('./src/components/Login/RegisterFormCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TestComponent: typeof import('./src/components/TestComponent/TestComponent.vue')['default']
     Toast: typeof import('primevue/toast')['default']
   }
 }
