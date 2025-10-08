@@ -1,1 +1,2 @@
-export * from "./AppMenuItem.d";
+export * from "./AppMenuItem";
+export * from "./AuthResponse";

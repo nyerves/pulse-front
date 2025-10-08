@@ -21,9 +21,10 @@ const validateForm = () => {
 
   if (!email.value) {
     errors.value.email = 'El email es requerido'
-  } else if (!/\S+@\S+\.\S+/.test(email.value)) {
-    errors.value.email = 'El email no es válido'
   }
+  // else if (!/\S+@\S+\.\S+/.test(email.value)) {
+  //   errors.value.email = 'El email no es válido'
+  // }
 
   if (!password.value) {
     errors.value.password = 'La contraseña es requerida'
@@ -127,7 +128,6 @@ const handleLogin = async () => {
               Correo Electrónico
             </label>
             <input
-              type="email"
               id="email"
               v-model="email"
               placeholder="Correo Electrónico"
@@ -178,7 +178,7 @@ const handleLogin = async () => {
       <div class="text-white flex flex-col justify-center items-center gap-4">
         <div class="flex justify-center">
           <div class="relative">
-            <img :src="LogoSvg" class="w-48 h-48 md:w-56 md:h-56" />
+            <img :src="LogoSvg" alt="Logo Pulse" class="w-48 h-48 md:w-56 md:h-56" />
           </div>
         </div>
 

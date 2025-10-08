@@ -10,6 +10,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/dashboard',
     name: 'dashboard',
+    meta: { requireAuth: true },
     component: Pages.DashboardPage,
   },
 ]
