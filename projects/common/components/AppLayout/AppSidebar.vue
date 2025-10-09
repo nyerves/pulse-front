@@ -31,6 +31,51 @@ const appMenuList = ref<AppMenuList[]>([
       { label: "Patologías", icon: "pi pi-fw pi-tablet", to: "/uikit/panel" },
     ],
   },
+  {
+    label: "Catálogos generales",
+    items: [
+      {
+        label: "Unidades Médicas",
+        icon: "pi pi-fw pi-building",
+        to: "/uikit/menumodel",
+      },
+      {
+        label: "Especialidades Médicas",
+        icon: "pi pi-fw pi-briefcase",
+        to: "/uikit/overlays",
+      },
+      {
+        label: "Médicos",
+        icon: "pi pi-fw pi-user",
+        to: "/uikit/menus",
+      },
+      {
+        label: "Pacientes",
+        icon: "pi pi-fw pi-users",
+        to: "/uikit/messages",
+      },
+    ],
+  },
+  {
+    label: "Administración",
+    items: [
+      {
+        label: "Usuarios",
+        icon: "pi pi-fw pi-user-edit",
+        to: "/administration/crud",
+      },
+      {
+        label: "Roles",
+        icon: "pi pi-fw pi-users",
+        to: "/administration/calendar",
+      },
+      {
+        label: "Permisos",
+        icon: "pi pi-fw pi-shield",
+        to: "/administration/permissions",
+      },
+    ],
+  },
 ]);
 </script>
 

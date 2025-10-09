@@ -40,7 +40,7 @@ const showRegister = ref(false)
     </div>
 
     <!-- Patient button -->
-    <div class="absolute top-8 right-7 z-10 hover:shadow-lg">
+    <div v-if="false" class="absolute top-8 right-7 z-10 hover:shadow-lg">
       <button
         class="bg-white cursor-pointer text-gray-800 px-6 py-3 rounded-lg text-lg font-medium hover:bg-gray-100 transition-colors"
       >
@@ -56,7 +56,6 @@ const showRegister = ref(false)
 
       <!-- Branding Section -->
       <div class="text-white flex flex-col justify-center items-center gap-5">
-        <!-- <LogoAnimated /> -->
         <div>
           <img :src="LogoApp" alt="Logo Pulse" />
         </div>

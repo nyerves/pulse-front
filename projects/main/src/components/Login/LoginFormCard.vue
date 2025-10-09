@@ -129,6 +129,7 @@ const handleLogin = async () => {
 
     <div class="mt-8 text-center flex gap-3">
       <button
+        v-if="false"
         class="text-gray-700 hover:text-teal-600 transition-colors font-medium cursor-pointer"
         @click="$emit('showRegister')"
       >
