@@ -62,17 +62,17 @@ const appMenuList = ref<AppMenuList[]>([
       {
         label: "Usuarios",
         icon: "pi pi-fw pi-user-edit",
-        to: "/administration/crud",
+        to: "/admin/users",
       },
       {
         label: "Roles",
         icon: "pi pi-fw pi-users",
-        to: "/administration/calendar",
+        to: "/admin/roles",
       },
       {
         label: "Permisos",
         icon: "pi pi-fw pi-shield",
-        to: "/administration/permissions",
+        to: "/admin/permissions",
       },
     ],
   },

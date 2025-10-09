@@ -10,7 +10,6 @@ import {
   Pill,
   Receipt,
 } from 'lucide-vue-next'
-import { AppLayout } from '@common/components'
 
 const menuItems = [
   {
@@ -71,36 +70,34 @@ const menuItems = [
 </script>
 
 <template>
-  <AppLayout>
-    <div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <template v-for="(item, _index) in menuItems" :key="_index">
-          <button
-            :class="`group relative overflow-hidden bg-white rounded-2xl shadow-lg hover:shadow-2xl ${item.shadowColor} transition-all duration-300 hover:scale-105 hover:-translate-y-2`"
-          >
-            <div :class="item.color" class="absolute inset-0 bg-gradient-to-br opacity-100"></div>
+  <div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <template v-for="(item, _index) in menuItems" :key="_index">
+        <button
+          :class="`group relative overflow-hidden bg-white rounded-2xl shadow-lg hover:shadow-2xl ${item.shadowColor} transition-all duration-300 hover:scale-105 hover:-translate-y-2`"
+        >
+          <div :class="item.color" class="absolute inset-0 bg-gradient-to-br opacity-100"></div>
 
-            <div class="absolute inset-0 opacity-10">
-              <div class="absolute -right-8 -top-8 w-32 h-32 bg-white rounded-full"></div>
-              <div class="absolute -left-4 -bottom-4 w-24 h-24 bg-white rounded-full"></div>
-            </div>
+          <div class="absolute inset-0 opacity-10">
+            <div class="absolute -right-8 -top-8 w-32 h-32 bg-white rounded-full"></div>
+            <div class="absolute -left-4 -bottom-4 w-24 h-24 bg-white rounded-full"></div>
+          </div>
 
-            <div class="relative p-6 flex flex-col items-center justify-center min-h-[160px]">
-              <div
-                class="bg-white/20 backdrop-blur-sm p-4 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300"
-              >
-                <component :is="item.icon" class="w-10 h-10 text-white" />
-              </div>
-
-              <h3 class="text-xl font-bold !text-white text-center">{{ item.label }}</h3>
-            </div>
-
+          <div class="relative p-6 flex flex-col items-center justify-center min-h-[160px]">
             <div
-              class="absolute inset-0 bg-gradient-to-t from-black/0 via-transparent to-white/0 group-hover:to-white/10 transition-all duration-300"
-            ></div>
-          </button>
-        </template>
-      </div>
+              class="bg-white/20 backdrop-blur-sm p-4 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300"
+            >
+              <component :is="item.icon" class="w-10 h-10 text-white" />
+            </div>
+
+            <h3 class="text-xl font-bold !text-white text-center">{{ item.label }}</h3>
+          </div>
+
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/0 via-transparent to-white/0 group-hover:to-white/10 transition-all duration-300"
+          ></div>
+        </button>
+      </template>
     </div>
-  </AppLayout>
+  </div>
 </template>
