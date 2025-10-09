@@ -1,3 +1,6 @@
-import AppLayout from "./AppLayout/AppLayout.vue";
+import { defineAsyncComponent } from "vue";
 
-export { AppLayout };
+import AppLayout from "./AppLayout/AppLayout.vue";
+const ModalLayout = defineAsyncComponent(() => import("./ModalLayout/ModalLayout.vue"));
+
+export { AppLayout, ModalLayout };

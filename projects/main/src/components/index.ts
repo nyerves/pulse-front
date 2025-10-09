@@ -2,4 +2,6 @@ import LoginFormCard from './Login/LoginFormCard.vue'
 import LogoAnimated from './Login/LogoAnimated.vue'
 import RegisterFormCard from './Login/RegisterFormCard.vue'
 
-export { LoginFormCard, LogoAnimated, RegisterFormCard }
+import RolesFormModal from './Roles/RolesFormModal.vue'
+
+export { LoginFormCard, LogoAnimated, RegisterFormCard, RolesFormModal }
