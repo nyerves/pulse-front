@@ -10,6 +10,7 @@ const router = useRouter()
 const toast = useToast()
 
 const isLoading = ref(false)
+const showPassword = ref(false)
 const formRegister = ref({
   name: '',
   username: '',
@@ -76,7 +77,6 @@ const handleRegister = async () => {
 
   try {
     await AuthService.Register(formRegister.value)
-
     router.push('/dashboard')
   } catch (error) {
     console.error('Login error:', error)
@@ -118,12 +118,13 @@ const inputClasses =
       </div>
 
       <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+        <label for="emailRegister" class="block text-sm font-medium text-gray-700 mb-2">
           Correo Electrónico
         </label>
 
         <input
-          id="email"
+          id="emailRegister"
+          autocomplete="off"
           v-model="formRegister.email"
           placeholder="Correo Electrónico"
           :class="inputClasses"
@@ -133,23 +134,25 @@ const inputClasses =
       </div>
 
       <div>
-        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+        <label for="passwordRegister" class="block text-sm font-medium text-gray-700 mb-2">
           Contraseña
         </label>
 
         <input
           type="password"
-          id="password"
+          id="passwordRegister"
+          autocomplete="off"
           v-model="formRegister.password"
           placeholder="Contraseña"
           :class="inputClasses"
         />
+
         <div v-if="errors.password" class="text-red-500 text-sm mt-1">
           {{ errors.password }}
         </div>
       </div>
 
-      <div>
+      <div class="relative">
         <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">
           Confirmar Contraseña
         </label>
@@ -161,6 +164,15 @@ const inputClasses =
           placeholder="Confirmar Contraseña"
           :class="inputClasses"
         />
+
+        <div
+          class="absolute right-2 top-8 cursor-pointer rounded-lg bg-white p-2"
+          @click="showPassword = !showPassword"
+        >
+          <i v-if="showPassword" class="pi pi-eye" style="color: slateblue" />
+          <i v-else class="pi pi-eye-slash" style="color: slateblue; font-size: 1rem" />
+        </div>
+
         <div v-if="errors.confirmPassword" class="text-red-500 text-sm mt-1">
           {{ errors.confirmPassword }}
         </div>

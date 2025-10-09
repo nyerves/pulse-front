@@ -11,6 +11,7 @@ const toast = useToast()
 
 const email = ref('')
 const password = ref('')
+const showPassword = ref(false)
 const isLoading = ref(false)
 const errors = ref({
   email: '',
@@ -23,9 +24,6 @@ const validateForm = () => {
   if (!email.value) {
     errors.value.email = 'El email es requerido'
   }
-  // else if (!/\S+@\S+\.\S+/.test(email.value)) {
-  //   errors.value.email = 'El email no es válido'
-  // }
 
   if (!password.value) {
     errors.value.password = 'La contraseña es requerida'
@@ -95,17 +93,27 @@ const handleLogin = async () => {
         <div v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</div>
       </div>
 
-      <div>
+      <div class="relative">
         <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
           Contraseña
         </label>
+
         <input
-          type="password"
           id="password"
           v-model="password"
           placeholder="Contraseña"
+          :type="showPassword ? 'text' : 'password'"
           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
         />
+
+        <div
+          class="absolute right-2 top-8 cursor-pointer rounded-lg bg-white p-2"
+          @click="showPassword = !showPassword"
+        >
+          <i v-if="showPassword" class="pi pi-eye" style="color: slateblue" />
+          <i v-else class="pi pi-eye-slash" style="color: slateblue; font-size: 1rem" />
+        </div>
+
         <div v-if="errors.password" class="text-red-500 text-sm mt-1">
           {{ errors.password }}
         </div>

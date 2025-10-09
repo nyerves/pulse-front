@@ -26,12 +26,15 @@ export const AuthService = {
   },
   async Register({ name = "", username = "", email = "", password = "" }) {
     try {
-      const res = await axios.post<AuthResponse>(path + "/Auth/register", {
+      const data = {
         name,
         username,
         email,
         password,
-      });
+        roleId: 1,
+      };
+
+      const res = await axios.post<AuthResponse>(path + "/User", data);
 
       localStorage.setItem(StorageKeys.USER_AUTH, JSON.stringify(res.data));
     } catch (error) {
