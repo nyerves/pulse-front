@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { Permission, Role } from '@common/models'
 import { useConfirm } from 'primevue'
+import type { Permission, Role } from '@common/models'
 
 const emit = defineEmits(['edit', 'delete'])
 const props = defineProps<{
@@ -14,8 +14,10 @@ const confirm = useConfirm()
 const permissionsSelected = computed(() => {
   const { role, permissions } = props
 
-  const permissionsInRole = role.permissions.map((x) => x.permissionId)
-  return permissions.filter((x) => permissionsInRole.includes(x.id))
+  return role.permissions.map((x) => ({
+    name: permissions.find((p) => p.id === x.permissionId)?.name || '',
+    actions: x.actionIds.length,
+  }))
 })
 
 function showConfirm() {
@@ -59,14 +61,18 @@ function showConfirm() {
       <Button icon="pi pi-trash" variant="text" rounded severity="danger" @click="showConfirm" />
     </div>
 
-    <template v-for="(permission, _index) in permissionsSelected" :key="_index">
-      <Tag rounded>
-        <template #default>
-          {{ permission.name }}
+    <div class="flex flex-wrap gap-2 overflow-y-auto h-[60%]">
+      <template v-for="(permission, _index) in permissionsSelected" :key="_index">
+        <div>
+          <Tag rounded>
+            <template #default>
+              {{ permission.name }}
 
-          <Badge :value="4" size="small" class="ml-1" />
-        </template>
-      </Tag>
-    </template>
+              <Badge :value="permission.actions" size="small" class="ml-1" />
+            </template>
+          </Tag>
+        </div>
+      </template>
+    </div>
   </div>
 </template>

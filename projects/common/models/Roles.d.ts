@@ -5,14 +5,14 @@ export interface Role {
 }
 
 export interface RolePermission {
-  permissionId: string;
-  parentId: string;
+  permissionId: number;
+  parentId: number;
   actionIds: number[];
 }
 
 export interface Permission {
-  id: string;
-  parentPermissionId: string | null;
+  id: number;
+  parentPermissionId: number | null;
   name: string;
 }
 

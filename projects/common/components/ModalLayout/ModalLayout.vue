@@ -3,6 +3,8 @@ defineEmits(["close", "save"]);
 const props = defineProps<{
   title?: string;
   width?: string;
+  loading?: boolean;
+  saveDisabled?: boolean;
 }>();
 </script>
 
@@ -19,16 +21,24 @@ const props = defineProps<{
       <slot></slot>
     </div>
 
-    <div class="flex gap-2 dialog-footer">
-      <Button type="button" label="Cancel" severity="secondary" @click="$emit('close')"></Button>
-      <Button type="button" label="Save" @click="$emit('save')"></Button>
+    <div class="dialog-footer">
+      <Button type="button" label="Cancel" severity="secondary" @click="$emit('close')" />
+      <Button
+        type="button"
+        label="Save"
+        @click="$emit('save')"
+        :loading="props.loading"
+        :disabled="props.saveDisabled"
+      />
     </div>
   </Dialog>
 </template>
 
 <style scoped>
 .dialog-footer {
+  display: flex;
   justify-content: flex-end;
+  gap: 0.5rem;
   margin-top: 0.5rem;
   border-top: 1px solid #eee;
   padding-top: 0.5rem;

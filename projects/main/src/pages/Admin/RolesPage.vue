@@ -11,12 +11,7 @@ const roleSelected = ref<Role>()
 const permissions = ref<Permission[]>([])
 const actions = ref<PermissionAction[]>([])
 
-function handleEdit(role: Role) {
-  showCreateRoleModal.value = true
-  roleSelected.value = role
-}
-
-onMounted(async () => {
+async function fetchRoles() {
   try {
     isLoading.value = true
 
@@ -29,18 +24,28 @@ onMounted(async () => {
   } finally {
     isLoading.value = false
   }
-})
+}
+function handleEdit(role: Role) {
+  showCreateRoleModal.value = true
+  roleSelected.value = role
+}
+function closeModal() {
+  showCreateRoleModal.value = false
+  roleSelected.value = undefined
+}
+
+onMounted(() => fetchRoles())
 </script>
 
 <template>
-  <div>
+  <div class="px-20">
     <RolesFormModal
       v-if="showCreateRoleModal"
       :actions="actions"
       :permissions="permissions"
       :roleSelected="roleSelected"
-      @close="showCreateRoleModal = false"
-      @save="showCreateRoleModal = false"
+      @saved="fetchRoles"
+      @close="closeModal"
     />
 
     <div class="flex items-start justify-between mb-8">
@@ -64,7 +69,13 @@ onMounted(async () => {
       </IconField>
     </div>
 
-    <div class="grid grid-cols-3 gap-6">
+    <template v-if="isLoading">
+      <div class="flex justify-center items-center h-[30dvh]">
+        <ProgressSpinner />
+      </div>
+    </template>
+
+    <div v-else class="grid grid-cols-3 gap-6">
       <template v-for="role in roles" :key="role.id">
         <RoleCard :role="role" :permissions="permissions" @edit="handleEdit(role)" />
       </template>

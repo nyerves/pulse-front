@@ -25,8 +25,14 @@ export const AuthService = {
       throw error;
     }
   },
-  async Logout() {
-    localStorage.removeItem(StorageKeys.USER_AUTH);
+  Logout(redirectToLogin = true) {
+    Object.values(StorageKeys).forEach((key) => {
+      localStorage.removeItem(key);
+    });
+
+    if (redirectToLogin) {
+      window.dispatchEvent(new CustomEvent("logout"));
+    }
   },
   async RefreshToken() {
     const userAuth = this.GetUserAuth();

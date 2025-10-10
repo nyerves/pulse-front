@@ -16,7 +16,7 @@ interface Props {
 
 export const ApiService = {
   async makeRequest<T>({ method, url = "", module, data = {}, params }: Props) {
-    if (!this.validLastRequest()) throw "expired token";
+    // if (!this.validLastRequest()) throw "expired token";
 
     const token = AuthService.GetToken();
     const baseURL = import.meta.env.VITE_FULL_API;

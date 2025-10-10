@@ -1,13 +1,27 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { Permission, PermissionAction } from '@common/models'
+import { computed, ref } from 'vue'
+import type { Permission, PermissionAction, RolePermission } from '@common/models'
 
+const rolePermission = defineModel<RolePermission>()
 const props = defineProps<{
   permission: Permission
   actions: PermissionAction[]
 }>()
 
 const showActions = ref(false)
+
+const actionsSelected = computed({
+  get() {
+    return rolePermission.value?.actionIds || []
+  },
+  set(value: number[]) {
+    rolePermission.value = {
+      permissionId: props.permission.id,
+      parentId: 0,
+      actionIds: value,
+    }
+  },
+})
 </script>
 
 <template>
@@ -18,7 +32,9 @@ const showActions = ref(false)
     >
       <div class="flex flex-col">
         <h6 class="font-medium !mb-1">{{ permission.name }}</h6>
-        <p class="text-sm text-gray-500">0 de {{ props.actions.length }} acciones asignadas</p>
+        <p class="text-sm text-gray-500">
+          {{ actionsSelected.length }} de {{ props.actions.length }} acciones asignadas
+        </p>
       </div>
 
       <i class="pi" :class="showActions ? 'pi-angle-up' : 'pi-angle-down'" />
@@ -28,7 +44,12 @@ const showActions = ref(false)
       <div v-if="showActions" class="flex flex-col gap-3 mt-4 px-4">
         <template v-for="action in props.actions" :key="action.id">
           <div>
-            <Checkbox :id="`${permission.id}-action-${action.id}`" :value="action.id" />
+            <Checkbox
+              v-model="actionsSelected"
+              :value="action.id"
+              :inputId="`${permission.id}-action-${action.id}`"
+            />
+
             <label :for="`${permission.id}-action-${action.id}`" class="ml-2">
               {{ action.name }}
             </label>

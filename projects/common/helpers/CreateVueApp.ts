@@ -30,9 +30,7 @@ export const CreateVueApp = async ({ htmlId, component, router, plugins = [] }: 
 
   window.addEventListener(
     "logout",
-    Debounce(() => {
-      router?.push("/login");
-    })
+    Debounce(() => router?.push("/login"))
   );
 
   app.use(router);
