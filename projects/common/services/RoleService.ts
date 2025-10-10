@@ -1,4 +1,4 @@
-import { Role } from "@common/models";
+import type { Role } from "@common/models";
 import { ApiService } from "./ApiService";
 
 const module = "Role";

@@ -1,4 +1,4 @@
-import { PermissionAction } from "@common/models";
+import type { PermissionAction } from "@common/models";
 import { ApiService } from "./ApiService";
 
 const module = "Action";

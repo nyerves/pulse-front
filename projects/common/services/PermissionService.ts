@@ -1,4 +1,4 @@
-import { Permission } from "@common/models";
+import type { Permission } from "@common/models";
 import { ApiService } from "./ApiService";
 
 const module = "Permission";

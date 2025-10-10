@@ -3,7 +3,7 @@ import type { AxiosInstance } from "axios";
 import { StorageKeys } from "@common/utils/StorageKeys";
 import { AuthService } from "@common/services/AuthService";
 import { Debounce, WithParams } from "@common/helpers";
-import { ApiResponse } from "@common/models";
+import type { ApiResponse } from "@common/models";
 
 interface Props {
   method: "GET" | "POST" | "PUT" | "DELETE";

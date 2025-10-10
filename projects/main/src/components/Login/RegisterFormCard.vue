@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue'
-import { AuthService } from '@common/services'
 
 defineEmits(['showLogin'])
 
@@ -76,7 +75,7 @@ const handleRegister = async () => {
   isLoading.value = true
 
   try {
-    await AuthService.Register(formRegister.value)
+    // await AuthService.Register(formRegister.value)
     router.push('/dashboard')
   } catch (error) {
     console.error('Login error:', error)
