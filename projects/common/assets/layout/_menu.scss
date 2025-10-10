@@ -89,6 +89,7 @@
 
       &.active-route {
         font-weight: 600;
+        color: var(--primary-contrast-color);
         background-color: var(--primary-color);
       }
 

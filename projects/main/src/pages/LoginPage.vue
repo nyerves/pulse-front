@@ -16,7 +16,6 @@ const bgStyle = {
     :style="bgStyle"
     class="min-h-screen flex items-center justify-center p-6 bg-cover bg-center"
   >
-    <Toast />
     <LoginFormCard />
   </div>
 </template>
