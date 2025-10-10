@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Badge: typeof import('primevue/badge')['default']
     Button: typeof import('primevue/button')['default']
     Checkbox: typeof import('primevue/checkbox')['default']
     Dialog: typeof import('primevue/dialog')['default']
@@ -16,9 +17,11 @@ declare module 'vue' {
     LogoAnimated: typeof import('./src/components/Login/LogoAnimated.vue')['default']
     Menu: typeof import('primevue/menu')['default']
     RegisterFormCard: typeof import('./src/components/Login/RegisterFormCard.vue')['default']
+    RoleCard: typeof import('./src/components/Roles/RoleCard.vue')['default']
     RolesFormModal: typeof import('./src/components/Roles/RolesFormModal.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Tag: typeof import('primevue/tag')['default']
     Toast: typeof import('primevue/toast')['default']
   }
 }

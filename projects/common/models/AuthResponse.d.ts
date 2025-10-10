@@ -17,3 +17,9 @@ export interface Data {
   createdAt: string;
   isActive: boolean;
 }
+
+export type ApiResponse<T> = {
+  status: boolean;
+  message: string;
+  data: T;
+};

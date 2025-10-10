@@ -1,16 +1,28 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { RolesFormModal } from '@/components'
-import { RoleService } from '@common/services'
+import { RoleCard, RolesFormModal } from '@/components'
+import { ActionService, PermissionService, RoleService } from '@common/services'
+import type { Permission, PermissionAction, Role } from '@common/models'
 
 const showCreateRoleModal = ref(false)
+const isLoading = ref(false)
+const roles = ref<Role[]>([])
+const permissions = ref<Permission[]>([])
+const actions = ref<PermissionAction[]>([])
 
 onMounted(async () => {
-  const res = await RoleService.Get({
-    with: ['RolePermissionActions.Permission'],
-  })
+  try {
+    isLoading.value = true
 
-  console.log(res)
+    roles.value = await RoleService.Get({
+      with: ['RolePermissionActions.Permission'],
+    })
+
+    permissions.value = await PermissionService.Get()
+    actions.value = await ActionService.Get()
+  } finally {
+    isLoading.value = false
+  }
 })
 </script>
 
@@ -34,6 +46,12 @@ onMounted(async () => {
         class="bg-teal-600 hover:bg-teal-700 text-white"
         @click="showCreateRoleModal = true"
       />
+    </div>
+
+    <div class="grid grid-cols-3 gap-6">
+      <template v-for="role in roles" :key="role.id">
+        <RoleCard :role :permissions />
+      </template>
     </div>
   </div>
 </template>

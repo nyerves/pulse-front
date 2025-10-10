@@ -3,6 +3,7 @@ import type { AxiosInstance } from "axios";
 import { StorageKeys } from "@common/utils/StorageKeys";
 import { AuthService } from "@common/services/AuthService";
 import { Debounce, WithParams } from "@common/helpers";
+import { ApiResponse } from "@common/models";
 
 interface Props {
   method: "GET" | "POST" | "PUT" | "DELETE";
@@ -37,8 +38,8 @@ export const ApiService = {
     this.interceptor(instance);
 
     try {
-      const res = await instance<T>(config);
-      return res?.data;
+      const res = await instance<ApiResponse<T>>(config);
+      return res?.data?.data;
     } catch (error) {
       throw error;
     }
