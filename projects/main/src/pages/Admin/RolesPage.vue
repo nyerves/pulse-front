@@ -77,7 +77,12 @@ onMounted(() => fetchRoles())
 
     <div v-else class="grid grid-cols-3 gap-6">
       <template v-for="role in roles" :key="role.id">
-        <RoleCard :role="role" :permissions="permissions" @edit="handleEdit(role)" />
+        <RoleCard
+          :role="role"
+          :permissions="permissions"
+          @delete="fetchRoles"
+          @edit="handleEdit(role)"
+        />
       </template>
     </div>
   </div>

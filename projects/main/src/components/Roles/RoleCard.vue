@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { useConfirm } from 'primevue'
+import { computed, ref } from 'vue'
 import type { Permission, Role } from '@common/models'
+import { ConfirmationModal } from '@common/components'
+import { RoleService } from '@common/services'
 
 const emit = defineEmits(['edit', 'delete'])
 const props = defineProps<{
@@ -9,7 +10,8 @@ const props = defineProps<{
   permissions: Permission[]
 }>()
 
-const confirm = useConfirm()
+const showConfirm = ref(false)
+const isDeleting = ref(false)
 
 const permissionsSelected = computed(() => {
   const { role, permissions } = props
@@ -20,30 +22,28 @@ const permissionsSelected = computed(() => {
   }))
 })
 
-function showConfirm() {
-  confirm.require({
-    message: 'Seguro que desea eliminar este rol?',
-    header: 'Confirmación',
-    icon: 'pi pi-info-circle',
-    rejectLabel: 'Cancelar',
-    rejectProps: {
-      label: 'Cancelar',
-      severity: 'secondary',
-      outlined: true,
-    },
-    acceptProps: {
-      label: 'Eliminar',
-      severity: 'danger',
-    },
-    accept: () => {
-      emit('delete', props.role)
-    },
-  })
+async function onDelete() {
+  try {
+    isDeleting.value = true
+
+    await RoleService.Delete(props.role.id)
+
+    emit('delete')
+    showConfirm.value = false
+  } finally {
+    isDeleting.value = false
+  }
 }
 </script>
 
 <template>
-  <ConfirmDialog />
+  <ConfirmationModal
+    v-if="showConfirm"
+    :loading="isDeleting"
+    :name="props.role.name"
+    @close="showConfirm = false"
+    @confirm="onDelete"
+  />
 
   <div class="card h-48 !p-5 shadow-sm">
     <div class="flex items-center mb-4 w-full">
@@ -58,7 +58,13 @@ function showConfirm() {
         severity="contrast"
         @click="$emit('edit')"
       />
-      <Button icon="pi pi-trash" variant="text" rounded severity="danger" @click="showConfirm" />
+      <Button
+        icon="pi pi-trash"
+        variant="text"
+        rounded
+        severity="danger"
+        @click="showConfirm = true"
+      />
     </div>
 
     <div class="flex flex-wrap gap-2 overflow-y-auto h-[60%]">
