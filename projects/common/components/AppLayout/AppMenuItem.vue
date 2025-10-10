@@ -5,7 +5,7 @@ import { useLayout } from "@common/composables";
 import type { AppMenuItem } from "@common/models";
 
 const route = useRoute();
-const { layoutState, setActiveMenuItem, toggleMenu } = useLayout();
+const { layoutState, setActiveMenuItem, toggleMenu, isSidebarActive } = useLayout();
 
 const props = defineProps({
   item: {
@@ -83,7 +83,7 @@ onBeforeMount(() => {
 <template>
   <li :class="{ 'layout-root-menuitem': root, 'active-menuitem': isActiveMenu }">
     <div v-if="root && item.visible !== false" class="layout-menuitem-root-text">
-      {{ item.label }}
+      {{ isSidebarActive ? item.label : "" }}
     </div>
 
     <a
@@ -108,7 +108,7 @@ onBeforeMount(() => {
     >
       <i :class="item.icon" class="layout-menuitem-icon"></i>
 
-      <span class="layout-menuitem-text">{{ item.label }}</span>
+      <span v-if="isSidebarActive" class="layout-menuitem-text">{{ item.label }}</span>
 
       <i class="pi pi-fw pi-angle-down layout-submenu-toggler" v-if="item.items" />
     </RouterLink>
@@ -127,5 +127,3 @@ onBeforeMount(() => {
     </Transition>
   </li>
 </template>
-
-<style lang="scss" scoped></style>

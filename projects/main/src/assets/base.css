@@ -34,10 +34,14 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
+
+  --menu-active-bg: rgba(120, 159, 134, 0.767);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --menu-active-bg: rgba(143, 159, 149, 0.767);
+
     --color-background: var(--vt-c-black);
     --color-background-soft: var(--vt-c-black-soft);
     --color-background-mute: var(--vt-c-black-mute);

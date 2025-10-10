@@ -5,7 +5,7 @@ const layoutConfig = reactive({
   primary: "emerald",
   surface: null as string | null,
   darkTheme: true,
-  menuMode: "static",
+  menuMode: "static" as "static" | "overlay" | "slim",
 });
 
 const layoutState = reactive({
@@ -39,9 +39,7 @@ export function useLayout() {
   };
 
   const toggleMenu = () => {
-    if (layoutConfig.menuMode === "overlay") {
-      layoutState.overlayMenuActive = !layoutState.overlayMenuActive;
-    }
+    layoutState.overlayMenuActive = !layoutState.overlayMenuActive;
 
     if (window.innerWidth > 991) {
       layoutState.staticMenuDesktopInactive = !layoutState.staticMenuDesktopInactive;
@@ -50,9 +48,9 @@ export function useLayout() {
     }
   };
 
-  const isSidebarActive = computed(
-    () => layoutState.overlayMenuActive || layoutState.staticMenuMobileActive
-  );
+  const isSidebarActive = computed(() => {
+    return layoutState.overlayMenuActive || layoutState.staticMenuMobileActive;
+  });
 
   const isDarkTheme = computed(() => layoutConfig.darkTheme);
 

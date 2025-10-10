@@ -38,7 +38,7 @@ onMounted(() => fetchRoles())
 </script>
 
 <template>
-  <div class="px-20">
+  <div>
     <RolesFormModal
       v-if="showCreateRoleModal"
       :actions="actions"

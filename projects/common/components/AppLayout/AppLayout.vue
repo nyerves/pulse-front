@@ -1,23 +1,12 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { useLayout } from "@common/composables";
 import AppSidebar from "./AppSidebar.vue";
 import AppTopbar from "./AppTopbar.vue";
 
-const { layoutConfig, layoutState, isSidebarActive } = useLayout();
+const { layoutState, isSidebarActive } = useLayout();
 
 const outsideClickListener = ref<((event: MouseEvent) => void) | null>(null);
-
-const containerClass = computed(() => {
-  return {
-    "layout-overlay": layoutConfig.menuMode === "overlay",
-    "layout-static": layoutConfig.menuMode === "static",
-    "layout-static-inactive":
-      layoutState.staticMenuDesktopInactive && layoutConfig.menuMode === "static",
-    "layout-overlay-active": layoutState.overlayMenuActive,
-    "layout-mobile-active": layoutState.staticMenuMobileActive,
-  };
-});
 
 function bindOutsideClickListener() {
   if (!outsideClickListener.value) {
@@ -63,17 +52,34 @@ watch(isSidebarActive, (newVal) => {
 <template>
   <Toast />
 
-  <div class="layout-wrapper" :class="containerClass">
-    <AppTopbar></AppTopbar>
+  <div class="new-layout-container">
+    <AppSidebar />
 
-    <AppSidebar></AppSidebar>
+    <div class="layout-wrapper flex-1">
+      <AppTopbar />
 
-    <div class="layout-main-container">
-      <div class="layout-main">
-        <RouterView />
+      <div class="layout-main-container">
+        <div class="layout-main">
+          <RouterView />
+        </div>
       </div>
-    </div>
 
-    <div class="layout-mask animate-fadein"></div>
+      <div class="layout-mask animate-fadein"></div>
+    </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.new-layout-container {
+  display: flex;
+  position: relative;
+  min-height: 100vh;
+}
+
+.layout-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+</style>

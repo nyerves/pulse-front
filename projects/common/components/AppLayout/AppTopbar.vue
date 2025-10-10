@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useLayout } from "@common/composables";
 import { AuthService } from "@common/services";
-import LogoBlack from "@common/assets/svg/pulse-logo-black.svg";
-import LogoWhite from "@common/assets/svg/pulse-logo.svg";
 
-const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
+const { toggleDarkMode, isDarkTheme } = useLayout();
 
 const user = AuthService.GetUserAuth();
 const menu = ref();
@@ -30,20 +28,21 @@ const items = ref([
   },
 ]);
 
+const avatarName = computed(() => {
+  if (user?.data?.name) {
+    return user.data.name
+      .split(" ")
+      .map((n: string) => n[0])
+      .join("");
+  }
+  return "U";
+});
 const toggle = (event: MouseEvent) => menu.value.toggle(event);
 </script>
 
 <template>
   <div class="layout-topbar">
-    <div class="layout-topbar-logo-container">
-      <button class="layout-menu-button layout-topbar-action" @click="toggleMenu">
-        <i class="pi pi-bars"></i>
-      </button>
-
-      <div class="layout-topbar-logo">
-        <img :src="!isDarkTheme ? LogoWhite : LogoBlack" alt="Logo" class="w-10" />
-      </div>
-    </div>
+    <div class="layout-topbar-logo-container"></div>
 
     <div class="layout-topbar-actions">
       <div class="layout-config-menu">
@@ -51,12 +50,8 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
           <i :class="['pi', isDarkTheme ? 'pi-sun' : 'pi-moon']" />
         </button>
 
-        <div
-          class="flex gap-3 hover:bg-gradient-to-bl p-1"
-          aria-controls="overlay_menu"
-          @click="toggle"
-        >
-          <Button rounded icon="pi pi-user" />
+        <div class="flex gap-3 menu-button" aria-controls="overlay_menu" @click="toggle">
+          <Avatar :label="avatarName" shape="circle" size="normal" />
           <Menu ref="menu" id="overlay_menu" :model="items" popup />
 
           <div class="flex flex-col ml-2">
@@ -68,3 +63,15 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.menu-button {
+  cursor: pointer;
+  padding: 0.5rem;
+
+  &:hover {
+    border-radius: 0.25rem;
+    background-color: var(--surface-hover);
+  }
+}
+</style>
