@@ -7,6 +7,7 @@ import { Debounce } from "./Debounce";
 import PrimeVue from "primevue/config";
 import Aura from "@primeuix/themes/aura";
 import ToastService from "primevue/toastservice";
+import ConfirmationService from "primevue/confirmationservice";
 
 import "primeicons/primeicons.css";
 import "@common/assets/base.scss";
@@ -47,6 +48,7 @@ export const CreateVueApp = async ({ htmlId, component, router, plugins = [] }: 
     },
   });
   app.use(ToastService);
+  app.use(ConfirmationService);
 
   app.mount(htmlId);
 };

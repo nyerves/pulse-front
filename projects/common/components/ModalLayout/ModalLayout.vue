@@ -19,9 +19,18 @@ const props = defineProps<{
       <slot></slot>
     </div>
 
-    <div class="flex gap-2" style="justify-content: flex-end">
+    <div class="flex gap-2 dialog-footer">
       <Button type="button" label="Cancel" severity="secondary" @click="$emit('close')"></Button>
       <Button type="button" label="Save" @click="$emit('save')"></Button>
     </div>
   </Dialog>
 </template>
+
+<style scoped>
+.dialog-footer {
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  border-top: 1px solid #eee;
+  padding-top: 0.5rem;
+}
+</style>
