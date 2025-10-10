@@ -32,7 +32,7 @@ const primaryColors = ref([
       200: "#a7f3d0",
       300: "#6ee7b7",
       400: "#34d399",
-      500: "#10b981",
+      500: "#10b984",
       600: "#059669",
       700: "#047857",
       800: "#065f46",
@@ -422,7 +422,9 @@ const surfaces = ref([
 ]);
 
 function getPresetExt() {
-  const color = primaryColors.value.find((c) => c.name === layoutConfig.primary);
+  const color = primaryColors.value.find(
+    (c) => c.name === layoutConfig.primary
+  );
 
   if (color?.name === "noir") {
     return {
@@ -500,7 +502,8 @@ function getPresetExt() {
             },
             highlight: {
               background: "color-mix(in srgb, {primary.400}, transparent 84%)",
-              focusBackground: "color-mix(in srgb, {primary.400}, transparent 76%)",
+              focusBackground:
+                "color-mix(in srgb, {primary.400}, transparent 76%)",
               color: "rgba(255,255,255,.87)",
               focusColor: "rgba(255,255,255,.87)",
             },
@@ -532,7 +535,9 @@ function applyTheme(type: string, color: (typeof primaryColors.value)[0]) {
 function onPresetChange() {
   layoutConfig.preset = preset.value;
   const presetValue = presets[preset.value as keyof typeof presets];
-  const surfacePalette = surfaces.value.find((s) => s.name === layoutConfig.surface)?.palette;
+  const surfacePalette = surfaces.value.find(
+    (s) => s.name === layoutConfig.surface
+  )?.palette;
 
   $t()
     .preset(presetValue)

@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue'
 import { AuthService } from '@common/services'
+import LogoApp from '@common/assets/png/logo_verde.png'
 
 defineEmits(['showRegister'])
 
@@ -74,75 +75,59 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="bg-white rounded-3xl shadow-xl p-10 md:p-12">
-    <h1 class="text-3xl font-bold !text-gray-700">INICIO DE SESIÓN</h1>
-    <p class="text-gray-600">Llene los campos para iniciar sesión</p>
+  <div
+    class="bg-white max-w-[450px] w-full p-8 rounded-xl shadow-lg flex flex-col items-center gap-4 login-form-card"
+  >
+    <img :src="LogoApp" alt="Logo Pulse" class="w-[120px] h-auto" />
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 text-center">Bienvenido a Pulse</h1>
+    <p class="text-sm text-gray-500 text-center">
+      Ingrese sus credenciales para acceder al sistema de gobernanza de salud.
+    </p>
 
-    <form @submit.prevent="handleLogin" class="space-y-6 pb-4">
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-          Correo Electrónico
-        </label>
+    <form @submit.prevent="handleLogin" class="w-full mt-4 flex flex-col gap-4">
+      <div class="relative w-full">
+        <label for="email" class="sr-only">Correo Electrónico</label>
         <input
           id="email"
           v-model="email"
           placeholder="Correo Electrónico"
-          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
+          class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-200"
         />
 
         <div v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</div>
       </div>
 
-      <div class="relative">
-        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-          Contraseña
-        </label>
+      <div class="relative w-full">
+        <label for="password" class="sr-only">Contraseña</label>
 
         <input
           id="password"
           v-model="password"
           placeholder="Contraseña"
           :type="showPassword ? 'text' : 'password'"
-          class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none transition"
+          class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-200 pr-10"
         />
 
         <div
-          class="absolute right-2 top-8 cursor-pointer rounded-lg bg-white p-2"
+          class="absolute right-3 top-3 text-gray-500 cursor-pointer"
           @click="showPassword = !showPassword"
+          aria-hidden
         >
-          <i v-if="showPassword" class="pi pi-eye" style="color: slateblue" />
-          <i v-else class="pi pi-eye-slash" style="color: slateblue; font-size: 1rem" />
+          <i v-if="showPassword" class="pi pi-eye" />
+          <i v-else class="pi pi-eye-slash" />
         </div>
 
-        <div v-if="errors.password" class="text-red-500 text-sm mt-1">
-          {{ errors.password }}
-        </div>
+        <div v-if="errors.password" class="text-red-500 text-sm mt-1">{{ errors.password }}</div>
       </div>
 
       <Button
         type="submit"
-        label="Iniciar sesión"
-        class="w-full bg-teal-900 !text-white py-3 rounded-lg font-medium hover:bg-teal-700 transition-colors shadow-md"
+        label="Iniciar Sesión"
+        class="w-full bg-[#0C9488] hover:bg-[#0C9488] text-white font-medium py-3 rounded-md"
         :loading="isLoading"
       />
     </form>
 
-    <div class="mt-8 text-center flex gap-3">
-      <button
-        v-if="false"
-        class="text-gray-700 hover:text-teal-600 transition-colors font-medium cursor-pointer"
-        @click="$emit('showRegister')"
-      >
-        Regístrate
-      </button>
-
-      <div class="text-gray-400">|</div>
-
-      <button
-        class="text-gray-700 hover:text-teal-600 transition-colors font-medium cursor-pointer"
-      >
-        Recuperar contraseña
-      </button>
-    </div>
+    <a href="#" class="text-sm text-gray-600 mt-3">¿Olvidó su contraseña?</a>
   </div>
 </template>

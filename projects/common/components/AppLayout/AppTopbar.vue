@@ -75,7 +75,7 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
           <Button rounded icon="pi pi-user" />
           <Menu ref="menu" id="overlay_menu" :model="items" popup />
 
-          <div v-if="false" class="flex flex-col ml-2">
+          <div class="flex flex-col ml-2">
             <span class="font-bold">{{ user?.data?.name }}</span>
             <span class="text-sm">{{ user?.data?.email }}</span>
           </div>
