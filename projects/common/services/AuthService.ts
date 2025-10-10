@@ -5,6 +5,14 @@ import { StorageKeys } from "@common/utils/StorageKeys";
 const path = import.meta.env.VITE_FULL_API;
 
 export const AuthService = {
+  GetUserAuth() {
+    const user = localStorage.getItem(StorageKeys.USER_AUTH);
+    return user ? (JSON.parse(user) as AuthResponse) : null;
+  },
+  GetToken() {
+    const user = this.GetUserAuth();
+    return user?.accessToken ?? "";
+  },
   async Login(username: string, password: string) {
     try {
       const res = await axios.post<AuthResponse>(path + "/Auth/login", {
@@ -17,26 +25,28 @@ export const AuthService = {
       throw error;
     }
   },
-  GetUserAuth() {
-    const user = localStorage.getItem(StorageKeys.USER_AUTH);
-    return user ? (JSON.parse(user) as AuthResponse) : null;
-  },
   async Logout() {
     localStorage.removeItem(StorageKeys.USER_AUTH);
   },
-  async Register({ name = "", username = "", email = "", password = "" }) {
+  async RefreshToken() {
+    const userAuth = this.GetUserAuth();
+    const url = path + "/Auth/Refresh";
+
     try {
-      const data = {
-        name,
-        username,
-        email,
-        password,
-        roleId: 1,
+      const { data } = await axios.post<any>(url, {
+        expiredToken: userAuth?.accessToken,
+        refreshToken: userAuth?.refreshToken,
+      });
+
+      const newUser = {
+        ...userAuth,
+        accessTokenExpiresAt: data.accessTokenExpiresAt,
+        refreshToken: data.refreshToken,
       };
 
-      const res = await axios.post<AuthResponse>(path + "/User", data);
+      localStorage.setItem(StorageKeys.USER_AUTH, JSON.stringify(newUser));
 
-      localStorage.setItem(StorageKeys.USER_AUTH, JSON.stringify(res.data));
+      return data.accessToken;
     } catch (error) {
       throw error;
     }

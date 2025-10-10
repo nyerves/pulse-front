@@ -1,8 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { RolesFormModal } from '@/components'
+import { RoleService } from '@common/services'
 
 const showCreateRoleModal = ref(false)
+
+onMounted(async () => {
+  const res = await RoleService.Get({
+    with: ['RolePermissionActions.Permission'],
+  })
+
+  console.log(res)
+})
 </script>
 
 <template>

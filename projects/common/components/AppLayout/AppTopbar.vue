@@ -41,30 +41,41 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
 <template>
   <div class="layout-topbar">
     <div class="layout-topbar-logo-container">
-      <button class="layout-menu-button layout-topbar-action" @click="toggleMenu">
+      <button
+        class="layout-menu-button layout-topbar-action"
+        @click="toggleMenu"
+      >
         <i class="pi pi-bars"></i>
       </button>
 
       <div class="layout-topbar-logo">
-        <img :src="!isDarkTheme ? LogoWhite : LogoBlack" alt="Logo" class="w-10" />
+        <img
+          :src="!isDarkTheme ? LogoWhite : LogoBlack"
+          alt="Logo"
+          class="w-10"
+        />
       </div>
     </div>
 
     <div class="layout-topbar-actions">
       <div class="layout-config-menu">
-        <button type="button" class="layout-topbar-action" @click="toggleDarkMode">
+        <button
+          type="button"
+          class="layout-topbar-action"
+          @click="toggleDarkMode"
+        >
           <i :class="['pi', isDarkTheme ? 'pi-sun' : 'pi-moon']" />
         </button>
 
         <div
-          class="flex gap-3 hover:bg-gradient-to-bl"
+          class="flex gap-3 hover:bg-gradient-to-bl p-1"
           aria-controls="overlay_menu"
           @click="toggle"
         >
           <Button rounded icon="pi pi-user" />
           <Menu ref="menu" id="overlay_menu" :model="items" popup />
 
-          <div class="flex flex-col ml-2">
+          <div v-if="false" class="flex flex-col ml-2">
             <span class="font-bold">{{ user?.data?.name }}</span>
             <span class="text-sm">{{ user?.data?.email }}</span>
           </div>
