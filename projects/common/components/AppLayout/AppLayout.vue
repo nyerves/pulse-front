@@ -17,7 +17,7 @@ function bindOutsideClickListener() {
         layoutState.menuHoverActive = false;
       }
     };
-    document.addEventListener("click", outsideClickListener.value);
+    // document.addEventListener("click", outsideClickListener.value);
   }
 }
 function unbindOutsideClickListener() {

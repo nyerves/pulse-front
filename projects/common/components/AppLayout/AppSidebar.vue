@@ -75,6 +75,7 @@ const appMenuList = ref<AppMenuList[]>([
       <Button
         :icon="isSidebarActive ? 'pi pi-angle-double-left' : 'pi pi-angle-double-right'"
         class="p-button-text p-button-plain"
+        size="large"
         style="width: 100%"
         @click="toggleMenu"
       />
@@ -91,7 +92,7 @@ const appMenuList = ref<AppMenuList[]>([
   border-bottom: 1px solid var(--surface-d);
 
   img {
-    height: 4rem;
+    height: 5rem;
   }
 }
 

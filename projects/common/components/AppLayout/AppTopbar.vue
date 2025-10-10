@@ -32,9 +32,10 @@ const avatarName = computed(() => {
   if (user?.data?.name) {
     return user.data.name
       .split(" ")
-      .map((n: string) => n[0])
+      .map((n) => n[0])
       .join("");
   }
+
   return "U";
 });
 const toggle = (event: MouseEvent) => menu.value.toggle(event);
@@ -67,10 +68,12 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
 <style scoped lang="scss">
 .menu-button {
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  display: flex;
+  align-items: center;
 
   &:hover {
-    border-radius: 0.25rem;
+    border-radius: var(--content-border-radius);
     background-color: var(--surface-hover);
   }
 }
