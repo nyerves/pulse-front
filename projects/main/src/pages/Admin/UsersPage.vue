@@ -2,8 +2,14 @@
 import { ref, onMounted } from 'vue'
 import type { Role, User } from '@common/models'
 import { RoleService, UserService } from '@common/services'
+import { UsersFormModal } from '@/components'
+import { ConfirmationModal } from '@common/components'
 
 const loading = ref(false)
+const isDeleting = ref(false)
+const showConfirmationModal = ref(false)
+const showUserFormModal = ref(false)
+const userSelected = ref<User>()
 const userList = ref<User[]>([])
 const roleList = ref<Role[]>([])
 
@@ -18,9 +24,47 @@ const fetchUsers = async () => {
     loading.value = false
   }
 }
+const getAvatarLabel = (name: string) => {
+  if (name) {
+    return name
+      .split(' ')
+      .map((n) => n[0])
+      .join('')
+  }
+
+  return 'U'
+}
 const getRoleName = (roleId: number) => {
   const role = roleList.value.find((role) => role.id === roleId)
   return role?.name ?? '-'
+}
+const onSelectUser = (user?: User) => {
+  userSelected.value = user
+  showUserFormModal.value = true
+}
+const onDeleteUser = async () => {
+  if (!userSelected.value) return
+
+  try {
+    isDeleting.value = true
+    await UserService.Delete(userSelected.value.id)
+
+    closeModal()
+    fetchUsers()
+  } catch (error) {
+    console.error('Error deleting user:', error)
+  } finally {
+    isDeleting.value = false
+  }
+}
+const openConfirmationModal = (user: User) => {
+  showConfirmationModal.value = true
+  userSelected.value = user
+}
+const closeModal = () => {
+  showConfirmationModal.value = false
+  showUserFormModal.value = false
+  userSelected.value = undefined
 }
 
 onMounted(async () => {
@@ -30,6 +74,16 @@ onMounted(async () => {
 </script>
 
 <template>
+  <ConfirmationModal v-if="showConfirmationModal" @close="closeModal" @confirm="onDeleteUser" />
+
+  <UsersFormModal
+    v-if="showUserFormModal"
+    :user="userSelected"
+    :roles="roleList"
+    @close="closeModal"
+    @save="fetchUsers"
+  />
+
   <div>
     <div class="flex items-center justify-between mb-8">
       <div class="max-w-[44rem]">
@@ -40,23 +94,11 @@ onMounted(async () => {
         </p>
       </div>
 
-      <Button
-        icon="pi pi-plus"
-        label="Crear nuevo Usuario"
-        class="bg-teal-600 hover:bg-teal-700 text-white"
-      />
+      <Button icon="pi pi-plus" label="Crear nuevo Usuario" @click="onSelectUser()" />
     </div>
 
     <div class="card">
-      <DataTable
-        paginator
-        showGridlines
-        :value="userList"
-        :rows="10"
-        dataKey="id"
-        filterDisplay="menu"
-        :loading="loading"
-      >
+      <DataTable :rows="10" paginator dataKey="id" :value="userList" :loading="loading">
         <template #header>
           <div class="flex justify-between">
             <div></div>
@@ -65,7 +107,7 @@ onMounted(async () => {
               <InputIcon>
                 <i class="pi pi-search" />
               </InputIcon>
-              <InputText placeholder="Keyword Search" />
+              <InputText placeholder="Buscar usuario" />
             </IconField>
           </div>
         </template>
@@ -82,7 +124,9 @@ onMounted(async () => {
 
         <Column field="name" header="Nombre" style="min-width: 12rem">
           <template #body="{ data }">
-            {{ data.name }}
+            <Avatar :label="getAvatarLabel(data.name)" shape="circle" />
+
+            <span class="ml-2">{{ data.name }}</span>
           </template>
         </Column>
 
@@ -111,6 +155,23 @@ onMounted(async () => {
         <Column header="Role" style="min-width: 12rem">
           <template #body="{ data }">
             {{ getRoleName(data.roleId) }}
+          </template>
+        </Column>
+
+        <Column header="Acciones" style="min-width: 8rem">
+          <template #body="{ data }">
+            <Button
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-text p-button-plain"
+              @click="onSelectUser(data)"
+            />
+
+            <Button
+              v-if="data.roleId !== 1"
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-text p-button-danger"
+              @click="openConfirmationModal(data)"
+            />
           </template>
         </Column>
       </DataTable>

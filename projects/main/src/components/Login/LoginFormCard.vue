@@ -54,7 +54,7 @@ const handleLogin = async () => {
     class="bg-white max-w-[450px] w-full p-8 rounded-xl shadow-lg flex flex-col items-center gap-4 login-form-card"
   >
     <img :src="LogoApp" alt="Logo Pulse" class="w-[120px] h-auto" />
-    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 text-center">Bienvenido a Pulse</h1>
+    <h1 class="text-2xl md:text-3xl font-bold !text-gray-900 text-center">Bienvenido a Pulse</h1>
     <p class="text-sm text-gray-500 text-center">
       Ingrese sus credenciales para acceder al sistema de gobernanza de salud.
     </p>
@@ -66,7 +66,7 @@ const handleLogin = async () => {
           id="email"
           v-model="email"
           placeholder="Correo Electrónico"
-          class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-200"
+          class="w-full px-4 py-3 !bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-200"
         />
 
         <div v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</div>
@@ -80,7 +80,7 @@ const handleLogin = async () => {
           v-model="password"
           placeholder="Contraseña"
           :type="showPassword ? 'text' : 'password'"
-          class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-200 pr-10"
+          class="w-full px-4 py-3 !bg-white border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-200 pr-10"
         />
 
         <div
