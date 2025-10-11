@@ -4,7 +4,7 @@ import { ApiService } from "./ApiService";
 const module = "Role";
 
 export const RoleService = {
-  Get(params: any) {
+  Get(params?: any) {
     return ApiService.makeRequest<Role[]>({
       method: "GET",
       module,

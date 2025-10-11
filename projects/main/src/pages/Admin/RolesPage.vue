@@ -48,7 +48,7 @@ onMounted(() => fetchRoles())
       @close="closeModal"
     />
 
-    <div class="flex items-start justify-between mb-8">
+    <div class="flex items-center justify-between mb-8">
       <div>
         <h1 class="text-3xl font-bold mb-2">Gestión de Roles</h1>
         <p class="opacity-60">Configure roles y asigne permisos para el control de acceso</p>
