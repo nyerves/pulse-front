@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import type { Role, User } from '@common/models'
 import { RoleService, UserService } from '@common/services'
-import { UsersFormModal } from '@/components'
+import { UserFormModal } from '@/components'
 import { ConfirmationModal } from '@common/components'
 
 const loading = ref(false)
@@ -76,7 +76,7 @@ onMounted(async () => {
 <template>
   <ConfirmationModal v-if="showConfirmationModal" @close="closeModal" @confirm="onDeleteUser" />
 
-  <UsersFormModal
+  <UserFormModal
     v-if="showUserFormModal"
     :user="userSelected"
     :roles="roleList"
@@ -94,7 +94,7 @@ onMounted(async () => {
         </p>
       </div>
 
-      <Button icon="pi pi-plus" label="Crear nuevo Usuario" @click="onSelectUser()" />
+      <Button icon="pi pi-plus" label="Crear Usuario" @click="onSelectUser()" />
     </div>
 
     <div class="card">
@@ -107,7 +107,8 @@ onMounted(async () => {
               <InputIcon>
                 <i class="pi pi-search" />
               </InputIcon>
-              <InputText placeholder="Buscar usuario" />
+
+              <InputText placeholder="Buscar usuario" autocomplete="off" />
             </IconField>
           </div>
         </template>

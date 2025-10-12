@@ -68,7 +68,7 @@ onMounted(() => {
   <ModalLayout
     :loading="iSaving"
     :saveDisabled="!roleForm.name"
-    title="Crear Nuevo Rol"
+    title="Crear Rol"
     @close="$emit('close')"
     @save="onSubmit"
   >
