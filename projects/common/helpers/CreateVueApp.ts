@@ -3,6 +3,7 @@ import type { Plugin } from "vue";
 import type { Router } from "vue-router";
 import { createPinia } from "pinia";
 import { Debounce } from "./Debounce";
+import PulseTheme from "@common/utils/PulseTheme";
 
 import PrimeVue from "primevue/config";
 import Aura from "@primeuix/themes/aura";
@@ -21,7 +22,12 @@ interface VueApp {
   withDirectives?: boolean;
 }
 
-export const CreateVueApp = async ({ htmlId, component, router, plugins = [] }: VueApp) => {
+export const CreateVueApp = async ({
+  htmlId,
+  component,
+  router,
+  plugins = [],
+}: VueApp) => {
   const app = createApp(component);
 
   plugins.forEach((item) => {
@@ -39,7 +45,7 @@ export const CreateVueApp = async ({ htmlId, component, router, plugins = [] }: 
   app.use(PrimeVue, {
     theme: {
       name: "aura",
-      preset: Aura,
+      preset: PulseTheme,
       options: {
         darkModeSelector: ".app-dark",
       },

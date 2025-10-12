@@ -12,15 +12,15 @@ const items = ref([
     label: "Options",
     items: [
       {
-        label: "Profile",
+        label: "Perfil",
         icon: "pi pi-user",
       },
       {
-        label: "Settings",
+        label: "Configuraciones",
         icon: "pi pi-cog",
       },
       {
-        label: "Logout",
+        label: "Cerrar sesión",
         icon: "pi pi-sign-out",
         command: () => AuthService.Logout(),
       },
@@ -47,11 +47,19 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
 
     <div class="layout-topbar-actions">
       <div class="layout-config-menu">
-        <button type="button" class="layout-topbar-action" @click="toggleDarkMode">
+        <button
+          type="button"
+          class="layout-topbar-action"
+          @click="toggleDarkMode"
+        >
           <i :class="['pi', isDarkTheme ? 'pi-sun' : 'pi-moon']" />
         </button>
 
-        <div class="flex gap-3 menu-button" aria-controls="overlay_menu" @click="toggle">
+        <div
+          class="flex gap-3 menu-button"
+          aria-controls="overlay_menu"
+          @click="toggle"
+        >
           <Avatar :label="avatarName" shape="circle" size="normal" />
           <Menu ref="menu" id="overlay_menu" :model="items" popup />
 
