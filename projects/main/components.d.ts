@@ -22,6 +22,8 @@ declare module 'vue' {
     LoginFormCard: typeof import('./src/components/Login/LoginFormCard.vue')['default']
     LogoAnimated: typeof import('./src/components/Login/LogoAnimated.vue')['default']
     Menu: typeof import('primevue/menu')['default']
+    Message: typeof import('primevue/message')['default']
+    Password: typeof import('primevue/password')['default']
     PermissionActionCard: typeof import('./src/components/Roles/PermissionActionCard.vue')['default']
     Popover: typeof import('primevue/popover')['default']
     ProgressSpinner: typeof import('primevue/progressspinner')['default']

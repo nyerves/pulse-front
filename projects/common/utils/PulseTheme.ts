@@ -63,6 +63,18 @@ const PulseTheme = definePreset(Aura, {
       },
     },
   },
+  components: {
+    Message: {
+      root: {
+        border: "none",
+        borderRadius: "8px", // opcional, conserva algo de forma suave
+        padding: "0.75rem 1rem",
+      },
+      text: {
+        fontWeight: "400", // texto normal (por defecto suele ser 500 o 600)
+      },
+    },
+  },
 });
 
 export default PulseTheme;

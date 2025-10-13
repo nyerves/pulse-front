@@ -10,15 +10,15 @@ const router = useRouter()
 
 const email = ref('')
 const password = ref('')
-const showPassword = ref(false)
 const isLoading = ref(false)
 const errors = ref({
   email: '',
   password: '',
+  errorLogin: '',
 })
 
 const validateForm = () => {
-  errors.value = { email: '', password: '' }
+  errors.value = { email: '', password: '', errorLogin: '' }
 
   if (!email.value) {
     errors.value.email = 'El email es requerido'
@@ -42,7 +42,9 @@ const handleLogin = async () => {
 
     router.push('/dashboard')
   } catch (error) {
-    console.error('Login error:', error)
+    if (error) {
+      errors.value.errorLogin = 'Correo o contraseña incorrectos'
+    }
   } finally {
     isLoading.value = false
   }
@@ -51,49 +53,47 @@ const handleLogin = async () => {
 
 <template>
   <div
-    class="bg-white max-w-[450px] w-full p-8 rounded-xl shadow-lg flex flex-col items-center gap-4 login-form-card"
+    class="bg-white max-w-[440px] w-full p-8 rounded-xl shadow-lg flex flex-col items-center gap-4 login-form-card"
   >
-    <img :src="LogoApp" alt="Logo Pulse" class="w-[120px] h-auto" />
-    <h1 class="text-2xl md:text-3xl font-bold !text-gray-900 text-center">Bienvenido a Pulse</h1>
+    <img :src="LogoApp" alt="Logo Pulse" class="w-[110px] h-auto" />
+
+    <h1 class="text-xl md:text-2xl font-bold !text-gray-900 text-center !mb-1">
+      Bienvenido a Pulse
+    </h1>
+
     <p class="text-sm text-gray-500 text-center">
       Ingrese sus credenciales para acceder al sistema de gobernanza de salud.
     </p>
 
-    <form @submit.prevent="handleLogin" class="w-full mt-4 flex flex-col gap-4">
+    <form @submit.prevent="handleLogin" class="w-full mt-1 flex flex-col gap-4">
       <div class="relative w-full">
-        <label for="email" class="sr-only">Correo Electrónico</label>
-        <input
-          id="email"
-          v-model="email"
-          placeholder="Correo Electrónico"
-          class="w-full px-4 py-3 !bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-200"
-        />
+        <InputText v-model="email" placeholder="Correo electrónico" class="w-full" fluid />
 
         <div v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</div>
       </div>
 
       <div class="relative w-full">
-        <label for="password" class="sr-only">Contraseña</label>
-
-        <input
-          id="password"
+        <Password
+          fluid
+          toggle-mask
+          class="w-full"
+          :feedback="false"
           v-model="password"
           placeholder="Contraseña"
-          :type="showPassword ? 'text' : 'password'"
-          class="w-full px-4 py-3 !bg-white border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-200 pr-10"
         />
-
-        <div
-          class="absolute right-3 top-3 text-gray-500 cursor-pointer"
-          @click="showPassword = !showPassword"
-          aria-hidden
-        >
-          <i v-if="showPassword" class="pi pi-eye" />
-          <i v-else class="pi pi-eye-slash" />
-        </div>
 
         <div v-if="errors.password" class="text-red-500 text-sm mt-1">{{ errors.password }}</div>
       </div>
+
+      <template v-if="errors.errorLogin">
+        <Message
+          severity="error"
+          icon="pi pi-exclamation-triangle"
+          pt:root:class="!text-xs py-1 !outline-hidden"
+        >
+          {{ errors.errorLogin }}
+        </Message>
+      </template>
 
       <Button type="submit" label="Iniciar sesión" :loading="isLoading" />
     </form>
