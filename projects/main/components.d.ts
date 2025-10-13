@@ -32,5 +32,6 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     Tag: typeof import('primevue/tag')['default']
     Toast: typeof import('primevue/toast')['default']
+    UserFormModal: typeof import('./src/components/Users/UserFormModal.vue')['default']
   }
 }

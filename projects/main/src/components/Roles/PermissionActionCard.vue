@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import type { Permission, PermissionAction, RolePermission } from '@common/models'
 
-const rolePermission = defineModel<RolePermission>()
+const rolePermissionModel = defineModel<RolePermission[]>({ default: [] })
 const props = defineProps<{
   permission: Permission
   actions: PermissionAction[]
@@ -12,20 +12,31 @@ const showActions = ref(false)
 
 const actionsSelected = computed({
   get() {
-    return rolePermission.value?.actionIds || []
+    const rolePermission = rolePermissionModel.value?.find(
+      (x) => x.permissionId === props.permission.id,
+    )
+    return rolePermission?.actionIds || []
   },
   set(value: number[]) {
-    rolePermission.value = {
-      permissionId: props.permission.id,
-      parentId: 0,
-      actionIds: value,
+    const rolePermission = rolePermissionModel.value?.find((x) => {
+      return x.permissionId === props.permission.id
+    })
+
+    if (rolePermission) {
+      rolePermission.actionIds = value
+    } else {
+      rolePermissionModel.value.push({
+        parentId: 0,
+        actionIds: value,
+        permissionId: props.permission.id,
+      })
     }
   },
 })
 </script>
 
 <template>
-  <div class="card !mb-0 !p-2 !px-3 rounded-lg border border-gray-200">
+  <div class="card !mb-0 !p-2 !px-3 border border-gray-200 shadow">
     <div
       class="flex items-center my-1 justify-between cursor-pointer"
       @click="showActions = !showActions"
@@ -44,13 +55,9 @@ const actionsSelected = computed({
       <div v-if="showActions" class="flex flex-col gap-3 mt-4 px-4">
         <template v-for="action in props.actions" :key="action.id">
           <div>
-            <Checkbox
-              v-model="actionsSelected"
-              :value="action.id"
-              :inputId="`${permission.id}-action-${action.id}`"
-            />
+            <Checkbox v-model="actionsSelected" :value="action.id" :inputId="action.name" />
 
-            <label :for="`${permission.id}-action-${action.id}`" class="ml-2">
+            <label :for="action.name" class="ml-2">
               {{ action.name }}
             </label>
           </div>

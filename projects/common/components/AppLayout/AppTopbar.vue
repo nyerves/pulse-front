@@ -1,28 +1,26 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useLayout } from "@common/composables";
 import { AuthService } from "@common/services";
-import LogoBlack from "@common/assets/svg/pulse-logo-black.svg";
-import LogoWhite from "@common/assets/svg/pulse-logo.svg";
 
-const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
+const { toggleDarkMode, isDarkTheme } = useLayout();
 
 const user = AuthService.GetUserAuth();
 const menu = ref();
 const items = ref([
   {
-    label: "Options",
+    label: "",
     items: [
       {
-        label: "Profile",
+        label: "Perfil",
         icon: "pi pi-user",
       },
       {
-        label: "Settings",
+        label: "Configuraciones",
         icon: "pi pi-cog",
       },
       {
-        label: "Logout",
+        label: "Cerrar sesión",
         icon: "pi pi-sign-out",
         command: () => AuthService.Logout(),
       },
@@ -30,41 +28,84 @@ const items = ref([
   },
 ]);
 
+const avatarName = computed(() => {
+  if (user?.data?.name) {
+    return user.data.name
+      .split(" ")
+      .map((n) => n[0])
+      .join("");
+  }
+
+  return "U";
+});
 const toggle = (event: MouseEvent) => menu.value.toggle(event);
 </script>
 
 <template>
   <div class="layout-topbar">
-    <div class="layout-topbar-logo-container">
-      <button class="layout-menu-button layout-topbar-action" @click="toggleMenu">
-        <i class="pi pi-bars"></i>
-      </button>
-
-      <div class="layout-topbar-logo">
-        <img :src="!isDarkTheme ? LogoWhite : LogoBlack" alt="Logo" class="w-10" />
-      </div>
-    </div>
+    <div class="layout-topbar-logo-container"></div>
 
     <div class="layout-topbar-actions">
       <div class="layout-config-menu">
-        <button type="button" class="layout-topbar-action" @click="toggleDarkMode">
+        <button
+          v-if="false"
+          type="button"
+          class="layout-topbar-action"
+          @click="toggleDarkMode"
+        >
           <i :class="['pi', isDarkTheme ? 'pi-sun' : 'pi-moon']" />
         </button>
 
+        <Button
+          icon="pi pi-bell"
+          severity="secondary"
+          variant="text"
+          rounded
+          aria-label="Notification"
+        />
+
         <div
-          class="flex gap-3 hover:bg-gradient-to-bl p-1"
+          class="flex gap-3 menu-button"
           aria-controls="overlay_menu"
           @click="toggle"
         >
-          <Button rounded icon="pi pi-user" />
+          <Avatar
+            :label="avatarName"
+            shape="circle"
+            size="normal"
+            class="avatar-style"
+          />
           <Menu ref="menu" id="overlay_menu" :model="items" popup />
 
           <div class="flex flex-col ml-2">
-            <span class="font-bold">{{ user?.data?.name }}</span>
-            <span class="text-sm">{{ user?.data?.email }}</span>
+            <span class="font-semibold text-sm">{{ user?.data?.name }}</span>
+            <span class="text-xs opacity-20">{{ user?.data?.email }}</span>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.menu-button {
+  cursor: pointer;
+  padding: 0.5rem 0.8rem;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    border-radius: var(--content-border-radius);
+    background-color: var(--surface-hover);
+  }
+}
+
+.avatar-style {
+  background-color: #dee9fc !important;
+  color: #1a2551;
+  font-weight: bold;
+  padding: 1.2rem;
+  font-size: 0.8rem;
+  color: rgb(37 99 235 / var(--tw-text-opacity, 1));
+}
+</style>

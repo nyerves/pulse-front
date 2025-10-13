@@ -40,10 +40,6 @@
     }
 
     &.layout-static {
-      .layout-main-container {
-        margin-left: 22rem;
-      }
-
       &.layout-static-inactive {
         .layout-sidebar {
           transform: translateX(-100%);
@@ -72,6 +68,7 @@
     .layout-main-container {
       margin-left: 0;
       padding-left: 2rem;
+      padding-right: 1rem;
     }
 
     .layout-sidebar {

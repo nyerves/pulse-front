@@ -68,24 +68,24 @@ onMounted(() => {
   <ModalLayout
     :loading="iSaving"
     :saveDisabled="!roleForm.name"
-    title="Crear Nuevo Rol"
+    title="Crear Rol"
     @close="$emit('close')"
     @save="onSubmit"
   >
     <form class="flex flex-col">
-      <InputText
-        label="Nombre del Rol"
-        placeholder="Ingrese el nombre del rol"
-        v-model="roleForm.name"
-      />
+      <FloatLabel variant="on">
+        <InputText id="role-name" class="w-full" label="Nombre del Rol" v-model="roleForm.name" />
+
+        <label for="role-name">Nombre del Rol</label>
+      </FloatLabel>
 
       <div class="mt-6">
-        <h5 class="font-semibold mb-4">Permisos y acciones</h5>
+        <h6 class="font-semibold mb-4">Permisos y acciones</h6>
 
-        <div class="flex flex-col gap-4 max-h-[35dvh] overflow-y-auto px-3">
-          <template v-for="(permission, index) in props.permissions" :key="permission.id">
+        <div class="flex flex-col gap-4 max-h-[45dvh] overflow-y-auto px-3 py-2">
+          <template v-for="permission in props.permissions" :key="permission.id">
             <PermissionActionCard
-              v-model="roleForm.permissions[index]!"
+              v-model="roleForm.permissions"
               :permission="permission"
               :actions="props.actions"
             />

@@ -1,17 +1,18 @@
 @use "mixins" as *;
 
 .layout-topbar {
-  position: fixed;
-  height: 4rem;
+  position: relative;
+  width: 100%;
+  height: var(--top-menu-height);
   z-index: 997;
   left: 0;
   top: 0;
-  width: 100%;
-  padding: 0 2rem;
+  padding: 0 1rem;
   background-color: var(--surface-card);
   transition: left var(--layout-section-transition-duration);
   display: flex;
   align-items: center;
+  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.1);
 
   .layout-topbar-logo-container {
     width: 20rem;
@@ -89,7 +90,7 @@
 
   .layout-config-menu {
     display: flex;
-    gap: 1rem;
+    align-items: center;
   }
 }
 

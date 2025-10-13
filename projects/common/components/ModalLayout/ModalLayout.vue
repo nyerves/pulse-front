@@ -17,12 +17,17 @@ const props = defineProps<{
     @hide="$emit('close')"
     @update:visible="$emit('close')"
   >
-    <div class="max-h-[60dvh] overflow-y-auto mb-4">
+    <div class="modal-container">
       <slot></slot>
     </div>
 
     <div class="dialog-footer">
-      <Button type="button" label="Cancel" severity="secondary" @click="$emit('close')" />
+      <Button
+        type="button"
+        label="Cancel"
+        severity="secondary"
+        @click="$emit('close')"
+      />
       <Button
         type="button"
         label="Save"
@@ -41,6 +46,12 @@ const props = defineProps<{
   gap: 0.5rem;
   margin-top: 0.5rem;
   border-top: 1px solid #eee;
-  padding-top: 0.5rem;
+  padding-top: 0.9rem;
+}
+
+.modal-container {
+  padding: 1rem 0;
+  max-height: 70dvh;
+  overflow-y: auto;
 }
 </style>

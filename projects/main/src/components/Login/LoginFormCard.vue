@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useToast } from 'primevue'
 import { AuthService } from '@common/services'
 import LogoApp from '@common/assets/png/logo_verde.png'
 
 defineEmits(['showRegister'])
 
 const router = useRouter()
-const toast = useToast()
 
 const email = ref('')
 const password = ref('')
@@ -35,39 +33,16 @@ const validateForm = () => {
   return !errors.value.email && !errors.value.password
 }
 const handleLogin = async () => {
-  if (!validateForm()) {
-    toast.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'Por favor corrige los errores en el formulario',
-      life: 3000,
-    })
-
-    return
-  }
+  if (!validateForm()) return
 
   isLoading.value = true
 
   try {
     await AuthService.Login(email.value, password.value)
 
-    toast.add({
-      severity: 'success',
-      summary: 'Éxito',
-      detail: 'Inicio de sesión exitoso',
-      life: 3000,
-    })
-
     router.push('/dashboard')
   } catch (error) {
     console.error('Login error:', error)
-
-    toast.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'Error al iniciar sesión',
-      life: 3000,
-    })
   } finally {
     isLoading.value = false
   }
@@ -79,7 +54,7 @@ const handleLogin = async () => {
     class="bg-white max-w-[450px] w-full p-8 rounded-xl shadow-lg flex flex-col items-center gap-4 login-form-card"
   >
     <img :src="LogoApp" alt="Logo Pulse" class="w-[120px] h-auto" />
-    <h1 class="text-2xl md:text-3xl font-bold text-gray-900 text-center">Bienvenido a Pulse</h1>
+    <h1 class="text-2xl md:text-3xl font-bold !text-gray-900 text-center">Bienvenido a Pulse</h1>
     <p class="text-sm text-gray-500 text-center">
       Ingrese sus credenciales para acceder al sistema de gobernanza de salud.
     </p>
@@ -91,7 +66,7 @@ const handleLogin = async () => {
           id="email"
           v-model="email"
           placeholder="Correo Electrónico"
-          class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-200"
+          class="w-full px-4 py-3 !bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-200"
         />
 
         <div v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</div>
@@ -105,7 +80,7 @@ const handleLogin = async () => {
           v-model="password"
           placeholder="Contraseña"
           :type="showPassword ? 'text' : 'password'"
-          class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-200 pr-10"
+          class="w-full px-4 py-3 !bg-white border border-gray-200 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-200 pr-10"
         />
 
         <div
@@ -120,12 +95,7 @@ const handleLogin = async () => {
         <div v-if="errors.password" class="text-red-500 text-sm mt-1">{{ errors.password }}</div>
       </div>
 
-      <Button
-        type="submit"
-        label="Iniciar Sesión"
-        class="w-full bg-[#0C9488] hover:bg-[#0C9488] text-white font-medium py-3 rounded-md"
-        :loading="isLoading"
-      />
+      <Button type="submit" label="Iniciar sesión" :loading="isLoading" />
     </form>
 
     <a href="#" class="text-sm text-gray-600 mt-3">¿Olvidó su contraseña?</a>
