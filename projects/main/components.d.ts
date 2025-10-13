@@ -8,11 +8,14 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    Avatar: typeof import('primevue/avatar')['default']
     Badge: typeof import('primevue/badge')['default']
     Button: typeof import('primevue/button')['default']
     Checkbox: typeof import('primevue/checkbox')['default']
-    ConfirmDialog: typeof import('primevue/confirmdialog')['default']
+    Column: typeof import('primevue/column')['default']
+    DataTable: typeof import('primevue/datatable')['default']
     Dialog: typeof import('primevue/dialog')['default']
+    FloatLabel: typeof import('primevue/floatlabel')['default']
     IconField: typeof import('primevue/iconfield')['default']
     InputIcon: typeof import('primevue/inputicon')['default']
     InputText: typeof import('primevue/inputtext')['default']
@@ -20,6 +23,7 @@ declare module 'vue' {
     LogoAnimated: typeof import('./src/components/Login/LogoAnimated.vue')['default']
     Menu: typeof import('primevue/menu')['default']
     PermissionActionCard: typeof import('./src/components/Roles/PermissionActionCard.vue')['default']
+    Popover: typeof import('primevue/popover')['default']
     ProgressSpinner: typeof import('primevue/progressspinner')['default']
     RegisterFormCard: typeof import('./src/components/Login/RegisterFormCard.vue')['default']
     RoleCard: typeof import('./src/components/Roles/RoleCard.vue')['default']
