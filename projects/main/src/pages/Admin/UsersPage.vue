@@ -87,17 +87,17 @@ onMounted(async () => {
   <div>
     <div class="flex items-center justify-between mb-8">
       <div class="max-w-[44rem]">
-        <h1 class="text-3xl font-bold mb-2">Gestión de Usuarios</h1>
+        <h2 class="font-bold !mb-1">Gestión de Usuarios</h2>
         <p class="opacity-60 text-wrap">
           Aquí puedes gestionar los usuarios de la plataforma, asignar roles, permisos, y supervisar
           la actividad de los usuarios.
         </p>
       </div>
 
-      <Button icon="pi pi-plus" label="Crear Usuario" @click="onSelectUser()" />
+      <Button icon="pi pi-plus" label="Crear Usuario" raised @click="onSelectUser()" />
     </div>
 
-    <div class="card">
+    <div class="card !shadow-md">
       <DataTable :rows="10" paginator dataKey="id" :value="userList" :loading="loading">
         <template #header>
           <div class="flex justify-between">

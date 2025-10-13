@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import type { AppMenuList } from "@common/models";
 import { useLayout } from "@common/composables";
-import LogoBlack from "@common/assets/svg/pulse-logo-black.svg";
+import LogoBlack from "@common/assets/png/logo_verde.png";
 import LogoWhite from "@common/assets/svg/pulse-logo.svg";
 import AppMenuItem from "./AppMenuItem.vue";
 
@@ -11,7 +11,13 @@ const { isDarkTheme, toggleMenu, isSidebarActive } = useLayout();
 const appMenuList = ref<AppMenuList[]>([
   {
     label: "Home",
-    items: [{ label: "Inicio", icon: "pi pi-fw pi-home", to: "/dashboard" }],
+    items: [
+      {
+        label: "Dashboard",
+        icon: "pi pi-fw pi-objects-column",
+        to: "/dashboard",
+      },
+    ],
   },
   {
     label: "Catálogos especiales",
@@ -60,7 +66,10 @@ const appMenuList = ref<AppMenuList[]>([
 </script>
 
 <template>
-  <div class="layout-sidebar" :class="{ 'layout-sidebar-collapsed': !isSidebarActive }">
+  <div
+    class="layout-sidebar"
+    :class="{ 'layout-sidebar-collapsed': !isSidebarActive }"
+  >
     <div class="layout-logo">
       <img :src="!isDarkTheme ? LogoWhite : LogoBlack" alt="Logo" />
     </div>
@@ -73,7 +82,11 @@ const appMenuList = ref<AppMenuList[]>([
 
     <div class="layout-sidebar-footer">
       <Button
-        :icon="isSidebarActive ? 'pi pi-angle-double-left' : 'pi pi-angle-double-right'"
+        :icon="
+          isSidebarActive
+            ? 'pi pi-angle-double-left'
+            : 'pi pi-angle-double-right'
+        "
         class="p-button-text p-button-plain"
         size="large"
         style="width: 100%"
@@ -88,11 +101,12 @@ const appMenuList = ref<AppMenuList[]>([
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
   border-bottom: 1px solid var(--surface-d);
 
   img {
-    height: 5rem;
+    height: 4.3rem;
   }
 }
 

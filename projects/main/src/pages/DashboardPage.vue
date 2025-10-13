@@ -74,7 +74,8 @@ const menuItems = [
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <template v-for="(item, _index) in menuItems" :key="_index">
         <button
-          :class="`group relative overflow-hidden bg-white rounded-2xl shadow-lg hover:shadow-2xl ${item.shadowColor} transition-all duration-300 hover:scale-105 hover:-translate-y-2`"
+          :class="item.shadowColor"
+          class="group relative overflow-hidden bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-95 hover:-translate-y-2"
         >
           <div :class="item.color" class="absolute inset-0 bg-gradient-to-br opacity-100"></div>
 
@@ -85,7 +86,7 @@ const menuItems = [
 
           <div class="relative p-6 flex flex-col items-center justify-center min-h-[160px]">
             <div
-              class="bg-white/20 backdrop-blur-sm p-4 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300"
+              class="bg-white/20 backdrop-blur-sm p-4 rounded-2xl mb-4 group-hover:scale-95 transition-transform duration-300"
             >
               <component :is="item.icon" class="w-10 h-10 text-white" />
             </div>

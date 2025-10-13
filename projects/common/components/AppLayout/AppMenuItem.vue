@@ -85,15 +85,9 @@ onBeforeMount(() => {
 
 <template>
   <li
+    style="margin-bottom: 0.3rem"
     :class="{ 'layout-root-menuitem': root, 'active-menuitem': isActiveMenu }"
   >
-    <div
-      v-if="root && item.visible !== false"
-      class="layout-menuitem-root-text"
-    >
-      {{ isSidebarActive ? item.label : "" }}
-    </div>
-
     <a
       v-if="(!item.to || item.items) && item.visible !== false"
       :href="item.url"

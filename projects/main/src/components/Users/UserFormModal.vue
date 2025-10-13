@@ -132,7 +132,7 @@ onMounted(() => {
     @close="$emit('close')"
     @save="onFormSubmit"
   >
-    <div class="grid grid-cols-2 gap-3 w-full">
+    <div class="grid grid-cols-2 gap-3">
       <div class="flex flex-col">
         <FloatLabel variant="on">
           <InputText
@@ -203,81 +203,63 @@ onMounted(() => {
 
       <div class="col-span-2 border-b border-gray-200"></div>
 
-      <template v-if="props.user">
-        <FloatLabel variant="on" class="col-span-2">
-          <InputText
+      <div class="flex flex-col">
+        <FloatLabel variant="on">
+          <Password
             id="value6"
+            fluid
+            class="w-full"
             v-model="userForm.password"
+            aria-autocomplete="none"
+            promptLabel="Piensa en una contraseña segura"
+            weakLabel="Demasiado simple"
+            mediumLabel="Complejidad media"
+            strongLabel="Contraseña compleja"
+            :class="{ 'p-invalid': formErrors.password }"
+          >
+            <template #footer>
+              <Divider />
+              <ul class="pl-2 my-0 leading-normal text-xs">
+                <li>Mínimo 12 caracteres</li>
+                <li>Al menos una mayúscula</li>
+                <li>Al menos un número</li>
+                <li>Caracteres especiales: !@#$%^&*()-+</li>
+              </ul>
+            </template>
+          </Password>
+
+          <label for="value6">
+            {{ props.user ? 'Nueva Contraseña (opcional)' : 'Contraseña' }}
+          </label>
+        </FloatLabel>
+
+        <Message v-if="formErrors.password" severity="error" class="mt-1 text-xs" variant="simple">
+          {{ formErrors.password }}
+        </Message>
+      </div>
+
+      <div class="flex flex-col">
+        <FloatLabel variant="on">
+          <InputText
+            id="value7"
+            v-model="confirmPass"
             type="password"
             class="w-full"
-            autocomplete="new-password"
+            autocomplete="confirm-password"
+            :class="{ 'p-invalid': formErrors.confirmPass }"
           />
-          <label for="value6">Nueva Contraseña</label>
+          <label for="value7">Confirmar contraseña</label>
         </FloatLabel>
-      </template>
 
-      <template v-else>
-        <div class="flex flex-col">
-          <FloatLabel variant="on">
-            <Password
-              id="value6"
-              toggleMask
-              class="w-full"
-              v-model="userForm.password"
-              autocomplete="off"
-              promptLabel="Piensa en una contraseña segura"
-              weakLabel="Demasiado simple"
-              mediumLabel="Complejidad media"
-              strongLabel="Contraseña compleja"
-              :class="{ 'p-invalid': formErrors.password }"
-            >
-              <template #footer>
-                <Divider />
-                <ul class="pl-2 my-0 leading-normal text-sm">
-                  <li>Mínimo 12 caracteres</li>
-                  <li>Al menos una mayúscula</li>
-                  <li>Al menos un número</li>
-                  <li>Caracteres especiales permitidos: !@#$%^&*()-+</li>
-                </ul>
-              </template>
-            </Password>
-
-            <label for="value6">Contraseña</label>
-          </FloatLabel>
-
-          <Message
-            v-if="formErrors.password"
-            severity="error"
-            class="mt-1 text-xs"
-            variant="simple"
-          >
-            {{ formErrors.password }}
-          </Message>
-        </div>
-
-        <div class="flex flex-col">
-          <FloatLabel variant="on">
-            <InputText
-              id="value7"
-              v-model="confirmPass"
-              type="password"
-              class="w-full"
-              autocomplete="confirm-password"
-              :class="{ 'p-invalid': formErrors.confirmPass }"
-            />
-            <label for="value7">Confirmar contraseña</label>
-          </FloatLabel>
-
-          <Message
-            v-if="formErrors.confirmPass"
-            severity="error"
-            class="mt-1 text-xs"
-            variant="simple"
-          >
-            {{ formErrors.confirmPass }}
-          </Message>
-        </div>
-      </template>
+        <Message
+          v-if="formErrors.confirmPass"
+          severity="error"
+          class="mt-1 text-xs"
+          variant="simple"
+        >
+          {{ formErrors.confirmPass }}
+        </Message>
+      </div>
     </div>
   </ModalLayout>
 </template>

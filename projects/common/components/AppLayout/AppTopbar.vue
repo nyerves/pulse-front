@@ -9,7 +9,7 @@ const user = AuthService.GetUserAuth();
 const menu = ref();
 const items = ref([
   {
-    label: "Options",
+    label: "",
     items: [
       {
         label: "Perfil",
@@ -48,6 +48,7 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
     <div class="layout-topbar-actions">
       <div class="layout-config-menu">
         <button
+          v-if="false"
           type="button"
           class="layout-topbar-action"
           @click="toggleDarkMode"
@@ -55,17 +56,30 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
           <i :class="['pi', isDarkTheme ? 'pi-sun' : 'pi-moon']" />
         </button>
 
+        <Button
+          icon="pi pi-bell"
+          severity="secondary"
+          variant="text"
+          rounded
+          aria-label="Notification"
+        />
+
         <div
           class="flex gap-3 menu-button"
           aria-controls="overlay_menu"
           @click="toggle"
         >
-          <Avatar :label="avatarName" shape="circle" size="normal" />
+          <Avatar
+            :label="avatarName"
+            shape="circle"
+            size="normal"
+            class="avatar-style"
+          />
           <Menu ref="menu" id="overlay_menu" :model="items" popup />
 
           <div class="flex flex-col ml-2">
-            <span class="font-bold">{{ user?.data?.name }}</span>
-            <span class="text-sm">{{ user?.data?.email }}</span>
+            <span class="font-semibold text-sm">{{ user?.data?.name }}</span>
+            <span class="text-xs opacity-20">{{ user?.data?.email }}</span>
           </div>
         </div>
       </div>
@@ -84,5 +98,14 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
     border-radius: var(--content-border-radius);
     background-color: var(--surface-hover);
   }
+}
+
+.avatar-style {
+  background-color: #dee9fc !important;
+  color: #1a2551;
+  font-weight: bold;
+  padding: 1.2rem;
+  font-size: 0.8rem;
+  color: rgb(37 99 235 / var(--tw-text-opacity, 1));
 }
 </style>

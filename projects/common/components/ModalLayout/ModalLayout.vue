@@ -46,7 +46,7 @@ const props = defineProps<{
   gap: 0.5rem;
   margin-top: 0.5rem;
   border-top: 1px solid #eee;
-  padding-top: 0.5rem;
+  padding-top: 0.9rem;
 }
 
 .modal-container {

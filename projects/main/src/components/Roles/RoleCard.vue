@@ -45,7 +45,7 @@ async function onDelete() {
     @confirm="onDelete"
   />
 
-  <div class="card h-48 !p-5 shadow-sm">
+  <div class="card h-48 !p-5 shadow-md">
     <div class="flex items-center mb-4 w-full">
       <h4 class="text-xl font-semibold !mb-0 !mr-auto">
         {{ role.name }}

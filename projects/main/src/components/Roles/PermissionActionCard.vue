@@ -25,7 +25,7 @@ const actionsSelected = computed({
 </script>
 
 <template>
-  <div class="card !mb-0 !p-2 !px-3 rounded-lg border border-gray-200">
+  <div class="card !mb-0 !p-2 !px-3 border border-gray-200 shadow">
     <div
       class="flex items-center my-1 justify-between cursor-pointer"
       @click="showActions = !showActions"

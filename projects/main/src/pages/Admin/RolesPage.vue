@@ -50,11 +50,12 @@ onMounted(() => fetchRoles())
 
     <div class="flex items-center justify-between mb-8">
       <div>
-        <h1 class="text-3xl font-bold mb-2">Gestión de Roles</h1>
+        <h2 class="font-bold !mb-1">Gestión de Roles</h2>
         <p class="opacity-60">Configure roles y asigne permisos para el control de acceso</p>
       </div>
 
       <Button
+        raised
         icon="pi pi-plus"
         label="Crear nuevo Rol"
         class="bg-teal-600 hover:bg-teal-700 text-white"

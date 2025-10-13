@@ -53,6 +53,14 @@ const PulseTheme = definePreset(Aura, {
           color: "#EF4444" /* Rojo alerta */,
         },
       },
+      dark: {
+        primary: {
+          color: "#0D9488", // Nuevo color primario en oscuro
+          inverseColor: "#0F172A", // Texto o ícono sobre el primario
+          hoverColor: "#14B8A6", // Hover
+          activeColor: "#0D9488", // Active
+        },
+      },
     },
   },
 });
