@@ -81,6 +81,7 @@ onMounted(() => fetchRoles())
         <RoleCard
           :role="role"
           :permissions="permissions"
+          :actions="actions"
           @delete="fetchRoles"
           @edit="handleEdit(role)"
         />

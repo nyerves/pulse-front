@@ -16,12 +16,19 @@ const props = defineProps<{
     @update:visible="$emit('close')"
   >
     <div class="dialog-body">
-      <span class="pi pi-info-circle" style="font-size: 2.8rem" />
-      <span> ¿Está seguro que desea eliminar {{ props.name ?? "este elemento" }}? </span>
+      <span class="pi pi-info-circle" style="font-size: 2.3rem" />
+      <span>
+        ¿Está seguro que desea eliminar {{ props.name ?? "este elemento" }}?
+      </span>
     </div>
 
     <div class="dialog-footer">
-      <Button type="button" label="Cancelar" severity="secondary" @click="$emit('close')" />
+      <Button
+        type="button"
+        label="Cancelar"
+        severity="secondary"
+        @click="$emit('close')"
+      />
 
       <Button
         type="button"
@@ -39,6 +46,7 @@ const props = defineProps<{
   display: flex;
   align-items: center;
   gap: 1rem;
+  padding: 0.3rem;
 }
 
 .dialog-footer {

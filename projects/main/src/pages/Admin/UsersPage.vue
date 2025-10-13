@@ -86,7 +86,7 @@ onMounted(async () => {
 
   <div>
     <div class="flex items-center justify-between mb-8">
-      <div class="max-w-[44rem]">
+      <div class="max-w-[80%]">
         <h2 class="font-bold !mb-1">Gestión de Usuarios</h2>
         <p class="opacity-60 text-wrap">
           Aquí puedes gestionar los usuarios de la plataforma, asignar roles, permisos, y supervisar
