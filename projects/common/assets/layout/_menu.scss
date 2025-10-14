@@ -44,6 +44,7 @@
 
   a {
     user-select: none;
+    padding: 1rem 6rem;
 
     &.active-menuitem {
       > .layout-submenu-toggler {
@@ -54,6 +55,7 @@
 
   li.active-menuitem {
     > a {
+      padding: 0.8rem 1rem;
       .layout-submenu-toggler {
         transform: rotate(-180deg);
       }
@@ -72,7 +74,7 @@
       outline: 0 none;
       color: var(--text-color);
       cursor: pointer;
-      padding: 0.55rem 1rem;
+      padding: 0.8rem 1rem;
       border-radius: var(--content-border-radius);
       transition:
         background-color var(--element-transition-duration),

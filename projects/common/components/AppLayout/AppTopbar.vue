@@ -1,43 +1,30 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import { useLayout } from "@common/composables";
 import { AuthService } from "@common/services";
 
 const { toggleDarkMode, isDarkTheme } = useLayout();
+const user = AuthService.GetUserAuth()?.data;
 
-const user = AuthService.GetUserAuth();
 const menu = ref();
+const isActiveMenu = ref(false);
 const items = ref([
   {
-    label: "",
-    items: [
-      {
-        label: "Perfil",
-        icon: "pi pi-user",
-      },
-      {
-        label: "Configuraciones",
-        icon: "pi pi-cog",
-      },
-      {
-        label: "Cerrar sesión",
-        icon: "pi pi-sign-out",
-        command: () => AuthService.Logout(),
-      },
-    ],
+    label: "Perfil",
+    icon: "pi pi-user",
+  },
+  {
+    label: "Configuraciones",
+    icon: "pi pi-cog",
+  },
+  {
+    label: "Cerrar sesión",
+    icon: "pi pi-sign-out",
+    class: "!text-red-600 bg-red-50 hover:!bg-red-100",
+    command: () => AuthService.Logout(),
   },
 ]);
 
-const avatarName = computed(() => {
-  if (user?.data?.name) {
-    return user.data.name
-      .split(" ")
-      .map((n) => n[0])
-      .join("");
-  }
-
-  return "U";
-});
 const toggle = (event: MouseEvent) => menu.value.toggle(event);
 </script>
 
@@ -47,12 +34,7 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
 
     <div class="layout-topbar-actions">
       <div class="layout-config-menu">
-        <button
-          v-if="false"
-          type="button"
-          class="layout-topbar-action"
-          @click="toggleDarkMode"
-        >
+        <button v-if="false" type="button" class="layout-topbar-action" @click="toggleDarkMode">
           <i :class="['pi', isDarkTheme ? 'pi-sun' : 'pi-moon']" />
         </button>
 
@@ -64,23 +46,47 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
           aria-label="Notification"
         />
 
-        <div
-          class="flex gap-3 menu-button"
-          aria-controls="overlay_menu"
-          @click="toggle"
-        >
+        <div class="flex gap-4 menu-button" aria-controls="overlay_menu" @click="toggle">
           <Avatar
-            :label="avatarName"
+            image="https://i.pravatar.cc/150?img=68"
             shape="circle"
-            size="normal"
             class="avatar-style"
+            size="large"
           />
-          <Menu ref="menu" id="overlay_menu" :model="items" popup />
 
-          <div class="flex flex-col ml-2">
-            <span class="font-semibold text-sm">{{ user?.data?.name }}</span>
-            <span class="text-xs opacity-20">{{ user?.data?.email }}</span>
+          <div class="flex flex-col">
+            <h6 class="font-bold !mb-0">{{ user?.name }}</h6>
+            <p class="text-xs opacity-20">{{ user?.email }}</p>
           </div>
+
+          <span
+            class="pi"
+            style="font-size: 0.8rem"
+            :class="isActiveMenu ? 'pi-chevron-up' : 'pi-chevron-down'"
+          />
+
+          <Menu
+            popup
+            ref="menu"
+            id="overlay_menu"
+            :model="items"
+            @show="isActiveMenu = true"
+            @hide="isActiveMenu = false"
+          >
+            <template #start>
+              <div class="user-info border-b border-solid border-gray-300">
+                <h6 class="font-bold !mb-1">{{ user?.name }}</h6>
+                <p class="text-xs opacity-20">{{ user?.email }}</p>
+              </div>
+            </template>
+
+            <template #item="{ item, props }">
+              <a v-ripple class="flex items-center py-2" v-bind="props.action">
+                <span :class="item.icon" />
+                <span>{{ item.label }}</span>
+              </a>
+            </template>
+          </Menu>
         </div>
       </div>
     </div>
@@ -90,7 +96,7 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
 <style scoped lang="scss">
 .menu-button {
   cursor: pointer;
-  padding: 0.5rem 0.8rem;
+  padding: 0.7rem 0.8rem;
   display: flex;
   align-items: center;
 
@@ -101,11 +107,11 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
 }
 
 .avatar-style {
-  background-color: #dee9fc !important;
-  color: #1a2551;
-  font-weight: bold;
-  padding: 1.2rem;
-  font-size: 0.8rem;
-  color: rgb(37 99 235 / var(--tw-text-opacity, 1));
+  border: 2px solid var(--primary-color);
+}
+
+.user-info {
+  padding: 0.8rem 1.5rem;
+  background-color: var(--surface-ground);
 }
 </style>

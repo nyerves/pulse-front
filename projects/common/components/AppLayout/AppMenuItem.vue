@@ -5,8 +5,7 @@ import { useLayout } from "@common/composables";
 import type { AppMenuItem } from "@common/models";
 
 const route = useRoute();
-const { layoutState, setActiveMenuItem, toggleMenu, isSidebarActive } =
-  useLayout();
+const { layoutState, setActiveMenuItem, toggleMenu, isSidebarActive } = useLayout();
 
 const props = defineProps({
   item: {
@@ -34,9 +33,7 @@ watch(
   () => layoutState.activeMenuItem,
   (newVal) => {
     const key = itemKey.value;
-    isActiveMenu.value = Boolean(
-      newVal === key || newVal?.startsWith(key + "-")
-    );
+    isActiveMenu.value = Boolean(newVal === key || newVal?.startsWith(key + "-"));
   }
 );
 
@@ -85,23 +82,20 @@ onBeforeMount(() => {
 
 <template>
   <li
-    style="margin-bottom: 0.3rem"
+    style="margin-bottom: 0.2rem"
     :class="{ 'layout-root-menuitem': root, 'active-menuitem': isActiveMenu }"
   >
     <a
       v-if="(!item.to || item.items) && item.visible !== false"
+      tabindex="0"
       :href="item.url"
-      @click="itemClick($event, item)"
       :class="item.class"
       :target="item.target"
-      tabindex="0"
+      @click="itemClick($event, item)"
     >
       <i :class="item.icon" class="layout-menuitem-icon"></i>
       <span class="layout-menuitem-text">{{ item.label }}</span>
-      <i
-        class="pi pi-fw pi-angle-down layout-submenu-toggler"
-        v-if="item.items"
-      ></i>
+      <i v-if="item.items" class="pi pi-fw pi-angle-down layout-submenu-toggler"></i>
     </a>
 
     <RouterLink
@@ -113,21 +107,13 @@ onBeforeMount(() => {
     >
       <i :class="item.icon" class="layout-menuitem-icon"></i>
 
-      <span v-if="isSidebarActive" class="layout-menuitem-text">{{
-        item.label
-      }}</span>
+      <span v-if="isSidebarActive" class="layout-menuitem-text">{{ item.label }}</span>
 
-      <i
-        class="pi pi-fw pi-angle-down layout-submenu-toggler"
-        v-if="item.items"
-      />
+      <i class="pi pi-fw pi-angle-down layout-submenu-toggler" v-if="item.items" />
     </RouterLink>
 
-    <Transition
-      v-if="item.items && item.visible !== false"
-      name="layout-submenu"
-    >
-      <ul v-show="root ? true : isActiveMenu" class="layout-submenu">
+    <Transition v-if="item.items && item.visible !== false" name="layout-submenu">
+      <ul v-show="root || isActiveMenu" class="layout-submenu">
         <AppMenuItem
           v-for="(child, i) in item.items"
           :key="i"
