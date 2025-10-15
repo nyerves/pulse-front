@@ -6,7 +6,11 @@ const RegisterFormCard = defineAsyncComponent(() => import('./Login/RegisterForm
 const RolesFormModal = defineAsyncComponent(() => import('./Roles/RolesFormModal.vue'))
 const RoleCard = defineAsyncComponent(() => import('./Roles/RoleCard.vue'))
 const UserFormModal = defineAsyncComponent(() => import('./Users/UserFormModal.vue'))
-const PageLayout = defineAsyncComponent(() => import('./Core/PageLayout/PageLayout.vue'))
+const PageLayout = defineAsyncComponent(() => import('./PageLayout/PageLayout.vue'))
+const FigmaDashboard = defineAsyncComponent(() => import('./UserDashboard/FigmaDashboard.vue'))
+const StrategicDashboard = defineAsyncComponent(
+  () => import('./UserDashboard/StrategicDashboard.vue'),
+)
 
 export {
   LoginFormCard,
@@ -14,6 +18,8 @@ export {
   RegisterFormCard,
   RolesFormModal,
   RoleCard,
+  FigmaDashboard,
+  StrategicDashboard,
   UserFormModal,
   PageLayout,
 }

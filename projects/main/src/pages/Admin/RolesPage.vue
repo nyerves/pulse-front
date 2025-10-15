@@ -2,8 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { ActionService, PermissionService, RoleService } from '@common/services'
 import type { Permission, PermissionAction, Role } from '@common/models'
-import { RoleCard, RolesFormModal } from '@/components'
-import PageLayout from '@/components/Core/PageLayout/PageLayout.vue'
+import { RoleCard, RolesFormModal, PageLayout } from '@/components'
 
 const showCreateRoleModal = ref(false)
 const isLoading = ref(false)

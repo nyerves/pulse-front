@@ -7,9 +7,9 @@ defineProps<{
 
 <template>
   <div class="flex flex-col h-full w-full">
-    <div class="flex items-center justify-between mb-8 gap-2">
+    <div class="flex items-center justify-between mb-8 gap-3">
       <div class="mr-auto max-w-[65%]">
-        <h2 class="font-bold !mb-1">{{ title }}</h2>
+        <h3 class="font-bold !mb-1">{{ title }}</h3>
 
         <template v-if="description">
           <p class="opacity-60">{{ description }}</p>

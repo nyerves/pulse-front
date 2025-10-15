@@ -43,13 +43,15 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
           @click="toggleDarkMode"
         />
 
-        <Button
-          icon="pi pi-bell"
-          severity="secondary"
-          variant="text"
-          rounded
-          aria-label="Notification"
-        />
+        <OverlayBadge value="2" size="small">
+          <Button
+            icon="pi pi-bell"
+            severity="secondary"
+            variant="text"
+            rounded
+            aria-label="Notification"
+          />
+        </OverlayBadge>
 
         <div
           class="flex gap-4 menu-button"
