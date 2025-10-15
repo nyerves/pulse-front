@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import type { Role, User } from '@common/models'
 import { RoleService, UserService } from '@common/services'
-import { UserFormModal } from '@/components'
+import { PageLayout, UserFormModal } from '@/components'
 import { ConfirmationModal } from '@common/components'
 
 const loading = ref(false)
@@ -84,18 +84,13 @@ onMounted(async () => {
     @save="fetchUsers"
   />
 
-  <div>
-    <div class="flex items-center justify-between mb-8">
-      <div class="max-w-[80%]">
-        <h2 class="font-bold !mb-1">Gestión de Usuarios</h2>
-        <p class="opacity-60 text-wrap">
-          Aquí puedes gestionar los usuarios de la plataforma, asignar roles, permisos, y supervisar
-          la actividad de los usuarios.
-        </p>
-      </div>
-
+  <PageLayout
+    title="Gestión de Usuarios"
+    description="Aquí puedes gestionar los usuarios de la plataforma, asignar roles, permisos, y supervisar la actividad de los usuarios."
+  >
+    <template #actions>
       <Button icon="pi pi-plus" label="Crear Usuario" raised @click="onSelectUser()" />
-    </div>
+    </template>
 
     <div class="card !shadow-md">
       <DataTable :rows="10" paginator dataKey="id" :value="userList" :loading="loading">
@@ -177,5 +172,5 @@ onMounted(async () => {
         </Column>
       </DataTable>
     </div>
-  </div>
+  </PageLayout>
 </template>

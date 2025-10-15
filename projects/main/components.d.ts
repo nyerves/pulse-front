@@ -25,6 +25,7 @@ declare module 'vue' {
     LogoAnimated: typeof import('./src/components/Login/LogoAnimated.vue')['default']
     Menu: typeof import('primevue/menu')['default']
     Message: typeof import('primevue/message')['default']
+    PageLayout: typeof import('./src/components/Core/PageLayout/PageLayout.vue')['default']
     Password: typeof import('primevue/password')['default']
     PermissionActionCard: typeof import('./src/components/Roles/PermissionActionCard.vue')['default']
     Popover: typeof import('primevue/popover')['default']

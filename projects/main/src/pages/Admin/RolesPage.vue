@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { RoleCard, RolesFormModal } from '@/components'
 import { ActionService, PermissionService, RoleService } from '@common/services'
 import type { Permission, PermissionAction, Role } from '@common/models'
+import { RoleCard, RolesFormModal } from '@/components'
+import PageLayout from '@/components/Core/PageLayout/PageLayout.vue'
 
 const showCreateRoleModal = ref(false)
 const isLoading = ref(false)
@@ -38,7 +39,20 @@ onMounted(() => fetchRoles())
 </script>
 
 <template>
-  <div>
+  <PageLayout
+    title="Gestión de Roles"
+    description="Configure roles y asigne permisos para el control de acceso"
+  >
+    <template #actions>
+      <Button
+        raised
+        icon="pi pi-plus"
+        label="Crear nuevo Rol"
+        class="bg-teal-600 hover:bg-teal-700 text-white"
+        @click="showCreateRoleModal = true"
+      />
+    </template>
+
     <RolesFormModal
       v-if="showCreateRoleModal"
       :actions="actions"
@@ -47,21 +61,6 @@ onMounted(() => fetchRoles())
       @saved="fetchRoles"
       @close="closeModal"
     />
-
-    <div class="flex items-center justify-between mb-8">
-      <div>
-        <h2 class="font-bold !mb-1">Gestión de Roles</h2>
-        <p class="opacity-60">Configure roles y asigne permisos para el control de acceso</p>
-      </div>
-
-      <Button
-        raised
-        icon="pi pi-plus"
-        label="Crear nuevo Rol"
-        class="bg-teal-600 hover:bg-teal-700 text-white"
-        @click="showCreateRoleModal = true"
-      />
-    </div>
 
     <div class="flex justify-end mb-6">
       <IconField>
@@ -87,5 +86,5 @@ onMounted(() => fetchRoles())
         />
       </template>
     </div>
-  </div>
+  </PageLayout>
 </template>

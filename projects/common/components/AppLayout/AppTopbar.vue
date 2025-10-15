@@ -20,7 +20,7 @@ const items = ref([
   {
     label: "Cerrar sesión",
     icon: "pi pi-sign-out",
-    class: "!text-red-600 bg-red-50 hover:!bg-red-100",
+    class: "border-t border-solid border-gray-300",
     command: () => AuthService.Logout(),
   },
 ]);
@@ -34,9 +34,14 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
 
     <div class="layout-topbar-actions">
       <div class="layout-config-menu">
-        <button v-if="false" type="button" class="layout-topbar-action" @click="toggleDarkMode">
-          <i :class="['pi', isDarkTheme ? 'pi-sun' : 'pi-moon']" />
-        </button>
+        <Button
+          rounded
+          variant="text"
+          severity="secondary"
+          aria-label="theme"
+          :icon="`pi ${isDarkTheme ? 'pi-sun' : 'pi-moon'}`"
+          @click="toggleDarkMode"
+        />
 
         <Button
           icon="pi pi-bell"
@@ -46,22 +51,26 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
           aria-label="Notification"
         />
 
-        <div class="flex gap-4 menu-button" aria-controls="overlay_menu" @click="toggle">
+        <div
+          class="flex gap-4 menu-button"
+          aria-controls="overlay_menu"
+          @click="toggle"
+        >
           <Avatar
             image="https://i.pravatar.cc/150?img=68"
             shape="circle"
             class="avatar-style"
-            size="large"
+            size="normal"
           />
 
           <div class="flex flex-col">
-            <h6 class="font-bold !mb-0">{{ user?.name }}</h6>
-            <p class="text-xs opacity-20">{{ user?.email }}</p>
+            <p class="text-sm font-semibold !mb-0">{{ user?.name }}</p>
+            <p class="text-xs text-secondary">Nivel estratégico</p>
           </div>
 
           <span
             class="pi"
-            style="font-size: 0.8rem"
+            style="font-size: 0.7rem; opacity: 70%"
             :class="isActiveMenu ? 'pi-chevron-up' : 'pi-chevron-down'"
           />
 
@@ -69,22 +78,18 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
             popup
             ref="menu"
             id="overlay_menu"
+            pt:root:style="width: 15rem;"
             :model="items"
             @show="isActiveMenu = true"
             @hide="isActiveMenu = false"
           >
             <template #start>
               <div class="user-info border-b border-solid border-gray-300">
-                <h6 class="font-bold !mb-1">{{ user?.name }}</h6>
-                <p class="text-xs opacity-20">{{ user?.email }}</p>
+                <p class="text-sm font-semibold !mb-0">{{ user?.name }}</p>
+                <p class="text-xs text-secondary">
+                  {{ user?.email }}
+                </p>
               </div>
-            </template>
-
-            <template #item="{ item, props }">
-              <a v-ripple class="flex items-center py-2" v-bind="props.action">
-                <span :class="item.icon" />
-                <span>{{ item.label }}</span>
-              </a>
             </template>
           </Menu>
         </div>
@@ -111,7 +116,7 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
 }
 
 .user-info {
-  padding: 0.8rem 1.5rem;
+  padding: 0.8rem 1rem;
   background-color: var(--surface-ground);
 }
 </style>

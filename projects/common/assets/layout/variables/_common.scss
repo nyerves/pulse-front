@@ -1,4 +1,5 @@
 :root {
+  --p-content-border-radius: 8px !important;
   --primary-color: var(--p-primary-color);
   --primary-contrast-color: var(--p-primary-contrast-color);
   --text-color: var(--p-text-color);
@@ -17,5 +18,6 @@
   --focus-ring-color: var(--p-focus-ring-color);
   --focus-ring-offset: var(--p-focus-ring-offset);
   --focus-ring-shadow: var(--p-focus-ring-shadow);
+  --p-button-border-radius: var(--p-content-border-radius) !important;
   --top-menu-height: 5rem;
 }
