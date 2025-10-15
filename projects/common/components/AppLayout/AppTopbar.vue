@@ -67,7 +67,7 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
 
           <div class="flex flex-col">
             <p class="text-sm font-semibold !mb-0">{{ user?.name }}</p>
-            <p class="text-xs text-secondary">Nivel estratégico</p>
+            <p class="text-xs text-secondary">Nivel Estratégico</p>
           </div>
 
           <span

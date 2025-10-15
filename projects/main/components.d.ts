@@ -20,6 +20,7 @@ declare module 'vue' {
     FigmaDashboard: typeof import('./src/components/UserDashboard/FigmaDashboard.vue')['default']
     FloatLabel: typeof import('primevue/floatlabel')['default']
     IconField: typeof import('primevue/iconfield')['default']
+    InformativeCard: typeof import('./src/components/InformativeCard/InformativeCard.vue')['default']
     InputIcon: typeof import('primevue/inputicon')['default']
     InputText: typeof import('primevue/inputtext')['default']
     LoginFormCard: typeof import('./src/components/Login/LoginFormCard.vue')['default']

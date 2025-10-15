@@ -46,7 +46,7 @@ onMounted(() => fetchRoles())
       <Button
         raised
         icon="pi pi-plus"
-        label="Crear nuevo Rol"
+        label="Crear Rol"
         class="bg-teal-600 hover:bg-teal-700 text-white"
         @click="showCreateRoleModal = true"
       />
