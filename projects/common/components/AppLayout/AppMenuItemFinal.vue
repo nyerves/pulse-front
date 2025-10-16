@@ -88,7 +88,7 @@ onMounted(() => {
   border-left: 2px solid var(--surface-border);
 
   .subitem-route {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     margin-left: 1.3rem;
     margin-bottom: 0.3rem;
   }

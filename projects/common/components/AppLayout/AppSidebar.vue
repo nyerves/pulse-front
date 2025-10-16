@@ -37,7 +37,7 @@ const appMenuList = ref<AppMenuList[]>([
       },
       {
         label: "Diario",
-        to: "/uikit/tree",
+        to: "/reports/daily",
       },
       {
         label: "Semanal",

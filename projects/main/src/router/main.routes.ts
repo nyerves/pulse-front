@@ -35,6 +35,17 @@ const routes: RouteRecordRaw[] = [
           },
         ],
       },
+      {
+        path: '/reports',
+        children: [
+          {
+            path: 'daily',
+            name: 'reports-daily',
+            meta: { requireAuth: true },
+            component: Pages.DailyReportPage,
+          },
+        ],
+      },
     ],
   },
 ]
