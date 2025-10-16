@@ -20,8 +20,8 @@ const tabOptions = computed(() => [
     description="Consolidado de 11 Hospitales | Octubre 2025"
   >
     <template #actions>
-      <Button severity="secondary" raised icon="pi pi-filter" label="Filtrar Hospitales" />
-      <Button raised icon="pi pi-download" label="Generar Reporte Consolidado" />
+      <Button severity="secondary" icon="pi pi-filter" label="Filtrar Hospitales" />
+      <Button icon="pi pi-download" label="Generar Reporte Consolidado" />
     </template>
 
     <div>

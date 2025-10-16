@@ -9,19 +9,10 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Avatar: typeof import('primevue/avatar')['default']
-    Badge: typeof import('primevue/badge')['default']
     Button: typeof import('primevue/button')['default']
-    Checkbox: typeof import('primevue/checkbox')['default']
-    Column: typeof import('primevue/column')['default']
-    DataTable: typeof import('primevue/datatable')['default']
-    Dialog: typeof import('primevue/dialog')['default']
-    Divider: typeof import('primevue/divider')['default']
-    Dropdown: typeof import('primevue/dropdown')['default']
+    Chart: typeof import('primevue/chart')['default']
     FigmaDashboard: typeof import('./src/components/UserDashboard/FigmaDashboard.vue')['default']
-    FloatLabel: typeof import('primevue/floatlabel')['default']
-    IconField: typeof import('primevue/iconfield')['default']
     InformativeCard: typeof import('./src/components/InformativeCard/InformativeCard.vue')['default']
-    InputIcon: typeof import('primevue/inputicon')['default']
     InputText: typeof import('primevue/inputtext')['default']
     LoginFormCard: typeof import('./src/components/Login/LoginFormCard.vue')['default']
     LogoAnimated: typeof import('./src/components/Login/LogoAnimated.vue')['default']
@@ -31,8 +22,6 @@ declare module 'vue' {
     PageLayout: typeof import('./src/components/PageLayout/PageLayout.vue')['default']
     Password: typeof import('primevue/password')['default']
     PermissionActionCard: typeof import('./src/components/Roles/PermissionActionCard.vue')['default']
-    Popover: typeof import('primevue/popover')['default']
-    ProgressSpinner: typeof import('primevue/progressspinner')['default']
     RegisterFormCard: typeof import('./src/components/Login/RegisterFormCard.vue')['default']
     RoleCard: typeof import('./src/components/Roles/RoleCard.vue')['default']
     RolesFormModal: typeof import('./src/components/Roles/RolesFormModal.vue')['default']
@@ -41,14 +30,8 @@ declare module 'vue' {
     StrategicDashboard: typeof import('./src/components/UserDashboard/StrategicDashboard.vue')['default']
     Tab: typeof import('primevue/tab')['default']
     TabList: typeof import('primevue/tablist')['default']
-    TabPanel: typeof import('primevue/tabpanel')['default']
-    TabPanels: typeof import('primevue/tabpanels')['default']
     Tabs: typeof import('primevue/tabs')['default']
-    Tag: typeof import('primevue/tag')['default']
     Toast: typeof import('primevue/toast')['default']
     UserFormModal: typeof import('./src/components/Users/UserFormModal.vue')['default']
-  }
-  export interface GlobalDirectives {
-    Ripple: typeof import('primevue/ripple')['default']
   }
 }

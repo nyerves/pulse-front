@@ -89,7 +89,7 @@ onMounted(async () => {
     description="Aquí puedes gestionar los usuarios de la plataforma, asignar roles, permisos, y supervisar la actividad de los usuarios."
   >
     <template #actions>
-      <Button icon="pi pi-plus" label="Crear Usuario" raised @click="onSelectUser()" />
+      <Button icon="pi pi-plus" label="Crear Usuario" @click="onSelectUser()" />
     </template>
 
     <div class="card !shadow-md">

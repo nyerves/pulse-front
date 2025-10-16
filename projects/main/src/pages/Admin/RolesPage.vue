@@ -44,7 +44,6 @@ onMounted(() => fetchRoles())
   >
     <template #actions>
       <Button
-        raised
         icon="pi pi-plus"
         label="Crear Rol"
         class="bg-teal-600 hover:bg-teal-700 text-white"

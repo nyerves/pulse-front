@@ -14,7 +14,7 @@ const props = defineProps<{
     modal
     :header="props.title"
     :style="{ width: props.width || '40rem' }"
-    pt:root:class="!border-0 !bg-transparent"
+    pt:root:class="!border-0"
     pt:mask:class="backdrop-blur-sm"
     @hide="$emit('close')"
     @update:visible="$emit('close')"
@@ -24,7 +24,12 @@ const props = defineProps<{
     </div>
 
     <div class="dialog-footer">
-      <Button type="button" label="Cancel" severity="secondary" @click="$emit('close')" />
+      <Button
+        type="button"
+        label="Cancel"
+        severity="secondary"
+        @click="$emit('close')"
+      />
       <Button
         type="button"
         label="Save"
