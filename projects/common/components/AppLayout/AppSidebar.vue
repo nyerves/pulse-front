@@ -19,7 +19,7 @@ const appMenuList = ref<AppMenuList[]>([
       },
       {
         label: "Nivel 2: Táctico",
-        to: "/dashboard",
+        to: "/dashboard-tactic",
       },
     ],
   },

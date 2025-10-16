@@ -1,23 +1,37 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import { AppMenuList } from "@common/models";
 
-defineProps<{ isCollapsed: boolean; item: AppMenuList }>();
+const props = defineProps<{ isCollapsed: boolean; item: AppMenuList }>();
+const route = useRoute();
 
-const isActiveMenu = ref(false);
 const collapsedSubMenu = ref(false);
 
+const isGroupActive = computed(() => {
+  return getIsGroupActive();
+});
+
 const clickMenu = () => {
-  isActiveMenu.value = !isActiveMenu.value;
   collapsedSubMenu.value = !collapsedSubMenu.value;
 };
+const getIsGroupActive = () => {
+  return props.item.items.some((item) => isRouteActive(item.to));
+};
+const isRouteActive = (path: string) => {
+  return route.path.startsWith(path);
+};
+
+onMounted(() => {
+  collapsedSubMenu.value = getIsGroupActive();
+});
 </script>
 
 <template>
   <li style="margin-bottom: 0.7rem">
     <div
       class="item-route main-item-route"
-      :class="{ 'active-route': isActiveMenu }"
+      :class="{ 'active-route': isGroupActive }"
       @click="clickMenu"
     >
       <i class="pi" :class="item.icon" />
@@ -31,7 +45,10 @@ const clickMenu = () => {
       >
         <template v-for="subItem in item.items" :key="index">
           <RouterLink :to="subItem.to">
-            <div class="item-route subitem-route">
+            <div
+              class="item-route subitem-route"
+              :class="{ 'sub-active-route': isRouteActive(subItem.to) }"
+            >
               {{ subItem.label }}
             </div>
           </RouterLink>
@@ -67,13 +84,18 @@ const clickMenu = () => {
 
 .subitem-container {
   margin-top: 0.3rem;
-  margin-left: 1.5rem;
+  margin-left: 1.4rem;
   border-left: 2px solid var(--surface-border);
 
   .subitem-route {
     font-size: 0.85rem;
     margin-left: 1.3rem;
     margin-bottom: 0.3rem;
+  }
+
+  .sub-active-route {
+    font-weight: 600;
+    background-color: var(--surface-hover);
   }
 }
 </style>
