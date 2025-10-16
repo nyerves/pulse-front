@@ -1,12 +1,12 @@
 export interface AppMenuList {
   label: string;
+  icon: string;
   items: AppMenuItem[];
 }
 
 export interface AppMenuItem {
   label: string;
-  icon?: string;
-  to?: string;
+  to: string;
   url?: string;
   class?: string;
   target?: string;

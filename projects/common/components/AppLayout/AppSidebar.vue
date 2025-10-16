@@ -2,62 +2,77 @@
 import { ref } from "vue";
 import type { AppMenuList } from "@common/models";
 import { useLayout } from "@common/composables";
-import LogoBlack from "@common/assets/png/logo_verde.png";
+import LogoGreen from "@common/assets/png/logo_verde.png";
 import LogoWhite from "@common/assets/svg/pulse-logo.svg";
-import AppMenuItem from "./AppMenuItem.vue";
+import AppMenuItemFinal from "./AppMenuItemFinal.vue";
 
 const { isDarkTheme, toggleMenu, isSidebarActive } = useLayout();
 
 const appMenuList = ref<AppMenuList[]>([
   {
-    label: "Home",
+    label: "Dashboard",
+    icon: "pi-objects-column",
     items: [
       {
-        label: "Dashboard",
-        icon: "pi pi-fw pi-objects-column",
+        label: "Nivel 1: Estratégico",
+        to: "/dashboard",
+      },
+      {
+        label: "Nivel 2: Táctico",
         to: "/dashboard",
       },
     ],
   },
   {
-    label: "Catálogos especiales",
+    label: "Reportes",
+    icon: "pi-chart-bar",
     items: [
       {
-        label: "CIE-I0",
-        icon: "pi pi-fw pi-id-card",
+        label: "Cumplimiento",
         to: "/uikit/formlayout",
       },
       {
-        label: "Procedimientos",
-        icon: "pi pi-fw pi-check-square",
+        label: "Incidencias",
         to: "/uikit/input",
       },
-      { label: "Medicamentos", icon: "pi pi-fw pi-table", to: "/uikit/table" },
-      { label: "CAUSES", icon: "pi pi-fw pi-list", to: "/uikit/list" },
       {
-        label: "Bienes Terapéuticos",
-        icon: "pi pi-fw pi-share-alt",
+        label: "Diario",
         to: "/uikit/tree",
       },
-      { label: "Patologías", icon: "pi pi-fw pi-tablet", to: "/uikit/panel" },
+      {
+        label: "Semanal",
+        to: "/uikit/tree",
+      },
+      {
+        label: "Centro de Recursos",
+        to: "/uikit/tree",
+      },
+    ],
+  },
+  {
+    label: "Gestión de Rezago",
+    icon: "pi-clipboard",
+    items: [
+      {
+        label: "Rezago",
+        to: "/uikit/rezago",
+      },
     ],
   },
   {
     label: "Administración",
+    icon: "pi-cog",
     items: [
       {
         label: "Usuarios",
-        icon: "pi pi-fw pi-user-edit",
         to: "/admin/users",
       },
       {
         label: "Roles",
-        icon: "pi pi-fw pi-users",
         to: "/admin/roles",
       },
       {
         label: "Permisos",
-        icon: "pi pi-fw pi-shield",
         to: "/admin/permissions",
       },
     ],
@@ -71,12 +86,12 @@ const appMenuList = ref<AppMenuList[]>([
     :class="{ 'layout-sidebar-collapsed': !isSidebarActive }"
   >
     <div class="layout-logo">
-      <img :src="!isDarkTheme ? LogoWhite : LogoBlack" alt="Logo" />
+      <img :src="!isDarkTheme ? LogoWhite : LogoGreen" alt="Logo" />
     </div>
 
     <ul class="layout-menu">
-      <template v-for="(item, i) in appMenuList" :key="item">
-        <AppMenuItem :item="item" :index="i" />
+      <template v-for="item in appMenuList" :key="item">
+        <AppMenuItemFinal :item="item" :is-collapsed="!isSidebarActive" />
       </template>
     </ul>
 
@@ -122,25 +137,6 @@ const appMenuList = ref<AppMenuList[]>([
 
   .layout-logo img {
     height: 2.5rem;
-  }
-
-  .layout-menu {
-    li {
-      .layout-menuitem-text {
-        display: none;
-      }
-
-      .layout-menuitem-root-text {
-        display: none;
-      }
-
-      .layout-menuitem-icon {
-        font-size: 1.5rem;
-        margin-right: 0;
-        text-align: center;
-        width: 100%;
-      }
-    }
   }
 }
 </style>

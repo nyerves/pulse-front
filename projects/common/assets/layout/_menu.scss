@@ -42,17 +42,6 @@
     }
   }
 
-  a {
-    user-select: none;
-    padding: 1rem 6rem;
-
-    &.active-menuitem {
-      > .layout-submenu-toggler {
-        transform: rotate(-180deg);
-      }
-    }
-  }
-
   li.active-menuitem {
     > a {
       padding: 0.7rem 1rem;
