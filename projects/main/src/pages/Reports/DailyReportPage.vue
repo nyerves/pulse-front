@@ -1,8 +1,30 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { PageLayout } from '@/components'
+import { SuccessModal } from '@common/components'
+
+const fileXlsx = ref<File>()
+const showSuccessModal = ref(false)
+const reportStep = ref<'load' | 'file-loaded' | 'progress' | 'loaded'>('loaded')
+
+const onChangeFile = (event: Event) => {
+  const target = event.target as HTMLInputElement
+
+  if (target.files && target.files.length > 0) {
+    fileXlsx.value = target.files[0]
+    reportStep.value = 'file-loaded'
+  } else {
+    fileXlsx.value = undefined
+    reportStep.value = 'load'
+  }
+}
 </script>
 
 <template>
+  <template v-if="showSuccessModal">
+    <SuccessModal />
+  </template>
+
   <PageLayout title="Carga Reporte Diario">
     <div class="flex justify-center">
       <div class="card shadow-md border border-gray-200 w-[38rem]">
@@ -14,7 +36,7 @@ import { PageLayout } from '@/components'
           <!-- Contenedor de vistas que cambian -->
           <div id="view-container">
             <!-- Vista 1: Dropzone (inicial) -->
-            <div id="dropzone-view">
+            <div v-if="reportStep === 'load'">
               <label
                 for="file-input"
                 id="drop-zone"
@@ -22,47 +44,125 @@ import { PageLayout } from '@/components'
               >
                 <div class="flex flex-col items-center justify-center space-y-4">
                   <i class="text-gray-400 pi pi-cloud-upload" style="font-size: 3.7rem" />
-                  <p class="text-lg font-medium text-gray-700">Arrastra y suelta tu archivo aquí</p>
-                  <p class="text-sm text-gray-500">o</p>
+                  <p class="text-lg font-medium">Arrastra y suelta tu archivo aquí</p>
+                  <p class="text-sm">o</p>
+
                   <span
                     class="px-5 py-2.5 text-sm font-semibold text-white bg-teal-600 rounded-lg hover:bg-teal-700 transition-colors shadow-sm"
                   >
                     Seleccionar Archivo
                   </span>
                 </div>
+
                 <input
                   id="file-input"
                   type="file"
                   class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                  @change="onChangeFile"
                 />
               </label>
-              <p class="text-center text-xs text-gray-400 mt-4">Solo se aceptan archivos .xlsx</p>
+
+              <p class="text-center text-xs text-secondary !mt-4">Solo se aceptan archivos .xlsx</p>
             </div>
 
             <!-- Vista 2: Archivo cargado (esperando subida) -->
-            <div
-              id="file-loaded-view"
-              class="hidden relative border-2 border-dashed border-green-500 rounded-lg p-6 bg-green-50"
-            >
-              <div class="flex items-center gap-4">
-                <div class="flex-shrink-0 bg-green-100 p-2 rounded-full">
-                  <i data-lucide="check-circle-2" class="w-6 h-6 text-green-600"></i>
+            <div v-else-if="reportStep === 'file-loaded'">
+              <div id="report-header-card" class="mb-8">
+                <!-- Plantilla para Reporte Diario -->
+                <div
+                  id="daily-header-card"
+                  class="bg-gray-50 p-4 rounded-lg border border-gray-200"
+                >
+                  <dl class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-3 text-sm">
+                    <div>
+                      <dt class="text-xs text-gray-500">Identificador</dt>
+                      <dd class="font-semibold text-gray-800 font-mono">INT-PULSE-001</dd>
+                    </div>
+                    <div>
+                      <dt class="text-xs text-gray-500">Responsable</dt>
+                      <dd class="font-semibold text-gray-800">Director de Hospital</dd>
+                    </div>
+                    <div>
+                      <dt class="text-xs text-gray-500">Frecuencia</dt>
+                      <dd class="font-semibold text-gray-800">Diaria</dd>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <dt class="text-xs text-gray-500">Hospital</dt>
+                      <dd id="header-hospital-daily" class="font-semibold text-gray-800">
+                        H.G. O'Horán
+                      </dd>
+                    </div>
+                    <div class="col-span-2 sm:col-span-2">
+                      <dt class="text-xs text-gray-500">Fecha de Reporte</dt>
+                      <dd id="header-date-daily" class="font-semibold text-gray-800">--</dd>
+                    </div>
+                    <div class="col-span-2 sm:col-span-3">
+                      <dt class="text-xs text-gray-500">Contenido</dt>
+                      <dd class="text-gray-700">Ocupación, Productividad, Abasto, Incidencias.</dd>
+                    </div>
+                  </dl>
                 </div>
-                <p id="filename-loaded" class="font-semibold text-gray-700 text-left truncate">
-                  Archivo_simulado.xlsx
-                </p>
+                <!-- Plantilla para Reporte Semanal -->
+                <div
+                  id="weekly-header-card"
+                  class="hidden bg-gray-50 p-4 rounded-lg border border-gray-200"
+                >
+                  <dl class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-3 text-sm">
+                    <div>
+                      <dt class="text-xs text-gray-500">Identificador</dt>
+                      <dd class="font-semibold text-gray-800 font-mono">INT-PULSE-003</dd>
+                    </div>
+                    <div>
+                      <dt class="text-xs text-gray-500">Responsable</dt>
+                      <dd class="font-semibold text-gray-800">Administrativo</dd>
+                    </div>
+                    <div>
+                      <dt class="text-xs text-gray-500">Frecuencia</dt>
+                      <dd class="font-semibold text-gray-800">Semanal</dd>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                      <dt class="text-xs text-gray-500">Hospital</dt>
+                      <dd id="header-hospital-weekly" class="font-semibold text-gray-800">
+                        H.G. O'Horán
+                      </dd>
+                    </div>
+                    <div class="col-span-2 sm:col-span-2">
+                      <dt class="text-xs text-gray-500">Periodo del Reporte</dt>
+                      <dd id="header-date-weekly" class="font-semibold text-gray-800">--</dd>
+                    </div>
+                    <div class="col-span-2 sm:col-span-3">
+                      <dt class="text-xs text-gray-500">Contenido</dt>
+                      <dd class="text-gray-700">Salud Laboral (RRHH), Eficiencia 1er Nivel.</dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+
+              <div
+                class="relative border-2 border-dashed border-green-500 rounded-lg p-6 bg-green-50"
+              >
+                <div class="flex items-center gap-4">
+                  <div class="flex-shrink-0 bg-green-100 p-2 rounded-full">
+                    <i class="text-green-600 pi pi-check-circle"></i>
+                  </div>
+
+                  <p id="filename-loaded" class="font-semibold text-secondary text-left truncate">
+                    {{ fileXlsx?.name }}
+                  </p>
+                </div>
               </div>
             </div>
 
             <!-- Vista 3: Progreso y Validación -->
-            <div id="progress-view" class="hidden">
+            <div v-else-if="reportStep === 'progress'">
               <div class="flex items-center gap-4 mb-4">
                 <i data-lucide="file-spreadsheet" class="w-8 h-8 text-teal-600 flex-shrink-0"></i>
                 <p id="filename-progress" class="font-semibold text-gray-700 truncate">
                   nombre_del_archivo.xlsx
                 </p>
               </div>
+
               <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
                 <div
                   id="progress-bar"
@@ -70,111 +170,28 @@ import { PageLayout } from '@/components'
                   style="width: 0%"
                 ></div>
               </div>
+
               <ul id="validation-steps" class="space-y-3 text-sm">
                 <!-- Los pasos de validación se insertarán aquí dinámicamente -->
               </ul>
             </div>
 
             <!-- Vista 4: Resultados (Éxito o Error) -->
-            <div id="results-view" class="hidden text-center">
+            <div v-else-if="reportStep === 'loaded'" class="text-center">
               <!-- Mensaje de Éxito -->
-              <div id="success-message" class="hidden">
+              <div id="success-message">
                 <div
                   class="mx-auto w-16 h-16 flex items-center justify-center bg-green-100 rounded-full mb-4"
                 >
-                  <i data-lucide="check" class="w-10 h-10 text-green-600"></i>
+                  <i class="pi pi-check-circle text-green-600" style="font-size: 1.5rem"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-800">Validación Exitosa</h3>
-                <p class="mt-2 text-gray-600">
+
+                <h5 class="font-bold">Validación Exitosa</h5>
+                <p class="mt-2 text-secondary">
                   El archivo ha sido procesado. Revisa el resumen antes de confirmar.
                 </p>
-
-                <!-- Contenedor para los resúmenes dinámicos -->
-                <div id="summary-container" class="mt-6 text-left font-sans">
-                  <!-- Plantilla para Resumen de Reporte Diario -->
-                  <div id="daily-summary-template" class="hidden space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                        <h3 class="text-lg font-bold text-gray-900 mb-4">Resumen de Ocupación</h3>
-                        <div class="flex items-center justify-center gap-6">
-                          <div class="relative w-40 h-40">
-                            <canvas id="summary-chart-ocupacion"></canvas>
-                          </div>
-                          <div id="summary-ocupacion-legend" class="space-y-3">
-                            <!-- Leyenda se genera dinámicamente -->
-                          </div>
-                        </div>
-                      </div>
-                      <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                        <h3 class="text-lg font-bold text-gray-900 mb-4">Productividad del Día</h3>
-                        <div
-                          id="summary-productividad-grid"
-                          class="grid grid-cols-2 gap-y-4 gap-x-2"
-                        >
-                          <!-- KPIs de productividad se generan dinámicamente -->
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      id="summary-abasto-alert"
-                      class="bg-yellow-50 border border-yellow-300 p-6 rounded-xl hidden"
-                    >
-                      <div class="flex items-start gap-4">
-                        <i data-lucide="shield-alert" class="w-8 h-8 text-yellow-600 mt-1"></i>
-                        <div>
-                          <h3 class="text-lg font-bold text-yellow-900">¡Alerta de Abasto!</h3>
-                          <p
-                            class="text-4xl font-extrabold text-yellow-700 my-2"
-                            id="summary-abasto-total"
-                          >
-                            0
-                          </p>
-                          <p class="text-sm text-yellow-800 mb-4">
-                            Claves de medicamentos en cero.
-                          </p>
-                          <div
-                            id="summary-abasto-breakdown"
-                            class="flex flex-wrap gap-x-6 gap-y-2 text-sm"
-                          >
-                            <!-- Desglose de abasto se genera dinámicamente -->
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-200">
-                      <h3 class="text-lg font-bold text-gray-900 mb-4">
-                        Nuevas Incidencias Reportadas
-                      </h3>
-                      <ul id="summary-incidencias-list" class="space-y-4">
-                        <!-- Incidencias se generan dinámicamente -->
-                      </ul>
-                    </div>
-                  </div>
-
-                  <!-- Plantilla para Resumen de Reporte Semanal -->
-                  <div id="weekly-summary-template" class="hidden space-y-6">
-                    <div>
-                      <h3 class="text-xl font-bold text-gray-900 mb-4">
-                        KPI de Salud Laboral (RRHH)
-                      </h3>
-                      <div id="summary-rrhh-grid" class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                        <!-- KPIs de RRHH se generan dinámicamente -->
-                      </div>
-                    </div>
-                    <div>
-                      <h3 class="text-xl font-bold text-gray-900 mb-4">
-                        KPI de Eficiencia de Primer Nivel
-                      </h3>
-                      <div
-                        id="summary-eficiencia-grid"
-                        class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
-                      >
-                        <!-- KPIs de Eficiencia se generan dinámicamente -->
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
+
               <!-- Mensaje de Error -->
               <div id="error-message" class="hidden">
                 <div
@@ -193,24 +210,21 @@ import { PageLayout } from '@/components'
             </div>
           </div>
 
-          <!-- Botones de Acción (siempre visibles, pero su estado cambia) -->
           <div
             id="action-buttons"
             class="flex items-center justify-end space-x-4 pt-4 border-t border-gray-100"
           >
-            <button
-              id="cancel-btn"
-              class="px-6 py-2 rounded-lg text-sm font-semibold border border-gray-300 text-gray-700 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Cancelar
-            </button>
-            <button
-              id="submit-btn"
-              class="px-6 py-2 text-sm font-semibold text-white bg-teal-600 rounded-lg hover:bg-teal-700 disabled:bg-teal-300 disabled:cursor-not-allowed"
-            >
-              Subir Reporte
-            </button>
-            <!-- El botón de confirmación final reemplazará a los otros cuando sea necesario -->
+            <template v-if="reportStep === 'loaded'">
+              <Button class="w-full font-semibold !text-sm" @click="showSuccessModal = true"
+                >Confirmar y Finalizar carga</Button
+              >
+            </template>
+
+            <template v-else>
+              <Button severity="secondary" variant="outlined"> Cancelar </Button>
+
+              <Button :disabled="!fileXlsx" class="font-semibold"> Subir Reporte </Button>
+            </template>
           </div>
         </div>
       </div>

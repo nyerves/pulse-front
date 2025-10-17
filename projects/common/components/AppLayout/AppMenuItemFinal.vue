@@ -91,6 +91,10 @@ onMounted(() => {
     font-size: 0.8rem;
     margin-left: 1.3rem;
     margin-bottom: 0.3rem;
+
+    &:not(.sub-active-route) {
+      color: var(--text-color-secondary);
+    }
   }
 
   .sub-active-route {

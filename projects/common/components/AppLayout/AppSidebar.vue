@@ -6,8 +6,9 @@ import LogoGreen from "@common/assets/png/logo_verde.png";
 import LogoWhite from "@common/assets/svg/pulse-logo.svg";
 import AppMenuItemFinal from "./AppMenuItemFinal.vue";
 
-const { isDarkTheme, toggleMenu, isSidebarActive } = useLayout();
+const { isDarkTheme } = useLayout();
 
+const isCollapsed = ref(false);
 const appMenuList = ref<AppMenuList[]>([
   {
     label: "Dashboard",
@@ -83,7 +84,7 @@ const appMenuList = ref<AppMenuList[]>([
 <template>
   <div
     class="layout-sidebar"
-    :class="{ 'layout-sidebar-collapsed': !isSidebarActive }"
+    :class="{ 'layout-sidebar-collapsed': !isCollapsed }"
   >
     <div class="layout-logo">
       <img :src="!isDarkTheme ? LogoWhite : LogoGreen" alt="Logo" />
@@ -91,21 +92,19 @@ const appMenuList = ref<AppMenuList[]>([
 
     <ul class="layout-menu">
       <template v-for="item in appMenuList" :key="item">
-        <AppMenuItemFinal :item="item" :is-collapsed="!isSidebarActive" />
+        <AppMenuItemFinal :item="item" :is-collapsed="!isCollapsed" />
       </template>
     </ul>
 
     <div class="layout-sidebar-footer">
       <Button
         :icon="
-          isSidebarActive
-            ? 'pi pi-angle-double-left'
-            : 'pi pi-angle-double-right'
+          isCollapsed ? 'pi pi-angle-double-left' : 'pi pi-angle-double-right'
         "
         class="p-button-text p-button-plain"
         size="large"
         style="width: 100%"
-        @click="toggleMenu"
+        @click="isCollapsed = !isCollapsed"
       />
     </div>
   </div>

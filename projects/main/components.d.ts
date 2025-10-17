@@ -9,10 +9,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Avatar: typeof import('primevue/avatar')['default']
-    Badge: typeof import('primevue/badge')['default']
     Button: typeof import('primevue/button')['default']
     Chart: typeof import('primevue/chart')['default']
-    Checkbox: typeof import('primevue/checkbox')['default']
     Column: typeof import('primevue/column')['default']
     DataTable: typeof import('primevue/datatable')['default']
     Dialog: typeof import('primevue/dialog')['default']
@@ -32,8 +30,6 @@ declare module 'vue' {
     PageLayout: typeof import('./src/components/PageLayout/PageLayout.vue')['default']
     Password: typeof import('primevue/password')['default']
     PermissionActionCard: typeof import('./src/components/Roles/PermissionActionCard.vue')['default']
-    Popover: typeof import('primevue/popover')['default']
-    ProgressSpinner: typeof import('primevue/progressspinner')['default']
     RegisterFormCard: typeof import('./src/components/Login/RegisterFormCard.vue')['default']
     RoleCard: typeof import('./src/components/Roles/RoleCard.vue')['default']
     RolesFormModal: typeof import('./src/components/Roles/RolesFormModal.vue')['default']
@@ -43,7 +39,6 @@ declare module 'vue' {
     Tab: typeof import('primevue/tab')['default']
     TabList: typeof import('primevue/tablist')['default']
     Tabs: typeof import('primevue/tabs')['default']
-    Tag: typeof import('primevue/tag')['default']
     Toast: typeof import('primevue/toast')['default']
     UserFormModal: typeof import('./src/components/Users/UserFormModal.vue')['default']
   }

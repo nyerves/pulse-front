@@ -24,19 +24,21 @@ const props = defineProps<{
     </div>
 
     <div class="dialog-footer">
-      <Button
-        type="button"
-        label="Cancel"
-        severity="secondary"
-        @click="$emit('close')"
-      />
-      <Button
-        type="button"
-        label="Save"
-        @click="$emit('save')"
-        :loading="props.loading"
-        :disabled="props.saveDisabled"
-      />
+      <slot name="footer">
+        <Button
+          type="button"
+          label="Cancel"
+          severity="secondary"
+          @click="$emit('close')"
+        />
+        <Button
+          type="button"
+          label="Save"
+          :loading="props.loading"
+          :disabled="props.saveDisabled"
+          @click="$emit('save')"
+        />
+      </slot>
     </div>
   </Dialog>
 </template>
