@@ -5,7 +5,7 @@ import { RoleService, UserService } from '@common/services'
 import { PageLayout, UserFormModal } from '@/components'
 import { ConfirmationModal } from '@common/components'
 
-const loading = ref(false)
+const loading = ref(true)
 const isDeleting = ref(false)
 const showConfirmationModal = ref(false)
 const showUserFormModal = ref(false)

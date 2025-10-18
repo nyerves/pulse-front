@@ -5,7 +5,8 @@ import { SuccessModal } from '@common/components'
 
 const fileXlsx = ref<File>()
 const showSuccessModal = ref(false)
-const reportStep = ref<'load' | 'file-loaded' | 'progress' | 'loaded'>('loaded')
+const loadFileProcess = ref(0)
+const reportStep = ref<'file-loaded' | 'progress' | 'loaded'>('file-loaded')
 
 const onChangeFile = (event: Event) => {
   const target = event.target as HTMLInputElement
@@ -13,30 +14,47 @@ const onChangeFile = (event: Event) => {
   if (target.files && target.files.length > 0) {
     fileXlsx.value = target.files[0]
     reportStep.value = 'file-loaded'
-  } else {
-    fileXlsx.value = undefined
-    reportStep.value = 'load'
+  }
+}
+const onLoadReport = () => {
+  if (fileXlsx.value) {
+    reportStep.value = 'progress'
+
+    const simulateLoading = setInterval(() => {
+      loadFileProcess.value += 10
+
+      if (loadFileProcess.value >= 100) {
+        clearInterval(simulateLoading)
+
+        setTimeout(() => {
+          reportStep.value = 'loaded'
+          loadFileProcess.value = 0
+        }, 1000)
+      }
+    }, 300)
   }
 }
 </script>
 
 <template>
   <template v-if="showSuccessModal">
-    <SuccessModal @close="showSuccessModal = false" />
+    <SuccessModal width="34rem" @close="showSuccessModal = false" />
   </template>
 
   <PageLayout title="Carga Reporte Diario">
     <div class="flex justify-center">
       <div class="card shadow-md border border-gray-200 w-[38rem]">
         <div>
-          <h4 class="text-center !text-bold">Cargar Reporte Diario</h4>
+          <h4 class="text-center !text-bold">
+            {{ reportStep === 'loaded' ? 'Carga de' : 'Resumen' }} Reporte Diario
+          </h4>
         </div>
 
         <div class="space-y-6">
           <!-- Contenedor de vistas que cambian -->
           <div id="view-container">
             <!-- Vista 1: Dropzone (inicial) -->
-            <div v-if="reportStep === 'load'">
+            <div v-if="!fileXlsx">
               <label
                 for="file-input"
                 id="drop-zone"
@@ -66,8 +84,8 @@ const onChangeFile = (event: Event) => {
               <p class="text-center text-xs text-secondary !mt-4">Solo se aceptan archivos .xlsx</p>
             </div>
 
-            <!-- Vista 2: Archivo cargado (esperando subida) -->
-            <div v-else-if="reportStep === 'file-loaded'">
+            <div v-else>
+              <!-- Resumen del Reporte -->
               <div id="report-header-card" class="mb-8">
                 <!-- Plantilla para Reporte Diario -->
                 <div
@@ -103,6 +121,7 @@ const onChangeFile = (event: Event) => {
                     </div>
                   </dl>
                 </div>
+
                 <!-- Plantilla para Reporte Semanal -->
                 <div
                   id="weekly-header-card"
@@ -139,7 +158,9 @@ const onChangeFile = (event: Event) => {
                 </div>
               </div>
 
+              <!-- Vista 1: Archivo cargado correctamente -->
               <div
+                v-if="reportStep === 'file-loaded'"
                 class="relative border-2 border-dashed border-green-500 rounded-lg p-6 bg-green-50"
               >
                 <div class="flex items-center gap-4">
@@ -152,60 +173,56 @@ const onChangeFile = (event: Event) => {
                   </p>
                 </div>
               </div>
-            </div>
 
-            <!-- Vista 3: Progreso y Validación -->
-            <div v-else-if="reportStep === 'progress'">
-              <div class="flex items-center gap-4 mb-4">
-                <i data-lucide="file-spreadsheet" class="w-8 h-8 text-teal-600 flex-shrink-0"></i>
-                <p id="filename-progress" class="font-semibold text-gray-700 truncate">
-                  nombre_del_archivo.xlsx
-                </p>
-              </div>
-
-              <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
-                <div
-                  id="progress-bar"
-                  class="bg-teal-500 h-2.5 rounded-full transition-all duration-500"
-                  style="width: 0%"
-                ></div>
-              </div>
-
-              <ul id="validation-steps" class="space-y-3 text-sm">
-                <!-- Los pasos de validación se insertarán aquí dinámicamente -->
-              </ul>
-            </div>
-
-            <!-- Vista 4: Resultados (Éxito o Error) -->
-            <div v-else-if="reportStep === 'loaded'" class="text-center">
-              <!-- Mensaje de Éxito -->
-              <div id="success-message">
-                <div
-                  class="mx-auto w-16 h-16 flex items-center justify-center bg-green-100 rounded-full mb-4"
-                >
-                  <i class="pi pi-check-circle text-green-600" style="font-size: 1.5rem"></i>
+              <!-- Vista 2: Progreso y Validación -->
+              <div v-else-if="reportStep === 'progress'">
+                <div class="flex items-center gap-4 mb-4">
+                  <i class="pi pi-file-excel text-teal-600 flex-shrink-0" />
+                  <p id="filename-progress" class="font-semibold text-gray-700 truncate">
+                    {{ fileXlsx?.name ?? 'Excel file.xlsx' }}
+                  </p>
                 </div>
 
-                <h5 class="font-bold">Validación Exitosa</h5>
-                <p class="mt-2 text-secondary">
-                  El archivo ha sido procesado. Revisa el resumen antes de confirmar.
-                </p>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+                  <ProgressBar :value="loadFileProcess" class="!h-3.5" />
+                </div>
+
+                <ul id="validation-steps" class="space-y-3 text-sm">
+                  <!-- Los pasos de validación se insertarán aquí dinámicamente -->
+                </ul>
               </div>
 
-              <!-- Mensaje de Error -->
-              <div id="error-message" class="hidden">
-                <div
-                  class="mx-auto w-16 h-16 flex items-center justify-center bg-red-100 rounded-full mb-4"
-                >
-                  <i data-lucide="alert-triangle" class="w-10 h-10 text-red-600"></i>
+              <!-- Vista 3: Resultados (Éxito o Error) -->
+              <div v-else-if="reportStep === 'loaded'" class="text-center">
+                <!-- Mensaje de Éxito -->
+                <div id="success-message">
+                  <div
+                    class="mx-auto w-16 h-16 flex items-center justify-center bg-green-100 rounded-full mb-4"
+                  >
+                    <i class="pi pi-check text-green-600 !font-bold" style="font-size: 1.5rem" />
+                  </div>
+
+                  <h5 class="font-bold">Validación Exitosa</h5>
+                  <p class="mt-2 text-secondary text-sm">
+                    El archivo ha sido procesado. Revisa el resumen antes de confirmar.
+                  </p>
                 </div>
-                <h3 class="text-xl font-bold text-gray-800">Error en la Validación</h3>
-                <p
-                  id="error-details"
-                  class="mt-2 text-gray-600 bg-red-50 p-3 rounded-md border border-red-200"
-                >
-                  No se pudo procesar el archivo.
-                </p>
+
+                <!-- Mensaje de Error -->
+                <div id="error-message" class="hidden">
+                  <div
+                    class="mx-auto w-16 h-16 flex items-center justify-center bg-red-100 rounded-full mb-4"
+                  >
+                    <i data-lucide="alert-triangle" class="w-10 h-10 text-red-600"></i>
+                  </div>
+                  <h3 class="text-xl font-bold text-gray-800">Error en la Validación</h3>
+                  <p
+                    id="error-details"
+                    class="mt-2 text-gray-600 bg-red-50 p-3 rounded-md border border-red-200"
+                  >
+                    No se pudo procesar el archivo.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -215,15 +232,17 @@ const onChangeFile = (event: Event) => {
             class="flex items-center justify-end space-x-4 pt-4 border-t border-gray-100"
           >
             <template v-if="reportStep === 'loaded'">
-              <Button class="w-full font-semibold !text-sm" @click="showSuccessModal = true"
-                >Confirmar y Finalizar carga</Button
-              >
+              <Button class="w-full font-semibold !text-sm" @click="showSuccessModal = true">
+                Confirmar y Finalizar carga
+              </Button>
             </template>
 
             <template v-else>
               <Button severity="secondary" variant="outlined"> Cancelar </Button>
 
-              <Button :disabled="!fileXlsx" class="font-semibold"> Subir Reporte </Button>
+              <Button :disabled="!fileXlsx" class="font-semibold" @click="onLoadReport">
+                Subir Reporte
+              </Button>
             </template>
           </div>
         </div>

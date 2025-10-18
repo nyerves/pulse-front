@@ -114,8 +114,7 @@ const openMenu = (event: PointerEvent, list: MenuItem) => {
       <template #item="{ item, props }">
         <RouterLink :to="item.to">
           <div v-ripple class="flex items-center" v-bind="props.action">
-            <span :class="item.icon" />
-            <span class="ml-2">{{ item.label }}</span>
+            <span class="ml-2 !text-sm text-secondary">{{ item.label }}</span>
           </div>
         </RouterLink>
       </template>
@@ -141,7 +140,7 @@ const openMenu = (event: PointerEvent, list: MenuItem) => {
   align-items: center;
   justify-content: center;
   padding: 0.5rem 0;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   border-bottom: 1px solid var(--surface-d);
 
   img {

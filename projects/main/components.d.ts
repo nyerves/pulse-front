@@ -28,6 +28,7 @@ declare module 'vue' {
     PageLayout: typeof import('./src/components/PageLayout/PageLayout.vue')['default']
     Password: typeof import('primevue/password')['default']
     PermissionActionCard: typeof import('./src/components/Roles/PermissionActionCard.vue')['default']
+    ProgressBar: typeof import('primevue/progressbar')['default']
     ProgressSpinner: typeof import('primevue/progressspinner')['default']
     RegisterFormCard: typeof import('./src/components/Login/RegisterFormCard.vue')['default']
     RoleCard: typeof import('./src/components/Roles/RoleCard.vue')['default']
