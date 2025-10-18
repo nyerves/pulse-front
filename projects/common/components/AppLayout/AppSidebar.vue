@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { AppMenuList } from "@common/models";
+import type { MenuItem } from "primevue/menuitem";
 import { useLayout } from "@common/composables";
 import LogoGreen from "@common/assets/png/logo_verde.png";
 import LogoWhite from "@common/assets/svg/pulse-logo.svg";
@@ -8,8 +8,10 @@ import AppMenuItemFinal from "./AppMenuItemFinal.vue";
 
 const { isDarkTheme } = useLayout();
 
-const isCollapsed = ref(false);
-const appMenuList = ref<AppMenuList[]>([
+const menu = ref();
+const isExpanded = ref(false);
+const menuOpt = ref<MenuItem[]>([]);
+const appMenuList = ref<MenuItem[]>([
   {
     label: "Dashboard",
     icon: "pi-objects-column",
@@ -79,12 +81,19 @@ const appMenuList = ref<AppMenuList[]>([
     ],
   },
 ]);
+
+const openMenu = (event: PointerEvent, list: MenuItem) => {
+  if (!isExpanded.value) {
+    menuOpt.value = [list];
+    menu.value?.toggle(event);
+  }
+};
 </script>
 
 <template>
   <div
     class="layout-sidebar"
-    :class="{ 'layout-sidebar-collapsed': !isCollapsed }"
+    :class="{ 'layout-sidebar-collapsed': !isExpanded }"
   >
     <div class="layout-logo">
       <img :src="!isDarkTheme ? LogoWhite : LogoGreen" alt="Logo" />
@@ -92,19 +101,35 @@ const appMenuList = ref<AppMenuList[]>([
 
     <ul class="layout-menu">
       <template v-for="item in appMenuList" :key="item">
-        <AppMenuItemFinal :item="item" :is-collapsed="!isCollapsed" />
+        <AppMenuItemFinal
+          :item="item"
+          :is-collapsed="!isExpanded"
+          aria-controls="overlay_menu_sidebar"
+          @click="openMenu($event, item)"
+        />
       </template>
     </ul>
+
+    <Menu popup ref="menu" id="overlay_menu_sidebar" :model="menuOpt">
+      <template #item="{ item, props }">
+        <RouterLink :to="item.to">
+          <div v-ripple class="flex items-center" v-bind="props.action">
+            <span :class="item.icon" />
+            <span class="ml-2">{{ item.label }}</span>
+          </div>
+        </RouterLink>
+      </template>
+    </Menu>
 
     <div class="layout-sidebar-footer">
       <Button
         :icon="
-          isCollapsed ? 'pi pi-angle-double-left' : 'pi pi-angle-double-right'
+          isExpanded ? 'pi pi-angle-double-left' : 'pi pi-angle-double-right'
         "
         class="p-button-text p-button-plain"
         size="large"
         style="width: 100%"
-        @click="isCollapsed = !isCollapsed"
+        @click="isExpanded = !isExpanded"
       />
     </div>
   </div>

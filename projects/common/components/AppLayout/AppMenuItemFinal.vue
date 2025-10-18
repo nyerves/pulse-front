@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import { AppMenuList } from "@common/models";
+import type { MenuItem } from "primevue/menuitem";
 
-const props = defineProps<{ isCollapsed: boolean; item: AppMenuList }>();
 const route = useRoute();
+const props = defineProps<{ isCollapsed: boolean; item: MenuItem }>();
 
 const collapsedSubMenu = ref(false);
 
@@ -16,7 +16,7 @@ const clickMenu = () => {
   collapsedSubMenu.value = !collapsedSubMenu.value;
 };
 const getIsGroupActive = () => {
-  return props.item.items.some((item) => isRouteActive(item.to));
+  return (props.item.items ?? []).some((item) => isRouteActive(item.to));
 };
 const isRouteActive = (path: string) => {
   return route.path.startsWith(path);

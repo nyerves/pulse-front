@@ -22,7 +22,7 @@ const onChangeFile = (event: Event) => {
 
 <template>
   <template v-if="showSuccessModal">
-    <SuccessModal />
+    <SuccessModal @close="showSuccessModal = false" />
   </template>
 
   <PageLayout title="Carga Reporte Diario">

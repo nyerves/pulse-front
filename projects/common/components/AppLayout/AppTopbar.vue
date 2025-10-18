@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { MenuItem } from "primevue/menuitem";
 import { useLayout } from "@common/composables";
 import { AuthService } from "@common/services";
-
+1;
 const { toggleDarkMode, isDarkTheme } = useLayout();
 const user = AuthService.GetUserAuth()?.data;
 
 const menu = ref();
 const isActiveMenu = ref(false);
-const items = ref([
+const items = ref<MenuItem[]>([
   {
     label: "Perfil",
     icon: "pi pi-user",
