@@ -46,12 +46,13 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
 
         <OverlayBadge value="2" size="small">
           <Button
+            rounded
+            variant="text"
             icon="pi pi-bell"
             severity="secondary"
-            variant="text"
-            rounded
             aria-label="Notification"
-          />
+          >
+          </Button>
         </OverlayBadge>
 
         <div

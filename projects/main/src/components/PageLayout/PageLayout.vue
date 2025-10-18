@@ -6,13 +6,13 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex flex-col h-full w-full">
+  <div class="flex flex-col h-full w-full px-14 pt-10">
     <div class="flex items-center justify-between mb-8 gap-3">
       <div class="mr-auto max-w-[65%]">
-        <h3 class="font-bold !mb-1">{{ title }}</h3>
+        <h3 class="font-bold">{{ title }}</h3>
 
         <template v-if="description">
-          <p class="opacity-60">{{ description }}</p>
+          <p class="text-secondary text-sm">{{ description }}</p>
         </template>
       </div>
 

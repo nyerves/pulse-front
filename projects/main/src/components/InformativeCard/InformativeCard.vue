@@ -66,7 +66,7 @@ onMounted(() => {
 
     <div>
       <!-- <slot></slot> -->
-      <Chart type="pie" :data="chartData" :options="chartOptions" class="w-full" />
+      <Chart type="pie" :data="chartData" :options="chartOptions" class="w-full max-w-[20rem]" />
     </div>
   </div>
 </template>
