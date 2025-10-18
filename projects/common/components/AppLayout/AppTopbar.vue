@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { MenuItem } from "primevue/menuitem";
+import type { MenuItem } from "primevue/menuitem";
 import { useLayout } from "@common/composables";
 import { AuthService } from "@common/services";
-1;
+
 const { toggleDarkMode, isDarkTheme } = useLayout();
 const user = AuthService.GetUserAuth()?.data;
 
