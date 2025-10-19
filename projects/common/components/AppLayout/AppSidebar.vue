@@ -99,7 +99,7 @@ const openMenu = (event: PointerEvent, list: MenuItem) => {
       <template v-for="item in appMenuList" :key="item">
         <AppMenuItemFinal
           :item="item"
-          :is-collapsed="!layoutState.isExpanded"
+          :is-expanded="layoutState.isExpanded"
           aria-controls="overlay_menu_sidebar"
           @click="openMenu($event, item)"
         />

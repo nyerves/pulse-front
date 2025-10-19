@@ -4,7 +4,7 @@ import { useRoute } from "vue-router";
 import type { MenuItem } from "primevue/menuitem";
 
 const route = useRoute();
-const props = defineProps<{ isCollapsed: boolean; item: MenuItem }>();
+const props = defineProps<{ isExpanded: boolean; item: MenuItem }>();
 
 const collapsedSubMenu = ref(false);
 
@@ -32,16 +32,16 @@ onMounted(() => {
     <div
       class="item-route main-item-route"
       :class="{ 'active-route': isGroupActive }"
-      :style="{ justifyContent: isCollapsed ? 'center' : 'flex-start' }"
+      :style="{ justifyContent: isExpanded ? 'flex-start' : 'center' }"
       @click="clickMenu"
     >
       <i class="pi" :class="item.icon" />
-      <span v-if="!isCollapsed">{{ item.label }}</span>
+      <span v-if="isExpanded">{{ item.label }}</span>
     </div>
 
     <Transition name="layout-submenu">
       <div
-        v-if="collapsedSubMenu && item.items && !isCollapsed"
+        v-if="collapsedSubMenu && item.items && isExpanded"
         class="subitem-container"
       >
         <template v-for="subItem in item.items" :key="index">

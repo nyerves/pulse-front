@@ -43,7 +43,7 @@ const onLoadReport = () => {
 
   <PageLayout title="Carga Reporte Diario">
     <div class="flex justify-center">
-      <div class="card shadow-md border border-gray-200 w-[38rem]">
+      <div class="card shadow-md border border-gray-200 w-[44rem]">
         <div>
           <h4 class="text-center !text-bold">
             {{ reportStep === 'loaded' ? 'Carga de' : 'Resumen' }} Reporte Diario
@@ -184,7 +184,7 @@ const onLoadReport = () => {
                 </div>
 
                 <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
-                  <ProgressBar :value="loadFileProcess" class="!h-3.5" />
+                  <ProgressBar :value="loadFileProcess" :show-value="false" class="!h-3.5" />
                 </div>
 
                 <ul id="validation-steps" class="space-y-3 text-sm">

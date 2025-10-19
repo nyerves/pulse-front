@@ -69,9 +69,7 @@ watch(isSidebarActive, (newVal) => {
       <AppTopbar />
 
       <div class="layout-main-container">
-        <div class="layout-main">
-          <RouterView />
-        </div>
+        <RouterView />
       </div>
 
       <div class="layout-mask animate-fadein"></div>

@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { MenuItem } from "primevue/menuitem";
+import Menu from "primevue/menu";
 import { useLayout } from "@common/composables";
 import { AuthService } from "@common/services";
 
 const { toggleDarkMode, isDarkTheme } = useLayout();
 const user = AuthService.GetUserAuth()?.data;
 
-const menu = ref();
+const menu = ref<InstanceType<typeof Menu>>();
 const isActiveMenu = ref(false);
 const items = ref<MenuItem[]>([
   {
@@ -18,15 +19,9 @@ const items = ref<MenuItem[]>([
     label: "Configuraciones",
     icon: "pi pi-cog",
   },
-  {
-    label: "Cerrar sesión",
-    icon: "pi pi-sign-out",
-    class: "border-t border-solid border-gray-300",
-    command: () => AuthService.Logout(),
-  },
 ]);
 
-const toggle = (event: MouseEvent) => menu.value.toggle(event);
+const toggle = (event: MouseEvent) => menu.value?.toggle(event);
 </script>
 
 <template>
@@ -84,7 +79,7 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
             popup
             ref="menu"
             id="overlay_menu"
-            pt:root:style="width: 15rem;"
+            pt:root:style="width: 17rem;"
             :model="items"
             @show="isActiveMenu = true"
             @hide="isActiveMenu = false"
@@ -95,6 +90,16 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
                 <p class="text-xs text-secondary">
                   {{ user?.email }}
                 </p>
+              </div>
+            </template>
+
+            <template #end>
+              <div
+                class="border-t border-gray-200 btn-close-session"
+                @click="AuthService.Logout()"
+              >
+                <i class="pi pi-sign-out" />
+                Cerrar sesión
               </div>
             </template>
           </Menu>
@@ -124,5 +129,19 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
 .user-info {
   padding: 0.8rem 1rem;
   background-color: var(--surface-ground);
+}
+
+.btn-close-session {
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  color: rgba(220, 38, 38);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: oklch(97.1% 0.013 17.38);
+  }
 }
 </style>
