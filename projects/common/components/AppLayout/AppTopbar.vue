@@ -66,7 +66,7 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
             image="https://i.pravatar.cc/150?img=68"
             shape="circle"
             class="avatar-style"
-            size="large"
+            size="normal"
           />
 
           <div class="flex flex-col">

@@ -12,7 +12,7 @@ defineProps<{
         <h2 class="font-bold">{{ title }}</h2>
 
         <template v-if="description">
-          <p class="text-secondary text-sm">{{ description }}</p>
+          <p class="text-secondary">{{ description }}</p>
         </template>
       </div>
 

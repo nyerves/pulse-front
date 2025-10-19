@@ -82,7 +82,7 @@ watch(isSidebarActive, (newVal) => {
 <style lang="scss">
 :root {
   --width-sidebar: 12vw;
-  --width-sidebar-collapsed: 5vw;
+  --width-sidebar-collapsed: 4.5vw;
 }
 
 .new-layout-container {
@@ -97,6 +97,7 @@ watch(isSidebarActive, (newVal) => {
 }
 .layout-sidebar-collapsed {
   width: var(--width-sidebar-collapsed);
+  min-width: 70px;
 }
 
 // Main content area

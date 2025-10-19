@@ -27,7 +27,7 @@ const appMenuList = ref<MenuItem[]>([
   },
   {
     label: "Reportes",
-    icon: "pi-chart-bar",
+    icon: "pi-file-excel",
     items: [
       {
         label: "Cumplimiento",

@@ -52,19 +52,21 @@ onMounted(() => {
 
 <template>
   <div
-    class="card !p-4 shadow hover:shadow-md hover:-translate-y-0.5 duration-200 rounded-md cursor-pointer"
+    class="card shadow hover:shadow-md hover:-translate-y-0.5 duration-200 rounded-md cursor-pointer overflow-hidden"
   >
     <div class="flex gap-2 items-center mb-4">
-      <h6 class="!mr-auto !mb-0 text-xs !font-semibold">
+      <h6 class="!mr-auto !mb-0 text-xs !font-semibold max-w-[70%]">
         {{ title }}
       </h6>
 
-      <span class="pi pi-exclamation-circle" />
+      <div class="absolute top-3 -right-1 flex items-center gap-2 font-mono">
+        <span class="pi pi-exclamation-circle opacity-65" />
 
-      <div
-        class="bg-secondary-theme border border-gray-200 py-1 px-2 text-xs rounded text-secondary"
-      >
-        CAP-01
+        <div
+          class="bg-secondary-theme border border-gray-200 py-1 px-2 text-xs rounded text-secondary"
+        >
+          CAP-01
+        </div>
       </div>
     </div>
 
