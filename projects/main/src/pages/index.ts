@@ -5,5 +5,6 @@ const RolesPage = () => import('./Admin/RolesPage.vue')
 const UsersPage = () => import('./Admin/UsersPage.vue')
 
 const DailyReportPage = () => import('./Reports/DailyReportPage.vue')
+const ResourceCenterPage = () => import('./Reports/ResourceCenterPage.vue')
 
-export { LoginPage, DashboardPage, RolesPage, UsersPage, DailyReportPage }
+export { LoginPage, DashboardPage, RolesPage, UsersPage, DailyReportPage, ResourceCenterPage }

@@ -47,7 +47,7 @@ const appMenuList = ref<MenuItem[]>([
       },
       {
         label: "Centro de Recursos",
-        to: "/uikit/tree",
+        to: "/reports/resource-center",
       },
     ],
   },

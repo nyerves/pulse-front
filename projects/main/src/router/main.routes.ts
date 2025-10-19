@@ -44,6 +44,12 @@ const routes: RouteRecordRaw[] = [
             meta: { requireAuth: true },
             component: Pages.DailyReportPage,
           },
+          {
+            path: 'resource-center',
+            name: 'reports-resource-center',
+            meta: { requireAuth: true },
+            component: Pages.ResourceCenterPage,
+          },
         ],
       },
     ],
