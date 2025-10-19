@@ -6,10 +6,9 @@ import LogoGreen from "@common/assets/png/logo_verde.png";
 import LogoWhite from "@common/assets/svg/pulse-logo.svg";
 import AppMenuItemFinal from "./AppMenuItemFinal.vue";
 
-const { isDarkTheme } = useLayout();
+const { isDarkTheme, layoutState, toggleMenu } = useLayout();
 
 const menu = ref();
-const isExpanded = ref(false);
 const menuOpt = ref<MenuItem[]>([]);
 const appMenuList = ref<MenuItem[]>([
   {
@@ -83,7 +82,7 @@ const appMenuList = ref<MenuItem[]>([
 ]);
 
 const openMenu = (event: PointerEvent, list: MenuItem) => {
-  if (!isExpanded.value) {
+  if (!layoutState.isExpanded) {
     menuOpt.value = [list];
     menu.value?.toggle(event);
   }
@@ -91,11 +90,8 @@ const openMenu = (event: PointerEvent, list: MenuItem) => {
 </script>
 
 <template>
-  <div
-    class="layout-sidebar"
-    :class="{ 'layout-sidebar-collapsed': !isExpanded }"
-  >
-    <div class="layout-logo">
+  <aside class="layout-sidebar">
+    <div class="layout-logo" :class="{ 'small-logo': !layoutState.isExpanded }">
       <img :src="!isDarkTheme ? LogoWhite : LogoGreen" alt="Logo" />
     </div>
 
@@ -103,7 +99,7 @@ const openMenu = (event: PointerEvent, list: MenuItem) => {
       <template v-for="item in appMenuList" :key="item">
         <AppMenuItemFinal
           :item="item"
-          :is-collapsed="!isExpanded"
+          :is-collapsed="!layoutState.isExpanded"
           aria-controls="overlay_menu_sidebar"
           @click="openMenu($event, item)"
         />
@@ -123,15 +119,17 @@ const openMenu = (event: PointerEvent, list: MenuItem) => {
     <div class="layout-sidebar-footer">
       <Button
         :icon="
-          isExpanded ? 'pi pi-angle-double-left' : 'pi pi-angle-double-right'
+          layoutState.isExpanded
+            ? 'pi pi-angle-double-left'
+            : 'pi pi-angle-double-right'
         "
         class="p-button-text p-button-plain"
         size="large"
         style="width: 100%"
-        @click="isExpanded = !isExpanded"
+        @click="toggleMenu"
       />
     </div>
-  </div>
+  </aside>
 </template>
 
 <style lang="scss" scoped>
@@ -139,12 +137,18 @@ const openMenu = (event: PointerEvent, list: MenuItem) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 0;
-  margin-bottom: 1.5rem;
+  padding: 0.8rem 0.5rem 0;
+  margin-bottom: 2rem;
   border-bottom: 1px solid var(--surface-d);
 
   img {
-    height: 4.3rem;
+    height: 5rem;
+  }
+}
+
+.small-logo {
+  img {
+    height: 3rem;
   }
 }
 
@@ -153,13 +157,5 @@ const openMenu = (event: PointerEvent, list: MenuItem) => {
   padding: 0.8rem 1rem;
   border-top: 1px solid var(--surface-d);
   text-align: center;
-}
-
-.layout-sidebar-collapsed {
-  width: 5rem !important;
-
-  .layout-logo img {
-    height: 2.5rem;
-  }
 }
 </style>

@@ -32,6 +32,7 @@ onMounted(() => {
     <div
       class="item-route main-item-route"
       :class="{ 'active-route': isGroupActive }"
+      :style="{ justifyContent: isCollapsed ? 'center' : 'flex-start' }"
       @click="clickMenu"
     >
       <i class="pi" :class="item.icon" />
@@ -60,9 +61,12 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .item-route {
-  padding: 0.5rem 0.9rem;
+  padding: 0.6rem 1rem;
   border-radius: var(--p-content-border-radius);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
 
   &:not(.active-route):hover {
     background-color: var(--surface-hover);
@@ -75,10 +79,13 @@ onMounted(() => {
 }
 
 .main-item-route {
+  > i {
+    font-size: 1.2rem;
+  }
+
   > span {
-    margin-left: 0.6rem;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 }
 
@@ -88,9 +95,9 @@ onMounted(() => {
   border-left: 2px solid var(--surface-border);
 
   .subitem-route {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     margin-left: 1.3rem;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.1rem;
 
     &:not(.sub-active-route) {
       color: var(--text-color-secondary);

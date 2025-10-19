@@ -12,7 +12,7 @@ function bindOutsideClickListener() {
   if (!outsideClickListener.value) {
     outsideClickListener.value = (event) => {
       if (isOutsideClicked(event)) {
-        layoutState.overlayMenuActive = false;
+        layoutState.isExpanded = false;
         layoutState.staticMenuMobileActive = false;
         layoutState.menuHoverActive = false;
       }
@@ -53,9 +53,19 @@ watch(isSidebarActive, (newVal) => {
   <Toast />
 
   <div class="new-layout-container">
-    <AppSidebar />
+    <AppSidebar
+      class="layout-sidebar-expanded"
+      :class="{ 'layout-sidebar-collapsed': !layoutState.isExpanded }"
+    />
 
-    <div class="layout-wrapper flex-1">
+    <div
+      class="layout-wrapper"
+      :style="{
+        marginLeft: layoutState.isExpanded
+          ? 'var(--width-sidebar)'
+          : 'var(--width-sidebar-collapsed)',
+      }"
+    >
       <AppTopbar />
 
       <div class="layout-main-container">
@@ -69,17 +79,29 @@ watch(isSidebarActive, (newVal) => {
   </div>
 </template>
 
-<style lang="scss" scoped>
-.new-layout-container {
-  display: flex;
-  position: relative;
-  min-height: 100vh;
+<style lang="scss">
+:root {
+  --width-sidebar: 12vw;
+  --width-sidebar-collapsed: 5vw;
 }
 
+.new-layout-container {
+  min-height: 100vh;
+  position: relative;
+}
+
+// Sidebar styles
+.layout-sidebar-expanded {
+  position: absolute;
+  width: var(--width-sidebar);
+}
+.layout-sidebar-collapsed {
+  width: var(--width-sidebar-collapsed);
+}
+
+// Main content area
 .layout-wrapper {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  position: relative;
 }
 </style>

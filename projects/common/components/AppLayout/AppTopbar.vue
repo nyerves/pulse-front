@@ -40,6 +40,7 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
           variant="text"
           severity="secondary"
           aria-label="theme"
+          size="large"
           :icon="`pi ${isDarkTheme ? 'pi-sun' : 'pi-moon'}`"
           @click="toggleDarkMode"
         />
@@ -47,6 +48,7 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
         <OverlayBadge value="2" size="small">
           <Button
             rounded
+            size="large"
             variant="text"
             icon="pi pi-bell"
             severity="secondary"
@@ -64,12 +66,12 @@ const toggle = (event: MouseEvent) => menu.value.toggle(event);
             image="https://i.pravatar.cc/150?img=68"
             shape="circle"
             class="avatar-style"
-            size="normal"
+            size="large"
           />
 
           <div class="flex flex-col">
-            <span class="text-sm font-semibold !mb-0">{{ user?.name }}</span>
-            <span class="text-xs text-secondary">Nivel Estratégico</span>
+            <span class="font-semibold !mb-0">{{ user?.name }}</span>
+            <span class="text-sm text-secondary">Nivel Estratégico</span>
           </div>
 
           <span

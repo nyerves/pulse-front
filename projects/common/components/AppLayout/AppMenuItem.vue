@@ -5,7 +5,8 @@ import { useLayout } from "@common/composables";
 import type { AppMenuItem } from "@common/models";
 
 const route = useRoute();
-const { layoutState, setActiveMenuItem, toggleMenu, isSidebarActive } = useLayout();
+const { layoutState, setActiveMenuItem, toggleMenu, isSidebarActive } =
+  useLayout();
 
 const props = defineProps({
   item: {
@@ -33,7 +34,9 @@ watch(
   () => layoutState.activeMenuItem,
   (newVal) => {
     const key = itemKey.value;
-    isActiveMenu.value = Boolean(newVal === key || newVal?.startsWith(key + "-"));
+    isActiveMenu.value = Boolean(
+      newVal === key || newVal?.startsWith(key + "-")
+    );
   }
 );
 
@@ -45,7 +48,7 @@ function itemClick(event: MouseEvent, item: AppMenuItem) {
 
   if (
     (item.to || item.url) &&
-    (layoutState.staticMenuMobileActive || layoutState.overlayMenuActive)
+    (layoutState.staticMenuMobileActive || layoutState.isExpanded)
   ) {
     // toggleMenu();
   }
@@ -95,7 +98,10 @@ onBeforeMount(() => {
     >
       <i :class="item.icon" class="layout-menuitem-icon"></i>
       <span class="layout-menuitem-text">{{ item.label }}</span>
-      <i v-if="item.items" class="pi pi-fw pi-angle-down layout-submenu-toggler"></i>
+      <i
+        v-if="item.items"
+        class="pi pi-fw pi-angle-down layout-submenu-toggler"
+      ></i>
     </a>
 
     <RouterLink
@@ -107,12 +113,20 @@ onBeforeMount(() => {
     >
       <i :class="item.icon" class="layout-menuitem-icon"></i>
 
-      <span v-if="isSidebarActive" class="layout-menuitem-text">{{ item.label }}</span>
+      <span v-if="isSidebarActive" class="layout-menuitem-text">{{
+        item.label
+      }}</span>
 
-      <i class="pi pi-fw pi-angle-down layout-submenu-toggler" v-if="item.items" />
+      <i
+        class="pi pi-fw pi-angle-down layout-submenu-toggler"
+        v-if="item.items"
+      />
     </RouterLink>
 
-    <Transition v-if="item.items && item.visible !== false" name="layout-submenu">
+    <Transition
+      v-if="item.items && item.visible !== false"
+      name="layout-submenu"
+    >
       <ul v-show="root || isActiveMenu" class="layout-submenu">
         <AppMenuItem
           v-for="(child, i) in item.items"

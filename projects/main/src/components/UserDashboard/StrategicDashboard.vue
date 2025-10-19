@@ -20,24 +20,29 @@ const tabOptions = computed(() => [
     description="Consolidado de 11 Hospitales | Octubre 2025"
   >
     <template #actions>
-      <Button severity="secondary" icon="pi pi-filter" label="Filtrar Hospitales" />
+      <div class="border border-gray-300 rounded-md">
+        <Button
+          severity="secondary"
+          icon="pi pi-filter"
+          label="Filtrar Hospitales"
+          variant="text"
+        />
+      </div>
       <Button icon="pi pi-download" label="Generar Reporte Consolidado" />
     </template>
 
     <div>
-      <div class="w-[28%] sm:w-1/3 md:w-1/2 lg:w-3/4 xl:w-full">
-        <Tabs value="0">
-          <TabList pt:root="!bg-transparent w-full overflow-x-auto">
-            <template v-for="tab in tabOptions" :key="tab.value">
-              <Tab pt:root="text-sm !font-normal" :value="tab.value">{{ tab.label }}</Tab>
-            </template>
-          </TabList>
-        </Tabs>
-      </div>
+      <Tabs value="0">
+        <TabList pt:root="!bg-transparent w-full overflow-x-auto">
+          <template v-for="tab in tabOptions" :key="tab.value">
+            <Tab pt:root="text-sm !font-normal" :value="tab.value">{{ tab.label }}</Tab>
+          </template>
+        </TabList>
+      </Tabs>
 
       <div class="pt-4">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-          <InformativeCard title="Ocupación Hospitalaria General" class="col-span-2" />
+          <InformativeCard title="Ocupación Hospitalaria General" class="xl:col-span-2" />
           <InformativeCard title="Productividad Quirúrgica" />
           <InformativeCard title="Abasto de Medicamentos (Claves en Cero)" />
           <InformativeCard title="Gestión de Incidencias" />
