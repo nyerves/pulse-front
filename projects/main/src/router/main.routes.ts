@@ -11,6 +11,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: AppLayout,
+    redirect: { name: 'dashboard' },
     meta: { requireAuth: true },
     children: [
       {
