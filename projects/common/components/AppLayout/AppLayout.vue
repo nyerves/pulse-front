@@ -79,7 +79,7 @@ watch(isSidebarActive, (newVal) => {
 
 <style lang="scss">
 :root {
-  --width-sidebar: 12vw;
+  --width-sidebar: 15vw;
   --width-sidebar-collapsed: 4.5vw;
 }
 
