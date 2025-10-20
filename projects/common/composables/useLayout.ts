@@ -1,11 +1,12 @@
-import { computed, reactive } from "vue";
+import { computed, onMounted, reactive } from "vue";
+import { StorageKeys } from "@common/utils/StorageKeys";
 
 const layoutConfig = reactive({
   preset: "Aura",
   primary: "emerald",
   surface: null as string | null,
-  darkTheme: true,
   menuMode: "static" as "static" | "overlay" | "slim",
+  darkTheme: isDarkTheme(),
 });
 
 const layoutState = reactive({
@@ -35,6 +36,8 @@ export function useLayout() {
 
   const executeDarkModeToggle = () => {
     layoutConfig.darkTheme = !layoutConfig.darkTheme;
+    updateTheme(layoutConfig.darkTheme);
+
     document.documentElement.classList.toggle("app-dark");
   };
 
@@ -55,9 +58,11 @@ export function useLayout() {
 
   const isDarkTheme = computed(() => layoutConfig.darkTheme);
 
-  const getPrimary = computed(() => layoutConfig.primary);
-
-  const getSurface = computed(() => layoutConfig.surface);
+  onMounted(() => {
+    if (layoutConfig.darkTheme) {
+      document.documentElement.classList.toggle("app-dark");
+    }
+  });
 
   return {
     layoutConfig,
@@ -65,9 +70,14 @@ export function useLayout() {
     toggleMenu,
     isSidebarActive,
     isDarkTheme,
-    getPrimary,
-    getSurface,
     setActiveMenuItem,
     toggleDarkMode,
   };
+}
+
+function isDarkTheme() {
+  return localStorage.getItem(StorageKeys.IS_DARK_MODE) === "true";
+}
+function updateTheme(value: boolean) {
+  localStorage.setItem(StorageKeys.IS_DARK_MODE, String(value));
 }
