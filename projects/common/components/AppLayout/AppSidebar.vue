@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import type { MenuItem } from "primevue/menuitem";
-import { useLayout } from "@common/composables";
+import { useDimension, useLayout } from "@common/composables";
 import LogoGreen from "@common/assets/png/logo_verde.png";
-import LogoWhite from "@common/assets/svg/pulse-logo.svg";
 import AppMenuItemFinal from "./AppMenuItemFinal.vue";
 
-const { isDarkTheme, layoutState, toggleMenu } = useLayout();
+const { layoutState, toggleMenu } = useLayout();
+const { isScreenMobile } = useDimension();
 
 const menu = ref();
 const menuOpt = ref<MenuItem[]>([]);
@@ -38,12 +38,18 @@ const appMenuList = ref<MenuItem[]>([
         to: "/uikit/input",
       },
       {
+        label: "CARGAS",
+      },
+      {
         label: "Diario",
         to: "/reports/daily",
       },
       {
         label: "Semanal",
         to: "/uikit/tree",
+      },
+      {
+        label: "RECURSOS",
       },
       {
         label: "Centro de Recursos",
@@ -57,7 +63,11 @@ const appMenuList = ref<MenuItem[]>([
     items: [
       {
         label: "Rezago",
-        to: "/uikit/rezago",
+        to: "/backlog-management",
+      },
+      {
+        label: "Seguimiento",
+        to: "/backlog-management/follow-up",
       },
     ],
   },
@@ -87,12 +97,24 @@ const openMenu = (event: PointerEvent, list: MenuItem) => {
     menu.value?.toggle(event);
   }
 };
+
+watch(
+  isScreenMobile,
+  (isMobile) => {
+    if (isMobile && layoutState.isExpanded) {
+      toggleMenu();
+    } else if (!isMobile && !layoutState.isExpanded) {
+      toggleMenu();
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
   <aside class="layout-sidebar">
     <div class="layout-logo" :class="{ 'small-logo': !layoutState.isExpanded }">
-      <img :src="!isDarkTheme ? LogoWhite : LogoGreen" alt="Logo" />
+      <img :src="LogoGreen" alt="Logo" />
     </div>
 
     <ul class="layout-menu">
@@ -108,7 +130,7 @@ const openMenu = (event: PointerEvent, list: MenuItem) => {
 
     <Menu popup ref="menu" id="overlay_menu_sidebar" :model="menuOpt">
       <template #item="{ item, props }">
-        <RouterLink :to="item.to">
+        <RouterLink v-if="item.to" :to="item.to">
           <div v-ripple class="flex items-center" v-bind="props.action">
             <span class="ml-2 !text-sm text-secondary">{{ item.label }}</span>
           </div>
@@ -118,6 +140,7 @@ const openMenu = (event: PointerEvent, list: MenuItem) => {
 
     <div class="layout-sidebar-footer">
       <Button
+        v-if="!isScreenMobile"
         :icon="
           layoutState.isExpanded
             ? 'pi pi-angle-double-left'

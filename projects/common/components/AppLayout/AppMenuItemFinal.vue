@@ -44,15 +44,23 @@ onMounted(() => {
         v-if="collapsedSubMenu && item.items && isExpanded"
         class="subitem-container"
       >
-        <template v-for="subItem in item.items" :key="index">
-          <RouterLink :to="subItem.to">
-            <div
-              class="item-route subitem-route"
-              :class="{ 'sub-active-route': isRouteActive(subItem.to) }"
-            >
+        <template v-for="(subItem, index) in item.items" :key="index">
+          <template v-if="!subItem.to">
+            <div class="subitem-separator">
               {{ subItem.label }}
             </div>
-          </RouterLink>
+          </template>
+
+          <template v-else>
+            <RouterLink :to="subItem.to">
+              <div
+                class="item-route subitem-route"
+                :class="{ 'sub-active-route': isRouteActive(subItem.to) }"
+              >
+                {{ subItem.label }}
+              </div>
+            </RouterLink>
+          </template>
         </template>
       </div>
     </Transition>
@@ -93,6 +101,17 @@ onMounted(() => {
   margin-top: 0.3rem;
   margin-left: 1.4rem;
   border-left: 2px solid var(--surface-border);
+
+  .subitem-separator {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.1rem;
+    opacity: 0.7;
+    letter-spacing: 0.05rem;
+    color: var(--text-color-secondary);
+    margin: 0.6rem 0 0.6rem 2.2rem;
+    text-transform: uppercase;
+  }
 
   .subitem-route {
     font-size: 0.9rem;

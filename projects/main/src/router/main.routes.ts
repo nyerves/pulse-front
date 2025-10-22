@@ -54,6 +54,17 @@ const routes: RouteRecordRaw[] = [
           },
         ],
       },
+      {
+        path: '/backlog-management',
+        children: [
+          {
+            path: '',
+            name: 'backlog-management',
+            meta: { requireAuth: true },
+            component: Pages.BacklogPage,
+          },
+        ],
+      },
     ],
   },
 ]
