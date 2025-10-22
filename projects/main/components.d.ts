@@ -9,6 +9,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Avatar: typeof import('primevue/avatar')['default']
+    Badge: typeof import('primevue/badge')['default']
     Button: typeof import('primevue/button')['default']
     Chart: typeof import('primevue/chart')['default']
     FigmaDashboard: typeof import('./src/components/UserDashboard/FigmaDashboard.vue')['default']
@@ -19,6 +20,7 @@ declare module 'vue' {
     Message: typeof import('primevue/message')['default']
     OverlayBadge: typeof import('primevue/overlaybadge')['default']
     PageLayout: typeof import('./src/components/PageLayout/PageLayout.vue')['default']
+    Password: typeof import('primevue/password')['default']
     PermissionActionCard: typeof import('./src/components/Roles/PermissionActionCard.vue')['default']
     RegisterFormCard: typeof import('./src/components/Login/RegisterFormCard.vue')['default']
     RoleCard: typeof import('./src/components/Roles/RoleCard.vue')['default']

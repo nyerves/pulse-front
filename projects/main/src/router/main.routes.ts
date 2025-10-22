@@ -9,8 +9,10 @@ const routes: RouteRecordRaw[] = [
     component: Pages.LoginPage,
   },
   {
-    path: '',
+    path: '/',
     component: AppLayout,
+    redirect: { name: 'dashboard' },
+    meta: { requireAuth: true },
     children: [
       {
         path: '/dashboard',
