@@ -41,6 +41,12 @@ const routes: RouteRecordRaw[] = [
         path: '/reports',
         children: [
           {
+            path: 'compliance',
+            name: 'reports-compliance',
+            meta: { requireAuth: true },
+            component: Pages.ComplianceReportPage,
+          },
+          {
             path: 'daily',
             name: 'reports-daily',
             meta: { requireAuth: true },

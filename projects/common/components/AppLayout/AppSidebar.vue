@@ -31,11 +31,11 @@ const appMenuList = ref<MenuItem[]>([
     items: [
       {
         label: "Cumplimiento",
-        to: "/uikit/formlayout",
+        to: "/reports/compliance",
       },
       {
         label: "Incidencias",
-        to: "/uikit/input",
+        to: "/reports/incidents",
       },
       {
         label: "CARGAS",
@@ -141,11 +141,7 @@ watch(
     <div class="layout-sidebar-footer">
       <Button
         v-if="!isScreenMobile"
-        :icon="
-          layoutState.isExpanded
-            ? 'pi pi-angle-double-left'
-            : 'pi pi-angle-double-right'
-        "
+        :icon="layoutState.isExpanded ? 'pi pi-angle-double-left' : 'pi pi-angle-double-right'"
         class="p-button-text p-button-plain"
         size="large"
         style="width: 100%"
