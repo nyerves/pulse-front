@@ -5,6 +5,7 @@ const RolesPage = () => import('./Admin/RolesPage.vue')
 const UsersPage = () => import('./Admin/UsersPage.vue')
 
 const DailyReportPage = () => import('./Reports/DailyReportPage.vue')
+const WeeklyReportPage = () => import('./Reports/WeeklyReportPage.vue')
 const ResourceCenterPage = () => import('./Reports/ResourceCenterPage.vue')
 
 const BacklogPage = () => import('./BacklogManagement/BacklogPage.vue')
@@ -16,6 +17,7 @@ export {
   RolesPage,
   UsersPage,
   DailyReportPage,
+  WeeklyReportPage,
   ResourceCenterPage,
   BacklogPage,
   ComplianceReportPage,

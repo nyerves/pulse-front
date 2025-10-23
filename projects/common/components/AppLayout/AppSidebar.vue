@@ -46,7 +46,7 @@ const appMenuList = ref<MenuItem[]>([
       },
       {
         label: "Semanal",
-        to: "/uikit/tree",
+        to: "/reports/weekly",
       },
       {
         label: "RECURSOS",
@@ -141,7 +141,11 @@ watch(
     <div class="layout-sidebar-footer">
       <Button
         v-if="!isScreenMobile"
-        :icon="layoutState.isExpanded ? 'pi pi-angle-double-left' : 'pi pi-angle-double-right'"
+        :icon="
+          layoutState.isExpanded
+            ? 'pi pi-angle-double-left'
+            : 'pi pi-angle-double-right'
+        "
         class="p-button-text p-button-plain"
         size="large"
         style="width: 100%"

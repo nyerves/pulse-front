@@ -11,6 +11,7 @@ const FigmaDashboard = defineAsyncComponent(() => import('./UserDashboard/FigmaD
 const StrategicDashboard = defineAsyncComponent(
   () => import('./UserDashboard/StrategicDashboard.vue'),
 )
+const LoadReportCard = defineAsyncComponent(() => import('./LoadReportCard/LoadReportCard.vue'))
 
 export {
   LoginFormCard,
@@ -22,4 +23,5 @@ export {
   StrategicDashboard,
   UserFormModal,
   PageLayout,
+  LoadReportCard,
 }
