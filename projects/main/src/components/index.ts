@@ -12,9 +12,11 @@ const StrategicDashboard = defineAsyncComponent(
   () => import('./UserDashboard/StrategicDashboard.vue'),
 )
 const LoadReportCard = defineAsyncComponent(() => import('./LoadReportCard/LoadReportCard.vue'))
+const InformativeCard = defineAsyncComponent(() => import('./InformativeCard/InformativeCard.vue'))
 
 export {
   LoginFormCard,
+  InformativeCard,
   LogoAnimated,
   RegisterFormCard,
   RolesFormModal,

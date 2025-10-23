@@ -55,9 +55,9 @@ onMounted(() => {
     class="card shadow hover:shadow-lg hover:-translate-y-0.5 duration-200 rounded-md cursor-pointer overflow-hidden"
   >
     <div class="flex gap-2 items-center mb-4">
-      <h6 class="!mr-auto !mb-0 text-xs !font-semibold max-w-[70%]">
+      <h5 class="!mr-auto !mb-0 text-xs !font-semibold max-w-[70%]">
         {{ title }}
-      </h6>
+      </h5>
 
       <div class="absolute top-3 -right-1 flex items-center gap-2 font-mono">
         <span class="pi pi-exclamation-circle opacity-65" />

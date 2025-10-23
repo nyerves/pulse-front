@@ -10,5 +10,13 @@
   },
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": ["CURP", "fadein", "primevue", "RRHH", "topbar", "Topbar"]
+  "cSpell.words": [
+    "CURP",
+    "fadein",
+    "lucide",
+    "primevue",
+    "RRHH",
+    "topbar",
+    "Topbar"
+  ]
 }
