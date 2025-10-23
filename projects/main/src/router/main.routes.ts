@@ -47,6 +47,12 @@ const routes: RouteRecordRaw[] = [
             component: Pages.ComplianceReportPage,
           },
           {
+            path: 'incidents',
+            name: 'reports-incident',
+            meta: { requireAuth: true },
+            component: Pages.IncidentManagementPage,
+          },
+          {
             path: 'daily',
             name: 'reports-daily',
             meta: { requireAuth: true },
