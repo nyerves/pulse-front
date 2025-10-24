@@ -1,5 +1,36 @@
 <script setup lang="ts">
 import { PageLayout } from '@/components'
+
+const cardList = [
+  {
+    title: 'Incidencias Totales',
+    value: '24',
+    status: null,
+    valueColor: 'text-green-700',
+    bgColor: 'bg-blue-100/50',
+  },
+  {
+    title: 'Criticas (> 72 h)',
+    value: '15',
+    status: 'En Proceso',
+    valueColor: 'text-red-500',
+    bgColor: 'bg-green-100/50',
+  },
+  {
+    title: 'Antigüedad Alta',
+    value: '8',
+    status: 'Asignado',
+    valueColor: 'text-yellow-500',
+    bgColor: 'bg-yellow-100/50',
+  },
+  {
+    title: 'Recientes (< 24 h)',
+    value: '120',
+    status: 'Nuevo',
+    valueColor: 'text-green-700',
+    bgColor: 'bg-purple-100/50',
+  },
+]
 </script>
 
 <template>
@@ -87,6 +118,20 @@ import { PageLayout } from '@/components'
         <Button label="Limpiar Filtros" severity="secondary" />
         <Button label="Aplicar Filtros" icon="pi pi-search" />
       </div>
+    </div>
+
+    <div class="py-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+      <template v-for="card in cardList" :key="card.title">
+        <div class="card shadow h-44">
+          <h5>{{ card.title }}</h5>
+
+          <p :class="`text-4xl font-bold ${card.valueColor}`">{{ card.value }}</p>
+
+          <div>
+            <p class="text-sm">{{ card.status ? `Estatus: ${card.status}` : 'En el Periodo' }}</p>
+          </div>
+        </div>
+      </template>
     </div>
   </PageLayout>
 </template>
