@@ -1,12 +1,47 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { TrendingUp, TrendingDown, List } from 'lucide-vue-next'
 import { PageLayout, InformativeCard } from '@/components'
+
+const percentage = ref(78)
+const formFilter = ref({
+  reportType: { name: 'Todos', code: 'all' },
+  status: { name: 'Todos', value: 'all' },
+  hospitals: [
+    { name: `H.G. O'Horán`, code: 'HA' },
+    { name: 'H.G. Valladolid', code: 'HB' },
+    { name: 'H.G. Tizimín', code: 'HC' },
+    { name: 'H. Materno Infantil', code: 'HD' },
+    { name: 'H. de la Amistad', code: 'HE' },
+  ],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dateRange: '10/05/2025 - 10/13/2025' as any,
+})
+
+const chartData = computed(() => ({
+  datasets: [
+    {
+      data: [percentage.value, 100 - percentage.value],
+      backgroundColor: ['#F44336', '#E5E7EB'], // verde y gris claro
+      borderWidth: 0,
+      cutout: '75%', // tamaño del agujero central
+    },
+  ],
+}))
 
 const cardList = [
   { title: 'Reportes en Periodo', value: '784', status: true, prevValue: '+10%' },
   { title: 'Próximos a Vencer', value: '9', status: true, prevValue: '-5%' },
   { title: 'Reportes Incumplidos', value: '147', status: false, prevValue: '+2%' },
 ]
+const chartOptions = {
+  rotation: 0, // inicia arriba
+  // circumference: 270, // hace un "semicírculo" o 3/4 círculo
+  plugins: {
+    legend: { display: false },
+    tooltip: { enabled: false },
+  },
+}
 </script>
 
 <template>
@@ -17,7 +52,7 @@ const cardList = [
       </template>
 
       <template #content>
-        <div class="grid md:grid-cols-4 grid-cols-2 gap-4 py-3">
+        <div class="grid md:grid-cols-4 grid-cols-2 gap-5 py-3">
           <div>
             <label for="dateFrom" class="text-sm block mb-2 font-medium">Tipo de reporte</label>
             <Select
@@ -25,12 +60,12 @@ const cardList = [
               checkmark
               :highlightOnSelect="false"
               class="h-11"
-              model-value="all"
+              v-model="formFilter.reportType"
               optionLabel="name"
               :options="[
-                { name: 'Todos', value: 'all' },
-                { name: 'Diario', value: 'daily' },
-                { name: 'Semanal', value: 'weekly' },
+                { name: 'Todos', code: 'all' },
+                { name: 'Diario', code: 'daily' },
+                { name: 'Semanal', code: 'weekly' },
               ]"
             />
           </div>
@@ -43,6 +78,7 @@ const cardList = [
               :highlightOnSelect="false"
               optionLabel="name"
               class="h-11"
+              v-model="formFilter.status"
               :options="[
                 { name: 'Todos', value: 'all' },
                 { name: 'Completados', value: 'done' },
@@ -59,6 +95,7 @@ const cardList = [
               fluid
               display="chip"
               optionLabel="name"
+              v-model="formFilter.hospitals"
               :maxSelectedLabels="3"
               class="w-full h-11"
               :options="[
@@ -79,6 +116,7 @@ const cardList = [
               selectionMode="range"
               :manualInput="false"
               update-model-type="string"
+              :model-value="formFilter.dateRange"
             />
           </div>
         </div>
@@ -90,25 +128,82 @@ const cardList = [
       </template>
     </Card>
 
-    <div class="grid mt-11 md:grid-cols-5 grid-cols-1 gap-4">
-      <InformativeCard title="Nivel de Cumplimiento" class="col-span-2" />
+    <div class="grid my-11 md:grid-cols-5 grid-cols-1 gap-6">
+      <InformativeCard title="Nivel de Cumplimiento" class="col-span-2">
+        <div class="flex items-center justify-around">
+          <div
+            class="relative flex items-center justify-center"
+            style="width: 150px; height: 150px"
+          >
+            <Chart
+              type="doughnut"
+              :data="chartData"
+              :options="chartOptions"
+              style="width: 100%; height: 100%"
+            />
+
+            <div class="absolute text-4xl font-bold text-red-600">{{ percentage }}%</div>
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 bg-green-500 rounded-full" />
+
+                <div>
+                  <span class="text-sm font-medium">Cumplidos</span>
+                  <p class="text-xs text-secondary">594 Reportes</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 bg-gray-300 rounded-full" />
+
+                <div>
+                  <span class="text-sm font-medium">No Cumplidos</span>
+                  <p class="text-xs text-secondary">594 Reportes</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-xs flex flex-col gap-1">
+              <span class="font-semibold">Umbrales</span>
+
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 bg-green-500 rounded-full" />
+                <span>&ge; 95%</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 bg-yellow-500 rounded-full" />
+                <span>90-95%</span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 bg-red-500 rounded-full" />
+                <span>&lt; 90%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </InformativeCard>
 
       <template v-for="(data, _index) in cardList" :key="_index">
         <div>
-          <Card>
+          <Card class="!shadow-md">
             <template #title>
               <h5 class="!font-semibold">{{ data.title }}</h5>
             </template>
 
             <template #content>
               <div>
-                <h1>{{ data.value }}</h1>
+                <h1 class="!font-semibold">{{ data.value }}</h1>
 
                 <div
-                  class="mt-2 flex items-center gap-2"
+                  class="mt-1 flex items-center gap-2"
                   :class="data.status ? 'text-green-500' : 'text-red-500'"
                 >
-                  <component :is="data.status ? TrendingUp : TrendingDown" />
+                  <component :is="data.status ? TrendingUp : TrendingDown" :size="14" />
                   <span> {{ data.prevValue }} vs periodo anterior </span>
                 </div>
               </div>
