@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { PageLayout } from '@/components'
-import { ReporteDiarioIncidenciasService } from '@common/services'
+import { DailyReportService } from '@common/services/DailyReportService'
 
+const indexLoading = ref(-1)
 const resourcesList = [
   {
     title: 'Reporte Diario de Operaciones (INT-PULSE-001)',
@@ -21,10 +23,25 @@ const resourcesList = [
   },
 ]
 
-const downloadTemplate = async () => {
-  const res = await ReporteDiarioIncidenciasService.DownloadTemplate()
+const downloadTemplate = async (index: number) => {
+  try {
+    indexLoading.value = index
+    const res = await DailyReportService.DownloadAllTemplates()
+    console.log(res)
 
-  console.log(res)
+    const blob = new Blob([res])
+
+    const url = window.URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = resourcesList[index]!.fileName + '.xlsx'
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    window.URL.revokeObjectURL(url)
+  } finally {
+    indexLoading.value = -1
+  }
 }
 </script>
 
@@ -59,7 +76,13 @@ const downloadTemplate = async () => {
             </div>
 
             <div>
-              <Button label="Descargar" icon="pi pi-download" @click="downloadTemplate" />
+              <Button
+                :loading="indexLoading === _index"
+                :disabled="indexLoading !== -1"
+                label="Descargar"
+                icon="pi pi-download"
+                @click="downloadTemplate(_index)"
+              />
             </div>
           </div>
         </div>

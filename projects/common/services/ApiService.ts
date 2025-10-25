@@ -30,7 +30,13 @@ export const ApiService = {
     const baseURL = import.meta.env.VITE_FULL_API;
     const includes = WithParams(params?.with);
 
-    const excelConfig: AxiosRequestConfig = {
+    const config: AxiosRequestConfig = {
+      timeout: 120_000,
+      method,
+      data,
+      params,
+      baseURL,
+      url: `/${module}${url}` + includes,
       responseType: isExcel ? "arraybuffer" : "json",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -40,22 +46,12 @@ export const ApiService = {
       },
     };
 
-    const config: AxiosRequestConfig = {
-      ...excelConfig,
-      timeout: 120_000,
-      method,
-      data,
-      params,
-      baseURL,
-      url: `/${module}${url}` + includes,
-    };
-
     const instance = axios.create(config);
     this.interceptor(instance);
 
     try {
       const res = await instance<ApiResponse<T>>(config);
-      return res?.data?.data;
+      return (isExcel ? res?.data : res.data?.data) as T;
     } catch (error) {
       throw error;
     }
