@@ -59,7 +59,7 @@ const chartOptions = {
               style="width: 100%; height: 100%"
             />
 
-            <div class="absolute text-3xl top-1/4 font-bold text-gray-800">{{ percentage }}%</div>
+            <div class="absolute text-3xl top-[30%] font-bold text-gray-800">{{ percentage }}%</div>
           </div>
 
           <div id="summary-ocupacion-legend" class="space-y-3">

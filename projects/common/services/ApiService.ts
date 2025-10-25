@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { AxiosInstance } from "axios";
+import type { AxiosInstance, AxiosRequestConfig } from "axios";
 import { StorageKeys } from "@common/utils/StorageKeys";
 import { AuthService } from "@common/services/AuthService";
 import { Debounce, WithParams } from "@common/helpers";
@@ -12,20 +12,36 @@ interface Props {
   data?: Record<string, any>;
   params?: any;
   _with?: string[];
+  isExcel?: boolean;
 }
 
 export const ApiService = {
-  async makeRequest<T>({ method, url = "", module, data = {}, params }: Props) {
+  async makeRequest<T>({
+    method,
+    url = "",
+    module,
+    data = {},
+    params,
+    isExcel,
+  }: Props) {
     // if (!this.validLastRequest()) throw "expired token";
 
     const token = AuthService.GetToken();
     const baseURL = import.meta.env.VITE_FULL_API;
     const includes = WithParams(params?.with);
 
-    const config = {
+    const excelConfig: AxiosRequestConfig = {
+      responseType: isExcel ? "arraybuffer" : "json",
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": isExcel
+          ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          : "application/json",
       },
+    };
+
+    const config: AxiosRequestConfig = {
+      ...excelConfig,
       timeout: 120_000,
       method,
       data,
@@ -88,6 +104,4 @@ export const ApiService = {
   },
 };
 
-const closeSession = Debounce(() => {
-  AuthService.Logout();
-});
+const closeSession = Debounce(() => AuthService.Logout());
