@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SuccessModal } from '@common/components'
+import SuccesLoadReportSection from './SuccesLoadReportSection.vue'
 
 const props = defineProps<{
   title?: string
@@ -43,7 +44,11 @@ const onLoadReport = () => {
 <template>
   <div class="card shadow-md border border-gray-200 w-[44rem]">
     <template v-if="showSuccessModal">
-      <SuccessModal width="34rem" @close="showSuccessModal = false" />
+      <SuccessModal
+        width="34rem"
+        @confirm="$router.push({ name: 'reports-compliance' })"
+        @close="showSuccessModal = false"
+      />
     </template>
 
     <h4 class="text-center !text-bold !mb-7">
@@ -110,7 +115,9 @@ const onLoadReport = () => {
                 </div>
                 <div class="col-span-2 sm:col-span-2">
                   <dt class="text-xs text-gray-500">Fecha de Reporte</dt>
-                  <dd id="header-date-daily" class="font-semibold text-gray-800">--</dd>
+                  <dd id="header-date-daily" class="font-semibold text-gray-800">
+                    25 de octubre de 2025
+                  </dd>
                 </div>
                 <div class="col-span-2 sm:col-span-3">
                   <dt class="text-xs text-gray-500">Contenido</dt>
@@ -192,18 +199,7 @@ const onLoadReport = () => {
           <!-- Vista 3: Resultados (Éxito o Error) -->
           <div v-else-if="reportStep === 'loaded'" class="text-center">
             <!-- Mensaje de Éxito -->
-            <div id="success-message">
-              <div
-                class="mx-auto w-16 h-16 flex items-center justify-center bg-green-100 rounded-full mb-4"
-              >
-                <i class="pi pi-check text-green-600 !font-bold" style="font-size: 1.5rem" />
-              </div>
-
-              <h5 class="font-bold">Validación Exitosa</h5>
-              <p class="mt-2 text-secondary text-sm">
-                El archivo ha sido procesado. Revisa el resumen antes de confirmar.
-              </p>
-            </div>
+            <SuccesLoadReportSection />
 
             <!-- Mensaje de Error -->
             <div id="error-message" class="hidden">

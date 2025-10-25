@@ -2,6 +2,7 @@
 import { ModalLayout } from "@common/components";
 
 defineEmits<{
+  (e: "confirm"): void;
   (e: "close"): void;
 }>();
 </script>
@@ -19,7 +20,7 @@ defineEmits<{
     </div>
 
     <template #footer>
-      <Button class="w-full font-semibold" @click="$emit('close')">
+      <Button class="w-full font-semibold" @click="$emit('confirm')">
         Aceptar
       </Button>
     </template>

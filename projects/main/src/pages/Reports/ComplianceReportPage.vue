@@ -223,8 +223,10 @@ const chartOptions = {
 
       <div class="p-4 border-b border-gray-200 flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <List class="w-4 h-4 text-gray-500" />
-          <span class="text-sm text-gray-600"><span id="compliance-count">0</span> resultados</span>
+          <List class="w-4 h-4 text-secondary" />
+          <span class="text-sm text-secondary"
+            ><span id="compliance-count">0</span> resultados</span
+          >
         </div>
 
         <div class="flex items-center gap-2">
@@ -283,14 +285,14 @@ const chartOptions = {
                 </tr>
               </thead>
 
-              <tbody id="compliance-table-body" class="bg-white divide-y divide-gray-200">
+              <tbody id="compliance-table-body" class="divide-y divide-gray-200">
                 <!-- Las filas se generarán dinámicamente -->
                 <tr>
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">22/10/2025</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm">22/10/2025</td>
 
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">H.G. Valladolid</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm">H.G. Valladolid</td>
 
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm">
                     <div class="flex items-center gap-3">
                       <Avatar
                         image="https://e7.pngegg.com/pngimages/348/800/png-clipart-man-wearing-blue-shirt-illustration-computer-icons-avatar-user-login-avatar-blue-child-thumbnail.png"
@@ -302,9 +304,9 @@ const chartOptions = {
                     </div>
                   </td>
 
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">Diario</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm">Diario</td>
 
-                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800">30/10/2025</td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm">30/10/2025</td>
 
                   <td class="px-6 py-4 whitespace-nowrap text-sm">
                     <Tag
