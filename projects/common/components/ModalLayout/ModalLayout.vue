@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { FileText } from "lucide-vue-next";
+
 defineEmits(["close", "save"]);
 const props = defineProps<{
+  icon?: boolean;
   title?: string;
   width?: string;
   loading?: boolean;
+  hideSaveBtn?: boolean;
   saveDisabled?: boolean;
 }>();
 </script>
@@ -19,6 +23,12 @@ const props = defineProps<{
     @hide="$emit('close')"
     @update:visible="$emit('close')"
   >
+    <template #header>
+      <slot name="header">
+        <h5 style="margin: unset">{{ props.title }}</h5>
+      </slot>
+    </template>
+
     <div class="modal-container">
       <slot></slot>
     </div>
@@ -32,6 +42,7 @@ const props = defineProps<{
           @click="$emit('close')"
         />
         <Button
+          v-if="hideSaveBtn !== true"
           type="button"
           label="Save"
           :loading="props.loading"

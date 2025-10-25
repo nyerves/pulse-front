@@ -45,7 +45,10 @@ const chartOptions = {
 </script>
 
 <template>
-  <PageLayout title="Tablero de Cumplimiento">
+  <PageLayout
+    title="Tablero de Cumplimiento"
+    description-modal="Esta sección permite monitorear el estado de la carga de reportes operativos (diarios) y de gestión (semanales) por parte de cada unidad hospitalaria. Utilice los filtros para analizar periodos o unidades específicas."
+  >
     <Card class="p-3">
       <template #title>
         <h5>Filtros de Cumplimiento</h5>

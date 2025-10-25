@@ -77,6 +77,7 @@ onMounted(() => {
   <PageLayout
     title="Dashboard Estratégico"
     description="Consolidado de 11 Hospitales | Octubre 2025"
+    description-modal="Esta vista presenta un consolidado de los Indicadores Clave de Rendimiento (KPIs) de toda la red hospitalaria. Permite analizar el estado de salud del sistema a través de diferentes perspectivas como capacidad, productividad y recursos."
   >
     <template #actions>
       <div class="border border-gray-300 rounded-md">

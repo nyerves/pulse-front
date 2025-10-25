@@ -29,7 +29,10 @@ const downloadTemplate = async () => {
 </script>
 
 <template>
-  <PageLayout title="Centro de Recursos">
+  <PageLayout
+    title="Centro de Recursos"
+    description-modal="Desde aquí puede descargar las últimas versiones de las plantillas oficiales (.xlsx) necesarias para la carga de reportes. Es crucial utilizar siempre la versión más reciente para evitar errores de validación."
+  >
     <div class="flex flex-col">
       <template v-for="(resource, _index) in resourcesList" :key="_index">
         <div class="card w-full shadow hover:shadow-md">

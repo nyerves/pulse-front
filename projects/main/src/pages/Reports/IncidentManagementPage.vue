@@ -34,7 +34,10 @@ const cardList = [
 </script>
 
 <template>
-  <PageLayout title="Gestión de Incidencias">
+  <PageLayout
+    title="Gestión de Incidencias"
+    description-modal="Este módulo centraliza todas las incidencias reportadas. Permite filtrar, ordenar y gestionar cada incidencia para su seguimiento y resolución."
+  >
     <div class="card p-3 shadow">
       <div class="flex justify-between mb-5 w-full">
         <h5>Filtros de Incidencias</h5>
